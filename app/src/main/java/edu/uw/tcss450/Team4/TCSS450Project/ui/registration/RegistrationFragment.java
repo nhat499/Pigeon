@@ -1,4 +1,4 @@
-package edu.uw.tcss450.Team4.TCSS450Project.registration;
+package edu.uw.tcss450.Team4.TCSS450Project.ui.registration;
 
 import android.os.Bundle;
 
