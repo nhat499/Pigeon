@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/activity_auth.xml" value="0.1" />
-        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
-        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_sign_in.xml" value="0.22" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
   </component>
