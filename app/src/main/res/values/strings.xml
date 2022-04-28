@@ -10,4 +10,6 @@
     <string name="hint_password_again">Retype Password</string>
     <string name="action_register_short">Register</string>
     <string name="action_signIn">Sign In</string>
+
+    <string name="title_chat">CHAT</string>
 </resources>
