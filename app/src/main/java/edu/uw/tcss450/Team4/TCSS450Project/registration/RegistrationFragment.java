@@ -130,8 +130,8 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void navigateToLogin() {
-        RegistrationFragmentDirections.ActionRegisterFragmentToLoginFragment directions =
-                RegistrationFragmentDirections.actionRegisterFragmentToLoginFragment();
+        RegistrationFragmentDirections.ActionRegistrationFragmentToMainActivity directions =
+                RegistrationFragmentDirections.actionRegistrationFragmentToMainActivity();
 
         directions.setEmail(binding.editEmail.getText().toString());
         directions.setPassword(binding.editPassword1.getText().toString());

@@ -9,7 +9,11 @@
         android:id="@+id/mainActivity"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.MainActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/activity_main" >
+        <argument android:name="email"
+            app:argType="string" />
+        <argument android:name="password" />
+    </activity>
     <fragment
         android:id="@+id/registrationFragment"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.registration.RegistrationFragment"
