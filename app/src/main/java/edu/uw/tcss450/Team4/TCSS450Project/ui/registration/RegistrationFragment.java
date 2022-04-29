@@ -1,4 +1,4 @@
-package edu.uw.tcss450.Team4.TCSS450Project.registration;
+package edu.uw.tcss450.Team4.TCSS450Project.ui.registration;
 
 import static edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator.checkClientPredicate;
 import static edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator.checkExcludeWhiteSpace;
