@@ -8,6 +8,19 @@
     <fragment
         android:id="@+id/navigation_chat"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment"
-        android:label="fragment_chat"
+        android:label="Chat"
         tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/navigation_weather"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.weather.WeatherFragment"
+        android:label="Weather"
+        tools:layout="@layout/fragment_weather" />
+
+    <fragment
+        android:id="@+id/navigation_contacts"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsFragment"
+        android:label="Contacts"
+        tools:layout="@layout/fragment_contacts" />
+
 </navigation>
