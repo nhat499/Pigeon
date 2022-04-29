@@ -16,14 +16,11 @@
     </activity>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.registration.RegistrationFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
             android:id="@+id/action_registrationFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
-        <action
-            android:id="@+id/action_registrationFragment_to_mainActivity2"
             app:destination="@id/mainActivity" />
     </fragment>
 </navigation>
