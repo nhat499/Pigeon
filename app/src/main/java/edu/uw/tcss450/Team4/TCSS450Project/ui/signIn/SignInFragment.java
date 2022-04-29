@@ -10,9 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
+//import com.auth0.jwt.JWT;
+//import com.auth0.jwt.algorithms.Algorithm;
+//import com.auth0.jwt.exceptions.JWTCreationException;
+
+import org.json.JSONObject;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentSignInBinding;
@@ -43,13 +45,18 @@ public class SignInFragment extends Fragment {
         FragmentSignInBinding binding = FragmentSignInBinding.bind(getView());
 
         //On button click, navigate to MainActivity
+        binding.buttonToRegister.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        SignInFragmentDirections.actionSignInFragmentToRegistrationFragment()
+                ));
+
         binding.buttonSignin.setOnClickListener(button -> {
 
             Navigation.findNavController(getView()).navigate(
                     SignInFragmentDirections
                             .actionSignInFragmentToMainActivity(
-                                    generateJwt(binding.editEmail.getText().toString())
-                            ));
+//                                    generateJwt(binding.editEmail.getText().toString())
+                                    binding.editEmail.getText().toString()));
             // This tells the containing acitivity that we are done with it.
             // it wil not be added to the back stack (cant click back to it)
             getActivity().fileList();
@@ -63,18 +70,18 @@ public class SignInFragment extends Fragment {
      * @param email the email used to encode into the JWT
      * @return the resulting JWT
      */
-    private String generateJwt(final String email) {
-        String token;
-        try {
-            Algorithm algorithm = Algorithm.HMAC256("secret key don't use a string literal in " +
-                    "production code!!!");
-            token = JWT.create()
-                    .withIssuer("auth0")
-                    .withClaim("email", email)
-                    .sign(algorithm);
-        } catch (JWTCreationException exception){
-            throw new RuntimeException("JWT Failed to Create.");
-        }
-        return token;
-    }
+//    private String generateJwt(final String email) {
+//        String token;
+//        try {
+//            Algorithm algorithm = Algorithm.HMAC256("secret key don't use a string literal in " +
+//                    "production code!!!");
+//            token = JWT.create()
+//                    .withIssuer("auth0")
+//                    .withClaim("email", email)
+//                    .sign(algorithm);
+//        } catch (JWTCreationException exception){
+//            throw new RuntimeException("JWT Failed to Create.");
+//        }
+//        return token;
+//    }
 }

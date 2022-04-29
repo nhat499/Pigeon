@@ -8,14 +8,14 @@
     tools:context=".ui.registration.RegistrationFragment">
 
     <Button
-        android:id="@+id/button_register2"
+        android:id="@+id/button_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="252dp"
         android:layout_marginTop="16dp"
         android:text="@string/action_register_short"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_password_3" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_password_2" />
 
     <EditText
         android:id="@+id/edit_first"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_last" />
 
     <EditText
-        android:id="@+id/edit_password_"
+        android:id="@+id/edit_password_1"
         android:layout_width="309dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
     <EditText
-        android:id="@+id/edit_password_3"
+        android:id="@+id/edit_password_2"
         android:layout_width="309dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
@@ -79,6 +79,6 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_password_" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_password_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
