@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_signInFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/action_signInFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -23,4 +26,13 @@
             android:name="jwt"
             app:argType="string" />
     </activity>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 </navigation>
