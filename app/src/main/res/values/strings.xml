@@ -2,6 +2,8 @@
     <string name="app_name">TCSS450Project</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="weather_blank_fragment">It\'s raining</string>
+    <string name="contacts_blank_fragment">You don\'t have any friends :(</string>
     // For Registration Page
     <string name="hint_first">First Name</string>
     <string name="hint_last">Last Name</string>
@@ -10,4 +12,7 @@
     <string name="hint_password_again">Retype Password</string>
     <string name="action_register_short">Register</string>
     <string name="action_signIn">Sign In</string>
+    <string name="title_weather">WEATHER</string>
+    <string name="title_contacts">CONTACTS</string>
+    <string name="title_chat">CHAT</string>
 </resources>
