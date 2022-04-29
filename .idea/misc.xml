@@ -6,6 +6,8 @@
         <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/activity_auth.xml" value="0.1" />
         <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
         <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_sign_in.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_home_landing.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/fragment_home_landing_view_model.xml" value="0.4036458333333333" />
       </map>
     </option>
   </component>
