@@ -57,7 +57,6 @@ public class RegistrationViewModel extends AndroidViewModel {
             }
         }
     }
-
     public void connect(final String first,
                         final String last,
                         final String email,
