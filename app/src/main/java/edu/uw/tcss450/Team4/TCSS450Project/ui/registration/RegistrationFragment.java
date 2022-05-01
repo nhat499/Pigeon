@@ -119,27 +119,24 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void verifyAuthWithServer() {
-        Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_signInFragment);
-
-//        mRegisterModel.connect(
-//                binding.editFirst.getText().toString(),
-//                binding.editLast.getText().toString(),
-//                binding.editEmail.getText().toString(),
-//                binding.editPassword1.getText().toString());
-        //This is an Asynchronous call. No statements after should rely on the
-        //result of connect()
+        mRegisterModel.connect(
+                binding.editFirst.getText().toString(),
+                binding.editLast.getText().toString(),
+                binding.editEmail.getText().toString(),
+                binding.editPassword1.getText().toString());
+//        This is an Asynchronous call. No statements after should rely on the
+//        result of connect()
 
     }
 
     private void navigateToLogin() {
-//        RegistrationFragmentDirections.ActionRegistrationFragmentToSignInFragment directions =
-//                RegistrationFragmentDirections.actionRegistrationFragmentToSignInFragment();
-//
-//        directions.setEmail(binding.editEmail.getText().toString());
-//        directions.setPassword(binding.editPassword1.getText().toString());
+        RegistrationFragmentDirections.ActionRegistrationFragmentToSignInFragment directions =
+                RegistrationFragmentDirections.actionRegistrationFragmentToSignInFragment();
 
-        Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_signInFragment);
+        directions.setEmail(binding.editEmail.getText().toString());
+        directions.setPassword(binding.editPassword1.getText().toString());
 
+        Navigation.findNavController(getView()).navigate(directions);
     }
 
     /**

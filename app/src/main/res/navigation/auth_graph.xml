@@ -16,6 +16,14 @@
         <action
             android:id="@+id/action_signInFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue="default" />
+        <argument
+            android:name="password"
+            app:argType="string"
+            android:defaultValue="default" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -24,6 +32,9 @@
         tools:layout="@layout/activity_main" >
         <argument
             android:name="jwt"
+            app:argType="string" />
+        <argument
+            android:name="email"
             app:argType="string" />
     </activity>
     <fragment
