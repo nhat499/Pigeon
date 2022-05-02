@@ -14,8 +14,11 @@
     <string name="hint_password_again">Retype Password</string>
     <string name="action_register_short">Register</string>
     <string name="action_signIn">Sign In</string>
+    // For nav bar
     <string name="title_home">HOME</string>
     <string name="title_weather">WEATHER</string>
     <string name="title_contacts">CONTACTS</string>
     <string name="title_chat">CHAT</string>
+    // For title bar
+    <string name="action_dark_mode">Dark Mode</string>
 </resources>
