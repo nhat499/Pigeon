@@ -20,5 +20,6 @@
     <string name="title_contacts">CONTACTS</string>
     <string name="title_chat">CHAT</string>
     // For title bar
-    <string name="action_dark_mode">Dark Mode</string>
+    <string name="action_dark_mode">Enable Dark Mode</string>
+    <string name="action_sign_out">Sign out</string>
 </resources>

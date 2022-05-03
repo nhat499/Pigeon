@@ -6,12 +6,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        // sets theme to dark mode on app open
+        SharedPreferences settings = getSharedPreferences("settings", 0);
+        boolean isChecked = settings.getBoolean("dark_mode", false);
+        toggleDarkMode(isChecked);
     }
 
     @Override
@@ -41,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
+        // updates the dark mode check box
+        SharedPreferences settings = getSharedPreferences("settings", 0);
+        boolean isChecked = settings.getBoolean("dark_mode", false);
+        MenuItem item = menu.findItem(R.id.action_dark_mode);
+        item.setChecked(isChecked);
+
         return true;
     }
 
@@ -48,10 +58,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_dark_mode) {
-            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            item.setChecked(!item.isChecked());
+            SharedPreferences settings = getSharedPreferences("settings", 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("dark_mode", item.isChecked());
+            editor.commit();
+            toggleDarkMode(item.isChecked());
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleDarkMode(boolean isChecked) {
+        if (isChecked) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 }
