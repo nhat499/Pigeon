@@ -18,4 +18,6 @@
     <string name="title_weather">WEATHER</string>
     <string name="title_contacts">CONTACTS</string>
     <string name="title_chat">CHAT</string>
+    // email verifications
+    <string name="email_verify">Please verify your email</string>
 </resources>

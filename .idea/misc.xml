@@ -23,7 +23,15 @@
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/menu/bottom_nav_menu.xml" value="0.23148148148148148" />
         <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/activity_auth.xml" value="0.1" />
         <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_chat.xml" value="0.27291666666666664" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_contacts.xml" value="0.27291666666666664" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_email_verification.xml" value="0.1" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_home_landing.xml" value="0.27291666666666664" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_registration.xml" value="0.27291666666666664" />
         <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_sign_in.xml" value="0.22" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_test.xml" value="0.13171225937183384" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_verify_email.xml" value="0.27291666666666664" />
+        <entry key="..\:/class/tcss450 mobile app dev/TheTheProject/app/src/main/res/layout/fragment_weather.xml" value="0.27291666666666664" />
         <entry key="app/src/main/res/layout/fragment_home_landing.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_home_landing_view_model.xml" value="0.4036458333333333" />
       </map>
