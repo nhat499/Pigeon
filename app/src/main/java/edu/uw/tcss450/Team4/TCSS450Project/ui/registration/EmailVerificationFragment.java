@@ -17,7 +17,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentEmailVerification
 import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Class to define the fragment lifecycle for the EmailVerification Fragment
+ *
  * @author team4
  * @version May 2022
  */

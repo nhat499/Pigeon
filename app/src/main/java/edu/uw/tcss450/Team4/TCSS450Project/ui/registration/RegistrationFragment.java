@@ -29,7 +29,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentRegistrationBindi
 import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Class to define the fragment lifecycle for the Registration Fragment
+ *
  * @author team4
  * @version May 2022
  */

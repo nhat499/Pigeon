@@ -22,7 +22,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Class to define the fragment lifecycle for the SignIn Fragment
+ *
  * @author team4
  * @version May 2022
  */

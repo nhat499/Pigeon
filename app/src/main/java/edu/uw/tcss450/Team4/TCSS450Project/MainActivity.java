@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
+ * Class that defines the lifecycle for the Main Activity
  *
  * @author Team4
  * @version May 2022

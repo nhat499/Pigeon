@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 /**
+ * Class that defines the lifecycle for the Authentication activity
  *
  * @author Team4
  * @version May 2022
