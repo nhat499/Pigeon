@@ -121,7 +121,7 @@ public class RegistrationFragment extends Fragment {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.editPassword1.getText().toString()),
                 this::verifyAuthWithServer,
-                result -> binding.editPassword1.setError("Please enter a valid Password."));
+                result -> binding.editPassword1.setError("Your password must have: \n Uppercase Letters \n Lowercase Letters \n Numbers \n Symbols"));
     }
 
     private void verifyAuthWithServer() {
