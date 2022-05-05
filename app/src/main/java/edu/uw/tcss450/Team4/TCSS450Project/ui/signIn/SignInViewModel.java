@@ -27,7 +27,7 @@ import java.util.Objects;
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 
 /**
- *
+ * View Model for the SignIn Fragment
  *
  * @author team4
  * @version May 2022

@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import java.util.Objects;
 
 /**
+ * View model for the Registration Fragment
  *
  * @author team4
  * @version May 2022

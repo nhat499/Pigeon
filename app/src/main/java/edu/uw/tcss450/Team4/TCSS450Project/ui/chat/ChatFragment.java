@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Class to define the fragment lifecycle for the Chat Fragment
+ *
  * @author team4
  * @version May 2022
  */
