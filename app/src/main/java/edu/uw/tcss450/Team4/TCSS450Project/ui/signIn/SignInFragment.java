@@ -1,24 +1,19 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.signIn;
 
 import static edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator.*;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 
@@ -31,6 +26,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 public class SignInFragment extends Fragment {
 
     private FragmentSignInBinding binding;
+
     private SignInViewModel mSignInModel;
 
     private PasswordValidator mEmailValidator = checkPwdLength(2)
@@ -47,37 +43,40 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSignInModel = new ViewModelProvider(getActivity())
-                .get(SignInViewModel.class);
+        mSignInModel = new ViewModelProvider(getActivity()).get(SignInViewModel.class);
+        // disable back button
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                // Handle the back button even
-                Log.d("BACKBUTTON", "Back button clicks");
+                Log.d("BACK_BUTTON", "Back button clicked");
             }
         };
-
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater);
-        // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //On button click, navigate to MainActivity
+        //On button click, navigate to registration
         binding.buttonToRegister.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         SignInFragmentDirections.actionSignInFragmentToRegistrationFragment()
                 ));
+        // set listener for resend verification
+        //binding.textResendLink.setOnClickListener(this::attemptResendLink);
+        // set listener for forgot password (either forgot password fragment or send email to email currently in editEmail)
+        //binding.textForgotPassword.setOnClickListener(this::attemptForgotPassword);
+        // set listener for remember me
+        //if checked save login info in shared preferences maybe
 
+        // On button click navigate to main activity
         binding.buttonSignin.setOnClickListener(this::attemptSignIn);
 
         mSignInModel.addResponseObserver(
@@ -111,8 +110,7 @@ public class SignInFragment extends Fragment {
         mSignInModel.connect(
                 binding.editEmail.getText().toString(),
                 binding.editPassword.getText().toString());
-        //This is an Asynchronous call. No statements after should rely on the
-        //result of connect()
+        //This is an Asynchronous call. No statements after should rely on the result of connect()
     }
 
     /**
@@ -145,6 +143,7 @@ public class SignInFragment extends Fragment {
             } else {
                 try {
                     if ((int) response.get("verification") == 1) {
+                        // save login info here if remember me is checked
                         navigateToSuccess(
                                 binding.editEmail.getText().toString(),
                                 response.getString("token")

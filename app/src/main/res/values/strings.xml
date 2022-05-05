@@ -17,6 +17,7 @@
     <string name="action_remember_me">Remember me</string>
     <string name="action_register_short">Register</string>
     <string name="action_signIn">Sign In</string>
+    <string name="action_resend_link"><u>Resend link</u></string>
     // For nav bar
     <string name="title_home">HOME</string>
     <string name="title_weather">WEATHER</string>
