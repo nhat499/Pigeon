@@ -135,9 +135,12 @@ public class RegistrationFragment extends Fragment {
 
     }
 
-    private void navigateToLogin(final String email, final String password) {
-        RegistrationFragmentDirections.ActionRegistrationFragmentToEmailVerificationFragment directions =
-                RegistrationFragmentDirections.actionRegistrationFragmentToEmailVerificationFragment(email, password);
+    private void navigateToLogin() {
+        RegistrationFragmentDirections.ActionRegistrationFragmentToSignInFragment directions =
+                RegistrationFragmentDirections.actionRegistrationFragmentToSignInFragment();
+
+        directions.setEmail(binding.editEmail.getText().toString());
+        directions.setPassword(binding.editPassword1.getText().toString());
 
         Navigation.findNavController(getView()).navigate(directions);
     }
@@ -159,10 +162,7 @@ public class RegistrationFragment extends Fragment {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
-                navigateToLogin(
-                        binding.editEmail.getText().toString(),
-                        binding.editPassword1.getText().toString()
-                );
+                navigateToLogin();
             }
         } else {
             Log.d("JSON Response", "No Response");

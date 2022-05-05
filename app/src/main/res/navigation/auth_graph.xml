@@ -22,6 +22,9 @@
             app:argType="string"
             android:defaultValue="default" />
         <action
+            android:id="@+id/action_signInFragment_to_emailVerificationFragment"
+            app:destination="@id/emailVerificationFragment" />
+        <action
             android:id="@+id/action_signInFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
     </fragment>
@@ -43,22 +46,22 @@
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
-            android:id="@+id/action_registrationFragment_to_emailVerificationFragment"
-            app:destination="@id/emailVerificationFragment" />
+            android:id="@+id/action_registrationFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/emailVerificationFragment"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.registration.EmailVerificationFragment"
         android:label="fragment_email_verification"
         tools:layout="@layout/fragment_email_verification" >
+        <action
+            android:id="@+id/action_emailVerificationFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+        <argument
+            android:name="jwt"
+            app:argType="string" />
         <argument
             android:name="email"
             app:argType="string" />
-        <argument
-            android:name="password"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_emailVerificationFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>

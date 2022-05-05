@@ -44,23 +44,14 @@ public class EmailVerificationFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void navigateToLogin(final String email, final String password) {
-        EmailVerificationFragmentDirections.ActionEmailVerificationFragmentToSignInFragment
-                directions = EmailVerificationFragmentDirections.actionEmailVerificationFragmentToSignInFragment();
-        directions.setEmail(email);
-        directions.setPassword(password);
-        Navigation.findNavController(getView()).navigate(directions);
-    }
-
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        Log.d("EmailVe", "EmailVe: " + args);
 //        Log.d("EmailVe", "EmailVe: " + args.getString("jwt"));
 //        Log.d("EmailVe", "EmailVe: " + args.getString("email"));
-
+        EmailVerificationFragmentDirections.ActionEmailVerificationFragmentToMainActivity
+                directions = EmailVerificationFragmentDirections.
+                actionEmailVerificationFragmentToMainActivity(args.getString("jwt"), args.getString("email"));
         binding.ButtonCheckVerification.setOnClickListener(button ->
-                navigateToLogin(
-                        args.getString("email"),
-                        args.getString("password")
-                ));
+                Navigation.findNavController(getView()).navigate(directions));
     }
 }
