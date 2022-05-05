@@ -1,0 +1,10 @@
+package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
+
+/**
+ * View model for the Chat Fragment
+ *
+ * @author team4
+ * @version May 2022
+ */
+public class ChatViewModel {
+}
