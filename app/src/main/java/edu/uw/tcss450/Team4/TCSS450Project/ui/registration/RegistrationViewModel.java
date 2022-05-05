@@ -20,6 +20,12 @@ import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
+
+/**
+ *
+ * @author team4
+ * @version May 2022
+ */
 public class RegistrationViewModel extends AndroidViewModel {
     private MutableLiveData<JSONObject> mResponse;
 

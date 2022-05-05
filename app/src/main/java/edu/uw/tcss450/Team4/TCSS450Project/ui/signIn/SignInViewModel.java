@@ -5,6 +5,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -25,6 +26,12 @@ import java.util.Objects;
 
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 
+/**
+ *
+ *
+ * @author team4
+ * @version May 2022
+ */
 public class SignInViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> mResponse;
