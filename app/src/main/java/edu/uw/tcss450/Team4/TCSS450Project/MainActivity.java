@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-//<<<<<<< HEAD
-//=======
         // sets theme to dark mode on app open
         SharedPreferences settings = getSharedPreferences("settings", 0);
         boolean isChecked = settings.getBoolean("dark_mode", false);
@@ -82,6 +80,5 @@ public class MainActivity extends AppCompatActivity {
     private void toggleDarkMode(boolean isChecked) {
         if (isChecked) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//>>>>>>> test
     }
 }

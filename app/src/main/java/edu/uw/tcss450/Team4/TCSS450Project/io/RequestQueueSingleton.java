@@ -2,14 +2,17 @@ package edu.uw.tcss450.Team4.TCSS450Project.io;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-
 import androidx.collection.LruCache;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+/**
+ *
+ * @author team4
+ * @version May 2022
+ */
 public class RequestQueueSingleton {
     private static RequestQueueSingleton instance;
     private static Context context;

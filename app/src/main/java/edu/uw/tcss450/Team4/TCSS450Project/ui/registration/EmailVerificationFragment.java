@@ -18,7 +18,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
 
 /**
  * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * @author team4
+ * @version May 2022
  */
 public class EmailVerificationFragment extends Fragment {
 

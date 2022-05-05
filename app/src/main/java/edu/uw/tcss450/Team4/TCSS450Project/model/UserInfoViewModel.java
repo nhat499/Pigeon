@@ -4,6 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+/**
+ *
+ * @author team4
+ * @version May 2022
+ */
 public class UserInfoViewModel extends ViewModel {
 
     private final String mEmail;
