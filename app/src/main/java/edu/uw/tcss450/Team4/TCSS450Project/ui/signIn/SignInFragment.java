@@ -113,7 +113,7 @@ public class SignInFragment extends Fragment {
     private void navigateToSuccess(final String email, final String jwt) {
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
-                        .actionSignInFragmentToEmailVerificationFragment(email, jwt));
+                        .actionSignInFragmentToMainActivity(email, jwt));
     }
 
     /**
@@ -134,10 +134,14 @@ public class SignInFragment extends Fragment {
                 }
             } else {
                 try {
-                    navigateToSuccess(
-                            binding.editEmail.getText().toString(),
-                            response.getString("token")
-                    );
+                    if ((int) response.get("verification") == 1) {
+                        navigateToSuccess(
+                                binding.editEmail.getText().toString(),
+                                response.getString("token")
+                        );
+                    } else {
+                        binding.editEmail.setError("Check email for verification instructions");
+                    }
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }

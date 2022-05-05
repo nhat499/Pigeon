@@ -20,7 +20,7 @@
     <string name="title_contacts">CONTACTS</string>
     <string name="title_chat">CHAT</string>
     // for email page
-    <string name="email_verify">Please verify your email</string>
+    <string name="email_verify">Check email for verification instructions.</string>
 
     <string name="action_dark_mode">Enable Dark Mode</string>
     <string name="action_sign_out">Sign out</string>
