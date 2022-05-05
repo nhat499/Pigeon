@@ -150,7 +150,7 @@ public class SignInFragment extends Fragment {
                                 response.getString("token")
                         );
                     } else {
-                        binding.editEmail.setError("Check email for verification instructions");
+                        binding.editEmail.setError("Must verify email before signing in.\nCheck your email for verification instructions.");
                     }
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
