@@ -2,22 +2,18 @@ package edu.uw.tcss450.Team4.TCSS450Project.ui.registration;
 
 import android.app.Application;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.nio.charset.Charset;
 import java.util.Objects;
 
@@ -28,6 +24,7 @@ import java.util.Objects;
  * @version May 2022
  */
 public class RegistrationViewModel extends AndroidViewModel {
+
     private MutableLiveData<JSONObject> mResponse;
 
     public RegistrationViewModel(@NonNull Application application) {
