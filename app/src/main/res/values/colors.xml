@@ -3,23 +3,23 @@
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
 <!-- default -->
-    <color name="primaryColor">#FFBB86FC</color>
-    <color name="primaryLightColor">#FF6200EE</color>
-    <color name="primaryDarkColor">#FF3700B3</color>
-    <color name="secondaryColor">#FF03DAC5</color>
-    <color name="secondaryLightColor">#009688</color>
-    <color name="secondaryDarkColor">#FF018786</color>
-    <color name="primaryTextColor">@color/white</color>
-    <color name="secondaryTextColor">@color/black</color>
+<!--    <color name="primaryColor">#FFBB86FC</color>-->
+<!--    <color name="primaryLightColor">#FF6200EE</color>-->
+<!--    <color name="primaryDarkColor">#FF3700B3</color>-->
+<!--    <color name="secondaryColor">#FF03DAC5</color>-->
+<!--    <color name="secondaryLightColor">#009688</color>-->
+<!--    <color name="secondaryDarkColor">#FF018786</color>-->
+<!--    <color name="primaryTextColor">@color/white</color>-->
+<!--    <color name="secondaryTextColor">@color/black</color>-->
 <!-- blue grey -->
-<!--    <color name="primaryColor">#1976d2</color>-->
-<!--    <color name="primaryLightColor">#63a4ff</color>-->
-<!--    <color name="primaryDarkColor">#004ba0</color>-->
-<!--    <color name="secondaryColor">#78909c</color>-->
-<!--    <color name="secondaryLightColor">#a7c0cd</color>-->
-<!--    <color name="secondaryDarkColor">#4b636e</color>-->
-<!--    <color name="primaryTextColor">#000000</color>-->
-<!--    <color name="secondaryTextColor">#000000</color>-->
+    <color name="primaryColor">#1976d2</color>
+    <color name="primaryLightColor">#63a4ff</color>
+    <color name="primaryDarkColor">#004ba0</color>
+    <color name="secondaryColor">#78909c</color>
+    <color name="secondaryLightColor">#a7c0cd</color>
+    <color name="secondaryDarkColor">#4b636e</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
 <!-- brown light brown -->
 <!--    <color name="primaryColor">#5d4037</color>-->
 <!--    <color name="primaryLightColor">#8b6b61</color>-->
