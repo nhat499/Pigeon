@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.ActivityMainBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.NewMessageCountViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.services.PushReceiver;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
@@ -40,12 +41,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private AppBarConfiguration mAppBarConfiguration;
+    AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
+
+        new ViewModelProvider(this,
+                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt())
+        ).get(UserInfoViewModel.class);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -55,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
         // sets theme to dark mode on app open
         SharedPreferences settings = getSharedPreferences("settings", 0);
         boolean isChecked = settings.getBoolean("dark_mode", false);
+
         toggleDarkMode(isChecked);
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {

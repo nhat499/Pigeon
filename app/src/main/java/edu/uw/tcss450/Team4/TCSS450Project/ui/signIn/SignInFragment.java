@@ -49,7 +49,10 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSignInModel = new ViewModelProvider(getActivity()).get(SignInViewModel.class);
+        mSignInModel = new ViewModelProvider(getActivity())
+                .get(SignInViewModel.class);
+        mPushyTokenViewModel = new ViewModelProvider(getActivity())
+                .get(PushyTokenViewModel.class);
         // disable back button
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -58,8 +61,6 @@ public class SignInFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        mPushyTokenViewModel = new ViewModelProvider(getActivity())
-                .get(PushyTokenViewModel.class);
     }
 
 
@@ -164,6 +165,10 @@ public class SignInFragment extends Fragment {
                                         response.getString("token")
                                 )).get(UserInfoViewModel.class);
                         sendPushyToken();
+                        navigateToSuccess(
+                                binding.editEmail.getText().toString(),
+                                response.getString("token")
+                        );
                     } else {
                         binding.editEmail.setError("Must verify email before signing in.\nCheck your email for verification instructions.");
                     }

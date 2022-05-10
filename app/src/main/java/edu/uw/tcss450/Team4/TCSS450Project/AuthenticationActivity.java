@@ -20,11 +20,15 @@ public class AuthenticationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+        Pushy.listen(this);
+        initiatePushyTokenRequest();
         SharedPreferences settings = getSharedPreferences("settings", 0);
         boolean isChecked = settings.getBoolean("dark_mode", false);
         toggleDarkMode(isChecked);
-        Pushy.listen(this);
-        initiatePushyTokenRequest();
+    }
+
+    private void initiatePushyTokenRequest() {
+        new ViewModelProvider(this).get(PushyTokenViewModel.class).retrieveToken();
     }
 
     /**
@@ -36,9 +40,4 @@ public class AuthenticationActivity extends AppCompatActivity {
         if (isChecked) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
-
-    private void initiatePushyTokenRequest() {
-        new ViewModelProvider(this).get(PushyTokenViewModel.class).retrieveToken();
-    }
-
 }
