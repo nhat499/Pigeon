@@ -1,6 +1,8 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.signIn;
 
 import static edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator.*;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,10 +86,13 @@ public class SignInFragment extends Fragment {
         mSignInModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
-
+        SharedPreferences settings = getActivity().getSharedPreferences("settings", 0);
+        String email = settings.getString("email", "");
+        String password = settings.getString("password", "");
+        if (email != "") mBinding.checkBoxRememberMe.setChecked(true);
         SignInFragmentArgs args = SignInFragmentArgs.fromBundle(getArguments());
-        mBinding.editEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
-        mBinding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
+        mBinding.editEmail.setText(args.getEmail().equals("default") ? email : args.getEmail());
+        mBinding.editPassword.setText(args.getPassword().equals("default") ? password : args.getPassword());
     }
 
     private void attemptSignIn(final View button) {
@@ -121,6 +126,17 @@ public class SignInFragment extends Fragment {
      * @param jwt the JSON Web Token supplied by the server
      */
     private void navigateToSuccess(final String email, final String jwt) {
+        SignInFragmentArgs args = SignInFragmentArgs.fromBundle(getArguments());
+        SharedPreferences settings = getActivity().getSharedPreferences("settings", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        if (mBinding.checkBoxRememberMe.isChecked()) {
+            editor.putString("email", email);
+            editor.putString("password", args.getPassword());
+        } else {
+            editor.putString("email", "");
+            editor.putString("password", "");
+        }
+        editor.commit();
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
                         .actionSignInFragmentToMainActivity(email, jwt));
@@ -146,6 +162,7 @@ public class SignInFragment extends Fragment {
                 try {
                     if ((int) response.get("verification") == 1) {
                         // save login info here if remember me is checked
+
                         navigateToSuccess(
                                 mBinding.editEmail.getText().toString(),
                                 response.getString("token")
