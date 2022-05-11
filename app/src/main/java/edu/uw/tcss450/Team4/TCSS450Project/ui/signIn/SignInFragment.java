@@ -131,7 +131,7 @@ public class SignInFragment extends Fragment {
         SharedPreferences.Editor editor = settings.edit();
         if (mBinding.checkBoxRememberMe.isChecked()) {
             editor.putString("email", email);
-            editor.putString("password", args.getPassword());
+            editor.putString("password", mBinding.editPassword.getText().toString());
         } else {
             editor.putString("email", "");
             editor.putString("password", "");
