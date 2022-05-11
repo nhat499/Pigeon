@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 import org.json.JSONException;
 import org.json.JSONObject;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentSignInBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.model.PushyTokenViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 
 /**
@@ -28,6 +30,10 @@ public class SignInFragment extends Fragment {
     private FragmentSignInBinding binding;
 
     private SignInViewModel mSignInModel;
+
+    private PushyTokenViewModel mPushyTokenViewModel;
+
+    private UserInfoViewModel mUserViewModel;
 
     private PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
@@ -43,7 +49,10 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSignInModel = new ViewModelProvider(getActivity()).get(SignInViewModel.class);
+        mSignInModel = new ViewModelProvider(getActivity())
+                .get(SignInViewModel.class);
+        mPushyTokenViewModel = new ViewModelProvider(getActivity())
+                .get(PushyTokenViewModel.class);
         // disable back button
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -86,6 +95,12 @@ public class SignInFragment extends Fragment {
         SignInFragmentArgs args = SignInFragmentArgs.fromBundle(getArguments());
         binding.editEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
         binding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
+//        don't allow sign in until pushy token retrieved
+        mPushyTokenViewModel.addTokenObserver(getViewLifecycleOwner(), token ->
+                binding.buttonSignin.setEnabled(!token.isEmpty()));
+        mPushyTokenViewModel.addResponseObserver(
+                getViewLifecycleOwner(),
+                this::observePushyPutResponse);
     }
 
     private void attemptSignIn(final View button) {
@@ -144,6 +159,12 @@ public class SignInFragment extends Fragment {
                 try {
                     if ((int) response.get("verification") == 1) {
                         // save login info here if remember me is checked
+                        mUserViewModel = new ViewModelProvider(getActivity(),
+                                new UserInfoViewModel.UserInfoViewModelFactory(
+                                        binding.editEmail.getText().toString(),
+                                        response.getString("token")
+                                )).get(UserInfoViewModel.class);
+                        sendPushyToken();
                         navigateToSuccess(
                                 binding.editEmail.getText().toString(),
                                 response.getString("token")
@@ -158,5 +179,33 @@ public class SignInFragment extends Fragment {
         } else {
             Log.d("JSON Response", "No Response");
         }
+    }
+
+    /**
+     * An observer on the HTTP Response from the web server. This observer should be
+     * attached to PushyTokenViewModel.
+     *
+     * @param response the Response from the server
+     */
+    private void observePushyPutResponse(final JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code")) {
+                //this error cannot be fixed by the user changing credentials...
+                binding.editEmail.setError(
+                        "Error Authenticating on Push Token. Please contact support");
+            } else {
+                navigateToSuccess(
+                        binding.editEmail.getText().toString(),
+                        mUserViewModel.getmJwt()
+                );
+            }
+        }
+    }
+
+    /**
+     * Helper to abstract the request to send the pushy token to the web service
+     */
+    private void sendPushyToken() {
+        mPushyTokenViewModel.sendTokenToWebservice(mUserViewModel.getmJwt());
     }
 }

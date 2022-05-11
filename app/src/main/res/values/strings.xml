@@ -29,4 +29,7 @@
     <string name="action_dark_mode">Enable Dark Mode</string>
     <string name="action_sign_out">Sign out</string>
 
+    <string name="base_url_service">https://team-4-tcss-450-web-service.herokuapp.com/</string>
+    <string name="base_url_auth">https://team-4-tcss-450-web-service.herokuapp.com/</string>
+
 </resources>
