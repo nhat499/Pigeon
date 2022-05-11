@@ -28,5 +28,7 @@
     
     <string name="action_dark_mode">Enable Dark Mode</string>
     <string name="action_sign_out">Sign out</string>
+    // For search bar
+    <string name="title_search">Search</string>
 
 </resources>

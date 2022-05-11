@@ -5,11 +5,27 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+
+
+import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateNewContactActivity;
 
 /**
  * Class that defines the lifecycle for the Main Activity
@@ -19,12 +35,24 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private TextView user_email,user_uid;
     private AppBarConfiguration mAppBarConfiguration;
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+       // String email = mUser.gotEmail();
+        //String current_user_uid = mUser.getUid();
+
+       // user_email.setText(email);
+       // user_uid.setText(current_user_uid);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -48,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
         getMenuInflater().inflate(R.menu.toolbar, menu);
         // updates the dark mode check box
         SharedPreferences settings = getSharedPreferences("settings", 0);
@@ -82,4 +113,5 @@ public class MainActivity extends AppCompatActivity {
         if (isChecked) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
+
 }
