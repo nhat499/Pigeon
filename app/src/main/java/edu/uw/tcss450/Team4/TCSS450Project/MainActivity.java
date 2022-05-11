@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    AppBarConfiguration mAppBarConfiguration;
+
 
     @Override
     protected void onStart(){
