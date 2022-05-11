@@ -104,7 +104,7 @@ public class SignInFragment extends Fragment {
         mBinding.editPassword.setText(args.getPassword().equals("default") ? password : args.getPassword());
 //        don't allow sign in until pushy token retrieved
         mPushyTokenViewModel.addTokenObserver(getViewLifecycleOwner(), token ->
-                binding.buttonSignin.setEnabled(!token.isEmpty()));
+                mBinding.buttonSignin.setEnabled(!token.isEmpty()));
         mPushyTokenViewModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observePushyPutResponse);
@@ -179,7 +179,7 @@ public class SignInFragment extends Fragment {
                         // save login info here if remember me is checked
                         mUserViewModel = new ViewModelProvider(getActivity(),
                                 new UserInfoViewModel.UserInfoViewModelFactory(
-                                        binding.editEmail.getText().toString(),
+                                        mBinding.editEmail.getText().toString(),
                                         response.getString("token")
                                 )).get(UserInfoViewModel.class);
                         sendPushyToken();
@@ -209,11 +209,11 @@ public class SignInFragment extends Fragment {
         if (response.length() > 0) {
             if (response.has("code")) {
                 //this error cannot be fixed by the user changing credentials...
-                binding.editEmail.setError(
+                mBinding.editEmail.setError(
                         "Error Authenticating on Push Token. Please contact support");
             } else {
                 navigateToSuccess(
-                        binding.editEmail.getText().toString(),
+                        mBinding.editEmail.getText().toString(),
                         mUserViewModel.getmJwt()
                 );
             }
