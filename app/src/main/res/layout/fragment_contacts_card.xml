@@ -12,37 +12,59 @@
         android:id="@+id/cardView"
         android:layout_width="410dp"
         android:layout_height="138dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="100dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="368dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="155dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="154dp"
+            android:layout_marginBottom="90dp"
             android:fontFamily="sans-serif-black"
             android:text="TextView"
+            android:textColor="@color/black"
             android:textSize="24sp"
-            tools:layout_editor_absoluteX="155dp"
-            tools:layout_editor_absoluteY="16dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/image_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="332dp"
+            android:layout_marginBottom="60dp"
             android:padding="3dp"
             android:src="@mipmap/ic_launcher"
-            tools:layout_editor_absoluteX="-2dp"
-            tools:layout_editor_absoluteY="-1dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/contact_to_chat"
-            android:layout_width="52dp"
-            android:layout_height="39dp"
+        <Button
+            android:id="@+id/button_contact_chat"
+            android:layout_width="53dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="354dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="72dp"
             android:background="@color/white"
-            android:padding="4dp"
-            android:src="@drawable/ic_chat_black_24dp"
-            tools:layout_editor_absoluteX="351dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:drawableLeft="@drawable/ic_chat_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

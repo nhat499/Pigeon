@@ -18,15 +18,19 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import edu.uw.tcss450.Team4.TCSS450Project.MainActivity;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
 
 
-class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.ViewHolder> {
+public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.ViewHolder> {
 
     // creating variables for context and array list.
     private Context context;
-    private ArrayList<ContactsViewModel> contactsModalArrayList;
+    private ArrayList<ContactsViewModel> contactsModalArrayList ;
+    private FragmentContactsListBinding binding;
 
     // creating a constructor
     public ContactsRVAdapter(Context context, ArrayList<ContactsViewModel> contactsModalArrayList) {
