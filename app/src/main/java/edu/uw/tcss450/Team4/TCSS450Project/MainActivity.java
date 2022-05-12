@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
         // to display our dialog
         builder.show();
     }
-}
+
     @Override
     public void onResume() {
         super.onResume();
