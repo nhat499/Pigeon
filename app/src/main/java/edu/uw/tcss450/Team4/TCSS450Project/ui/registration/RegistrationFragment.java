@@ -52,7 +52,44 @@ public class RegistrationFragment extends Fragment {
                     .and(checkPwdSpecialChar())
                     .and(checkExcludeWhiteSpace())
                     .and(checkPwdDigit())
+                    .and(checkPwdLowerCase().and(checkPwdUpperCase()));
+
+    // Used for setting the marks as a checkmark or x for each password requirement.
+    private PasswordValidator mPassWordValidatorLength =
+            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
+                    .and(checkPwdLength(7))
+                    .and(checkExcludeWhiteSpace());
+
+    private PasswordValidator mPassWordValidatorUppercase =
+            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
+                    .and(checkPwdUpperCase())
+                    .and(checkExcludeWhiteSpace());
+
+    private PasswordValidator mPassWordValidatorLowercase =
+            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
+                    .and(checkExcludeWhiteSpace())
                     .and(checkPwdLowerCase().or(checkPwdUpperCase()));
+
+    private PasswordValidator mPassWordValidatorNumber =
+            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
+                    .and(checkExcludeWhiteSpace())
+                    .and(checkPwdDigit());
+
+    private PasswordValidator mPassWordValidatorSymbol =
+            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
+                    .and(checkPwdSpecialChar())
+                    .and(checkExcludeWhiteSpace());
+
+
+    private String lengthMark = "";
+
+    private String uppercaseMark = "";
+
+    private String lowercaseMark = "";
+
+    private String numberMark = "";
+
+    private String symbolMark = "";
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -118,10 +155,69 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void validatePassword() {
+        // Are used to set the individual check marks or x marks.
+        mPassWordValidatorLength.processResult(
+                mPassWordValidatorLength.apply(binding.editPassword1.getText().toString()),
+                this::setLengthMarkCheck,
+                result -> setXMark(1));
+        mPassWordValidatorUppercase.processResult(
+                mPassWordValidatorUppercase.apply(binding.editPassword1.getText().toString()),
+                this::setUppercaseMarkCheck,
+                result -> setXMark(2));
+        mPassWordValidatorLowercase.processResult(
+                mPassWordValidatorLowercase.apply(binding.editPassword1.getText().toString()),
+                this::setLowercaseMarkCheck,
+                result -> setXMark(3));
+        mPassWordValidatorNumber.processResult(
+                mPassWordValidatorNumber.apply(binding.editPassword1.getText().toString()),
+                this::setNumberMarkCheck,
+                result -> setXMark(4));
+        mPassWordValidatorSymbol.processResult(
+                mPassWordValidatorSymbol.apply(binding.editPassword1.getText().toString()),
+                this::setSymbolMarkCheck,
+                result -> setXMark(5));
+
+
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.editPassword1.getText().toString()),
                 this::verifyAuthWithServer,
-                result -> binding.editPassword1.setError("Your password must have: \n Uppercase Letters \n Lowercase Letters \n Numbers \n Symbols"));
+                result -> binding.editPassword1.setError("Your password must have: \n" +
+                        lengthMark + " More Than 7 Characters \n" +
+                        uppercaseMark + " Uppercase Letters \n" +
+                        lowercaseMark + " Lowercase Letters \n" +
+                        numberMark + " Numbers \n" +
+                        symbolMark + " Symbols"));
+    }
+
+    // Having a method for processResult is required, so this is here as placeholder.
+    private void setLengthMarkCheck() {
+        lengthMark = "✓";
+    }
+    private void setUppercaseMarkCheck() {
+        uppercaseMark = "✓";
+    }
+    private void setLowercaseMarkCheck() {
+        lowercaseMark = "✓";
+    }
+    private void setNumberMarkCheck() {
+        numberMark = "✓";
+    }
+    private void setSymbolMarkCheck() {
+        symbolMark = "✓";
+    }
+
+    private void setXMark(int choose) {
+        if (choose == 1) {
+            lengthMark = "✕";
+        } else if (choose == 2) {
+            uppercaseMark = "✕";
+        } else if (choose == 3) {
+            lowercaseMark = "✕";
+        } else if (choose == 4) {
+            numberMark = "✕";
+        } else if (choose == 5) {
+            symbolMark = "✕";
+        }
     }
 
     private void verifyAuthWithServer() {
@@ -136,8 +232,12 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void navigateToLogin(final String email, final String password) {
-        RegistrationFragmentDirections.ActionRegistrationFragmentToEmailVerificationFragment directions =
-                RegistrationFragmentDirections.actionRegistrationFragmentToEmailVerificationFragment(email, password);
+        RegistrationFragmentDirections.ActionRegistrationFragmentToEmailConfirmationFragment directions =
+                RegistrationFragmentDirections.actionRegistrationFragmentToEmailConfirmationFragment();
+
+        directions.setEmail(email);
+        directions.setPassword(password);
+        directions.setType("registration");
 
         Navigation.findNavController(getView()).navigate(directions);
     }
