@@ -142,15 +142,14 @@ public class ForgotPasswordFragment extends Fragment {
     }
 
     private void verifyAuthWithServer() {
-//        Use this once endpoint is set up
-//        mForgotModel.connect(
-//                mBinding.editEmail.getText().toString(),
-//                mBinding.editPassword1.getText().toString()
-//        );
-        navigateToConfirmation(
+        mForgotModel.connect(
                 mBinding.editEmail.getText().toString(),
                 mBinding.editPassword1.getText().toString()
         );
+//        navigateToConfirmation(
+//                mBinding.editEmail.getText().toString(),
+//                mBinding.editPassword1.getText().toString()
+//        );
     }
 
     // Having a method for processResult is required, so this is here as placeholder.

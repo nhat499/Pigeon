@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentRegistrationBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 
@@ -36,7 +35,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
  */
 public class RegistrationFragment extends Fragment {
 
-    private FragmentRegistrationBinding binding;
+    private FragmentRegistrationBinding mBinding;
 
     private RegistrationViewModel mRegisterModel;
 
@@ -46,50 +45,28 @@ public class RegistrationFragment extends Fragment {
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
 
-    private PasswordValidator mPassWordValidator =
-            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
-                    .and(checkPwdLength(7))
-                    .and(checkPwdSpecialChar())
-                    .and(checkExcludeWhiteSpace())
-                    .and(checkPwdDigit())
-                    .and(checkPwdLowerCase().and(checkPwdUpperCase()));
+    private PasswordValidator mPassWordValidatorLength = checkPwdLength(7);
 
-    // Used for setting the marks as a checkmark or x for each password requirement.
-    private PasswordValidator mPassWordValidatorLength =
-            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
-                    .and(checkPwdLength(7))
-                    .and(checkExcludeWhiteSpace());
+    private PasswordValidator mPassWordValidatorUppercase = checkPwdUpperCase();
 
-    private PasswordValidator mPassWordValidatorUppercase =
-            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
-                    .and(checkPwdUpperCase())
-                    .and(checkExcludeWhiteSpace());
+    private PasswordValidator mPassWordValidatorLowercase = checkPwdLowerCase();
 
-    private PasswordValidator mPassWordValidatorLowercase =
-            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
-                    .and(checkExcludeWhiteSpace())
-                    .and(checkPwdLowerCase().or(checkPwdUpperCase()));
+    private PasswordValidator mPassWordValidatorNumber = checkPwdDigit();
 
-    private PasswordValidator mPassWordValidatorNumber =
-            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
-                    .and(checkExcludeWhiteSpace())
-                    .and(checkPwdDigit());
+    private PasswordValidator mPassWordValidatorSymbol = checkPwdSpecialChar();
 
-    private PasswordValidator mPassWordValidatorSymbol =
-            checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
-                    .and(checkPwdSpecialChar())
-                    .and(checkExcludeWhiteSpace());
+    private PasswordValidator mPassWordValidatorSpace = checkExcludeWhiteSpace();
 
+    private PasswordValidator mPassWordValidator = checkPwdLength(7)
+            .and(checkPwdSpecialChar())
+            .and(checkExcludeWhiteSpace())
+            .and(checkPwdDigit())
+            .and(checkPwdLowerCase().and(checkPwdUpperCase()));
 
-    private String lengthMark = "";
+    private PasswordValidator mPassWordValidatorMatch = checkClientPredicate(pwd ->
+            pwd.equals(mBinding.editPassword2.getText().toString().trim()));
 
-    private String uppercaseMark = "";
-
-    private String lowercaseMark = "";
-
-    private String numberMark = "";
-
-    private String symbolMark = "";
+    private String lengthMark, uppercaseMark, lowercaseMark, numberMark, symbolMark, spaceMark = "";
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -105,15 +82,15 @@ public class RegistrationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentRegistrationBinding.inflate(inflater);
-        return binding.getRoot();
+        mBinding = FragmentRegistrationBinding.inflate(inflater);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonRegister.setOnClickListener(this::attemptRegister);
+        mBinding.buttonRegister.setOnClickListener(this::attemptRegister);
         mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
     }
@@ -124,69 +101,68 @@ public class RegistrationFragment extends Fragment {
 
     private void validateFirst() {
         mNameValidator.processResult(
-                mNameValidator.apply(binding.editFirst.getText().toString().trim()),
+                mNameValidator.apply(mBinding.editFirst.getText().toString().trim()),
                 this::validateLast,
-                result -> binding.editFirst.setError("Please enter a first name."));
+                result -> mBinding.editFirst.setError("Please enter a first name."));
     }
 
     private void validateLast() {
         mNameValidator.processResult(
-                mNameValidator.apply(binding.editLast.getText().toString().trim()),
+                mNameValidator.apply(mBinding.editLast.getText().toString().trim()),
                 this::validateEmail,
-                result -> binding.editLast.setError("Please enter a last name."));
+                result -> mBinding.editLast.setError("Please enter a last name."));
     }
 
     private void validateEmail() {
         mEmailValidator.processResult(
-                mEmailValidator.apply(binding.editEmail.getText().toString().trim()),
-                this::validatePasswordsMatch,
-                result -> binding.editEmail.setError("Please enter a valid Email address."));
+                mEmailValidator.apply(mBinding.editEmail.getText().toString().trim()),
+                this::validatePasswordRequirements,
+                result -> mBinding.editEmail.setError("Please enter a valid Email address."));
     }
 
-    private void validatePasswordsMatch() {
-        PasswordValidator matchValidator =
-                checkClientPredicate(
-                        pwd -> pwd.equals(binding.editPassword2.getText().toString().trim()));
-
-        mEmailValidator.processResult(
-                matchValidator.apply(binding.editPassword1.getText().toString().trim()),
-                this::validatePassword,
-                result -> binding.editPassword1.setError("Passwords must match."));
-    }
-
-    private void validatePassword() {
+    private void validatePasswordRequirements() {
         // Are used to set the individual check marks or x marks.
         mPassWordValidatorLength.processResult(
-                mPassWordValidatorLength.apply(binding.editPassword1.getText().toString()),
+                mPassWordValidatorLength.apply(mBinding.editPassword1.getText().toString()),
                 this::setLengthMarkCheck,
                 result -> setXMark(1));
         mPassWordValidatorUppercase.processResult(
-                mPassWordValidatorUppercase.apply(binding.editPassword1.getText().toString()),
+                mPassWordValidatorUppercase.apply(mBinding.editPassword1.getText().toString()),
                 this::setUppercaseMarkCheck,
                 result -> setXMark(2));
         mPassWordValidatorLowercase.processResult(
-                mPassWordValidatorLowercase.apply(binding.editPassword1.getText().toString()),
+                mPassWordValidatorLowercase.apply(mBinding.editPassword1.getText().toString()),
                 this::setLowercaseMarkCheck,
                 result -> setXMark(3));
         mPassWordValidatorNumber.processResult(
-                mPassWordValidatorNumber.apply(binding.editPassword1.getText().toString()),
+                mPassWordValidatorNumber.apply(mBinding.editPassword1.getText().toString()),
                 this::setNumberMarkCheck,
                 result -> setXMark(4));
         mPassWordValidatorSymbol.processResult(
-                mPassWordValidatorSymbol.apply(binding.editPassword1.getText().toString()),
+                mPassWordValidatorSymbol.apply(mBinding.editPassword1.getText().toString()),
                 this::setSymbolMarkCheck,
                 result -> setXMark(5));
-
-
+        mPassWordValidatorSpace.processResult(
+                mPassWordValidatorSpace.apply(mBinding.editPassword1.getText().toString()),
+                this::setSpaceMarkCheck,
+                result -> setXMark(6));
         mPassWordValidator.processResult(
-                mPassWordValidator.apply(binding.editPassword1.getText().toString()),
-                this::verifyAuthWithServer,
-                result -> binding.editPassword1.setError("Your password must have: \n" +
+                mPassWordValidator.apply(mBinding.editPassword1.getText().toString()),
+                this::validatePasswordsMatch,
+                result -> mBinding.editPassword1.setError("Your password must have: \n" +
                         lengthMark + " More Than 7 Characters \n" +
                         uppercaseMark + " Uppercase Letters \n" +
                         lowercaseMark + " Lowercase Letters \n" +
-                        numberMark + " Numbers \n" +
-                        symbolMark + " Symbols"));
+                        numberMark + " At least 1 number \n" +
+                        symbolMark + " At least 1 symbol: @#$%&*!? \n" +
+                        spaceMark + " No spaces"));
+    }
+
+    private void validatePasswordsMatch() {
+        mPassWordValidatorMatch.processResult(
+                mPassWordValidatorMatch.apply(mBinding.editPassword1.getText().toString().trim()),
+                this::verifyAuthWithServer,
+                result -> mBinding.editPassword2.setError("Passwords must match."));
     }
 
     // Having a method for processResult is required, so this is here as placeholder.
@@ -205,6 +181,7 @@ public class RegistrationFragment extends Fragment {
     private void setSymbolMarkCheck() {
         symbolMark = "✓";
     }
+    private void setSpaceMarkCheck() { spaceMark = "✓"; }
 
     private void setXMark(int choose) {
         if (choose == 1) {
@@ -217,15 +194,17 @@ public class RegistrationFragment extends Fragment {
             numberMark = "✕";
         } else if (choose == 5) {
             symbolMark = "✕";
+        } else if (choose == 6) {
+            spaceMark = "✕";
         }
     }
 
     private void verifyAuthWithServer() {
         mRegisterModel.connect(
-                binding.editFirst.getText().toString(),
-                binding.editLast.getText().toString(),
-                binding.editEmail.getText().toString(),
-                binding.editPassword1.getText().toString());
+                mBinding.editFirst.getText().toString(),
+                mBinding.editLast.getText().toString(),
+                mBinding.editEmail.getText().toString(),
+                mBinding.editPassword1.getText().toString());
 //        This is an Asynchronous call. No statements after should rely on the
 //        result of connect()
 
@@ -252,7 +231,7 @@ public class RegistrationFragment extends Fragment {
         if (response.length() > 0) {
             if (response.has("code")) {
                 try {
-                    binding.editEmail.setError(
+                    mBinding.editEmail.setError(
                             "Error Authenticating: " +
                                     response.getJSONObject("data").getString("message"));
                 } catch (JSONException e) {
@@ -260,8 +239,8 @@ public class RegistrationFragment extends Fragment {
                 }
             } else {
                 navigateToLogin(
-                        binding.editEmail.getText().toString(),
-                        binding.editPassword1.getText().toString()
+                        mBinding.editEmail.getText().toString(),
+                        mBinding.editPassword1.getText().toString()
                 );
             }
         } else {
