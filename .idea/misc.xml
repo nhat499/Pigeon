@@ -19,8 +19,10 @@
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.18262411347517732" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts.xml" value="0.18262411347517732" />
+        <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_email_confirmation.xml" value="0.371875" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_email_verification.xml" value="0.371875" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_forgot_password.xml" value="0.347682119205298" />
+        <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_forgot_password_confirmation.xml" value="0.371875" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_home_landing.xml" value="0.18085106382978725" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_registration.xml" value="0.33" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_sign_in.xml" value="0.33" />
