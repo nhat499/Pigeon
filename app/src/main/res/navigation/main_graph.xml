@@ -31,8 +31,8 @@
     <fragment
         android:id="@+id/navigation_chat_room_list"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomListFragment"
-        android:label="fragment_chat_room_list"
-        tools:layout="@layout/fragment_chat_room_list" >
+        android:label="Chat Rooms"
+        tools:layout="@layout/fragment_chat_room_list">
         <action
             android:id="@+id/action_navigation_chat_room_list_to_navigation_chat"
             app:destination="@id/navigation_chat" />
