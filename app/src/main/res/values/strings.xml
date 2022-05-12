@@ -18,6 +18,10 @@
     <string name="action_register_short">Register</string>
     <string name="action_signIn">Sign In</string>
     <string name="action_resend_link"><u>Resend link</u></string>
+    <string name="title_forgot_password"><b>Forgot password?</b></string>
+    <string name="action_send_forgot_password">Request a reset link</string>
+    <string name="description_forgot_password">We sent an email to ? with a link to ...</string>
+
     // For nav bar
     <string name="title_home">HOME</string>
     <string name="title_weather">WEATHER</string>

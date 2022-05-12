@@ -232,8 +232,12 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void navigateToLogin(final String email, final String password) {
-        RegistrationFragmentDirections.ActionRegistrationFragmentToEmailVerificationFragment directions =
-                RegistrationFragmentDirections.actionRegistrationFragmentToEmailVerificationFragment(email, password);
+        RegistrationFragmentDirections.ActionRegistrationFragmentToEmailConfirmationFragment directions =
+                RegistrationFragmentDirections.actionRegistrationFragmentToEmailConfirmationFragment();
+
+        directions.setEmail(email);
+        directions.setPassword(password);
+        directions.setType("registration");
 
         Navigation.findNavController(getView()).navigate(directions);
     }
