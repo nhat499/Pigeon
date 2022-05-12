@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">雷神 || Pigeon</string>
+    <string name="app_name_short">Pigeon</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_blank_fragment">Welcome home!</string>
@@ -21,6 +22,7 @@
 
     <string name="title_forgot_password"><b>Forgot password?</b></string>
     <string name="action_send_forgot_password">Request a reset link</string>
+    <string name="description_forgot_password">We sent an email to ? with a link to ...</string>
     // For nav bar
     <string name="title_home">HOME</string>
     <string name="title_weather">WEATHER</string>
@@ -33,6 +35,8 @@
 
     <string name="action_dark_mode">Enable Dark Mode</string>
     <string name="action_sign_out">Sign out</string>
+    // For search bar
+    <string name="title_search">Search</string>
 
     <string name="base_url_service">https://team-4-tcss-450-web-service.herokuapp.com/</string>
     <string name="base_url_auth">https://team-4-tcss-450-web-service.herokuapp.com/</string>
