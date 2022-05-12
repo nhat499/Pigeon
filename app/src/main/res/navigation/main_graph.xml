@@ -38,6 +38,17 @@
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_landing" />
+
+    <fragment
+        android:id="@+id/navigation_chat_room_list"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomListFragment"
+        android:label="Chat Rooms"
+        tools:layout="@layout/fragment_chat_room_list">
+        <action
+            android:id="@+id/action_navigation_chat_room_list_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+    </fragment>
+
     <activity
         android:id="@+id/createNewContactActivity"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateNewContactActivity"
@@ -46,5 +57,4 @@
         android:id="@+id/contactDetailActivity"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactDetailActivity"
         android:label="ContactDetailActivity" />
-
 </navigation>
