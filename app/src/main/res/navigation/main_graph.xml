@@ -21,12 +21,30 @@
         android:id="@+id/navigation_contacts"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsFragment"
         android:label="Contacts"
-        tools:layout="@layout/fragment_contacts" />
+        tools:layout="@layout/fragment_contacts_list" >
+        <action
+            android:id="@+id/action_navigation_contacts_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+        <action
+            android:id="@+id/action_navigation_contacts_to_createNewContactActivity"
+            app:destination="@id/createNewContactActivity" />
+        <action
+            android:id="@+id/action_navigation_contacts_to_contactDetailActivity"
+            app:destination="@id/contactDetailActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_landing" />
+    <activity
+        android:id="@+id/createNewContactActivity"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateNewContactActivity"
+        android:label="CreateNewContactActivity" />
+    <activity
+        android:id="@+id/contactDetailActivity"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactDetailActivity"
+        android:label="ContactDetailActivity" />
 
 </navigation>
