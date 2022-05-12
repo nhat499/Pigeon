@@ -19,6 +19,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
+    private FragmentChatBinding binding;
 
     //The chat ID for "global" chat
     private static final int HARD_CODED_CHAT_ID = 1;
@@ -46,8 +47,8 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        binding = FragmentChatBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
