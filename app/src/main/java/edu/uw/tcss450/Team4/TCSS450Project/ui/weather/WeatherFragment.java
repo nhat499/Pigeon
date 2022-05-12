@@ -16,7 +16,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.R;
  * @author team4
  * @version May 2022
  */
-public class WeatherFragment extends Fragment {
+public class
+WeatherFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
