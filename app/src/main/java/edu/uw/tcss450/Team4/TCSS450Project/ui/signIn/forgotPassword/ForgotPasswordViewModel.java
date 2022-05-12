@@ -50,7 +50,7 @@ public class ForgotPasswordViewModel extends AndroidViewModel {
             e.printStackTrace();
         }
         Request request = new JsonObjectRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 url,
                 body,
                 mResponse::setValue,

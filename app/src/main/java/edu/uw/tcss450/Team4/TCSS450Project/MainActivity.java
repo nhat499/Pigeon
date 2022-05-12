@@ -34,7 +34,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
  * @version May 2022
  */
 public class MainActivity extends AppCompatActivity {
-
+// help
     private MainPushMessageReceiver mPushMessageReceiver;
 
     private NewMessageCountViewModel mNewMessageModel;
