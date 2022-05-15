@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_navigation_chat_room_list_to_navigation_chat"
             app:destination="@id/navigation_chat" />
+        <action
+            android:id="@+id/action_navigation_chat_room_list_to_createNewChatRoomFragment"
+            app:destination="@id/createNewChatRoomFragment" />
     </fragment>
 
     <activity
@@ -57,4 +60,12 @@
         android:id="@+id/contactDetailActivity"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactDetailActivity"
         android:label="ContactDetailActivity" />
+    <fragment
+        android:id="@+id/createNewChatRoomFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomFragment"
+        android:label="CreateNewChatRoomFragment" >
+        <action
+            android:id="@+id/action_createNewChatRoomFragment_to_navigation_chat_room_list"
+            app:destination="@id/navigation_chat_room_list" />
+    </fragment>
 </navigation>
