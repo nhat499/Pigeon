@@ -64,6 +64,6 @@
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.changePassword.ChangePasswordFragment"
-        android:label="fragment_change_password"
+        android:label="@string/app_name_short"
         tools:layout="@layout/fragment_change_password" />
 </navigation>
