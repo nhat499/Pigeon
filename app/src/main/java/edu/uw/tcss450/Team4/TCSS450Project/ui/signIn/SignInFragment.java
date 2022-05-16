@@ -2,6 +2,7 @@ package edu.uw.tcss450.Team4.TCSS450Project.ui.signIn;
 
 import static edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator.*;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import com.auth0.android.jwt.JWT;
 import org.json.JSONException;
 import org.json.JSONObject;
+import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.PushyTokenViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
@@ -49,6 +52,24 @@ public class SignInFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        SharedPreferences prefs =
+                getActivity().getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
+            String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
+            JWT jwt = new JWT(token);
+            if (!jwt.isExpired(0)) {
+                String email = jwt.getClaim("email").asString();
+                navigateToSuccess(email, token);
+                return;
+            }
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSignInModel = new ViewModelProvider(getActivity())
@@ -56,7 +77,7 @@ public class SignInFragment extends Fragment {
         mPushyTokenViewModel = new ViewModelProvider(getActivity())
                 .get(PushyTokenViewModel.class);
         // disable back button
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 Log.d("BACK_BUTTON", "Back button clicked");
@@ -75,34 +96,31 @@ public class SignInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         //On button click, navigate to registration
         mBinding.buttonToRegister.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         SignInFragmentDirections.actionSignInFragmentToRegistrationFragment()
                 ));
-        // set listener for resend verification
-        //binding.textResendLink.setOnClickListener(this::attemptResendLink);
+
+        //On button click, navigate to forgot password fragment
         mBinding.textForgotPassword.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         SignInFragmentDirections.actionSignInFragmentToForgotPasswordFragment()
                 ));
-        // set listener for remember me
-        //if checked save login info in shared preferences maybe
 
-        // On button click navigate to main activity
+        //On button click navigate to main activity
         mBinding.buttonSignin.setOnClickListener(this::attemptSignIn);
-
         mSignInModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
-        SharedPreferences settings = getActivity().getSharedPreferences("settings", 0);
-        String email = settings.getString("email", "");
-        String password = settings.getString("password", "");
-        if (email != "") mBinding.checkBoxRememberMe.setChecked(true);
+
+        //Set email and password after coming from registration or forgot password
         SignInFragmentArgs args = SignInFragmentArgs.fromBundle(getArguments());
-        mBinding.editEmail.setText(args.getEmail().equals("default") ? email : args.getEmail());
-        mBinding.editPassword.setText(args.getPassword().equals("default") ? password : args.getPassword());
-//        don't allow sign in until pushy token retrieved
+        mBinding.editEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
+        mBinding.editPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
+
+        //Don't allow sign in until pushy token retrieved
         mPushyTokenViewModel.addTokenObserver(getViewLifecycleOwner(), token ->
                 mBinding.buttonSignin.setEnabled(!token.isEmpty()));
         mPushyTokenViewModel.addResponseObserver(
@@ -141,20 +159,18 @@ public class SignInFragment extends Fragment {
      * @param jwt the JSON Web Token supplied by the server
      */
     private void navigateToSuccess(final String email, final String jwt) {
-        SignInFragmentArgs args = SignInFragmentArgs.fromBundle(getArguments());
-        SharedPreferences settings = getActivity().getSharedPreferences("settings", 0);
-        SharedPreferences.Editor editor = settings.edit();
+        //Save jwt if remember me is checked for auto sign in
         if (mBinding.checkBoxRememberMe.isChecked()) {
-            editor.putString("email", email);
-            editor.putString("password", mBinding.editPassword.getText().toString());
-        } else {
-            editor.putString("email", "");
-            editor.putString("password", "");
+            SharedPreferences prefs =
+                    getActivity().getSharedPreferences(
+                            getString(R.string.keys_shared_prefs),
+                            Context.MODE_PRIVATE);
+            prefs.edit().putString(getString(R.string.keys_prefs_jwt), jwt).apply();
         }
-        editor.commit();
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
                         .actionSignInFragmentToMainActivity(email, jwt));
+        getActivity().finish();
     }
 
     /**
@@ -176,7 +192,6 @@ public class SignInFragment extends Fragment {
             } else {
                 try {
                     if ((int) response.get("verification") == 1) {
-                        // save login info here if remember me is checked
                         mUserViewModel = new ViewModelProvider(getActivity(),
                                 new UserInfoViewModel.UserInfoViewModelFactory(
                                         mBinding.editEmail.getText().toString(),
