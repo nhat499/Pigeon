@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentArgs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +24,7 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
 
     //The chat ID for "global" chat
-    private static final int HARD_CODED_CHAT_ID = 1;
+    private int HARD_CODED_CHAT_ID;
 
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
@@ -36,6 +38,9 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        HARD_CODED_CHAT_ID = args.getRoom();
+        Log.d("ASd", HARD_CODED_CHAT_ID + "");
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);

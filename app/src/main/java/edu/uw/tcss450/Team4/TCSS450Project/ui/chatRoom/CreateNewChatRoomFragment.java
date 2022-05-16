@@ -2,66 +2,92 @@ package edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import edu.uw.tcss450.Team4.TCSS450Project.R;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatRoomListBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentCreateNewChatRoomBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateNewChatRoomFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
+
 public class CreateNewChatRoomFragment extends Fragment {
 
-    private Button addChatRoom;
+    private FragmentCreateNewChatRoomBinding mBinding;
+
+    private UserInfoViewModel mUserViewModel;
+
+    private CreateNewChatRoomViewModel mNewChatRoomModel;
 
     public CreateNewChatRoomFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CreateNewChatRoomFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CreateNewChatRoomFragment newInstance(String param1, String param2) {
-        CreateNewChatRoomFragment fragment = new CreateNewChatRoomFragment();
-
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ViewModelProvider provider = new ViewModelProvider(getActivity());
+        mUserViewModel = provider.get(UserInfoViewModel.class);
+        mNewChatRoomModel = provider.get(CreateNewChatRoomViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_new_chat_room, container, false);
+        mBinding = FragmentCreateNewChatRoomBinding.inflate(inflater);
+        return mBinding.getRoot();
+    }
+
+    // Initiate buttons and their bindings.
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Sets title of action bar.
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Create Chat Room");
+        // Binds buttons to their desired actions.
+        mBinding.buttonSearchUser.setOnClickListener(button ->
+                mNewChatRoomModel.searchUser());
+
+        // Retrieve chat room name from the text field.
+        mBinding.buttonCreateNewChatRoom.setOnClickListener(button ->
+                mNewChatRoomModel.createChatRoom(mUserViewModel.getmJwt(), mBinding.editChatRoomName.getText().toString()));
+
+        // Attaches response observer to handle when we cannot create the room.
+        mNewChatRoomModel.addResponseObserver(
+                getViewLifecycleOwner(),
+                this::observeResponse);
+    }
+
+    /**
+     * An observer on the HTTP Response from the web server. This observer should be
+     * attached to SignInViewModel.
+     *
+     * @param response the Response from the server
+     */
+    private void observeResponse(final JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code")) {
+                // Set a response saying "wasnt successful" in the chat shit.
+            } else {
+                // Go back to chat room list upon successful addition of chat room.
+                Navigation.findNavController(getView())
+                        .navigate(CreateNewChatRoomFragmentDirections
+                                .actionCreateNewChatRoomFragmentToNavigationChatRoomList());
+            }
+        }
     }
 }

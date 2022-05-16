@@ -26,18 +26,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.IntFunction;
 
+
+// USE THIS CLASS TO STORE CHAT ROOMS (AND USERS FOR EACH ROOM) ASSOCIATED WITH CURRENT USER.
 public class ChatRoomViewModel extends AndroidViewModel {
-    private MutableLiveData<List<ChatRoom>> mBlogList;
+
+    /**
+     * A Map of Lists of Chat Rooms
+     * The Key represents the Chat ID
+     * The value represents the List of (known) users for a chat room.
+     */
+    private MutableLiveData<List<ChatRoom>> mChatRoomList;
 
     public ChatRoomViewModel(@NonNull Application application) {
         super(application);
-        mBlogList = new MutableLiveData<>();
-        mBlogList.setValue(new ArrayList<>());
+        mChatRoomList = new MutableLiveData<>();
+        mChatRoomList.setValue(new ArrayList<>());
     }
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super List<ChatRoom>> observer) {
-        mBlogList.observe(owner, observer);
+        mChatRoomList.observe(owner, observer);
     }
 
     // Used when handling data from database.

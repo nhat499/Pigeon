@@ -9,7 +9,12 @@
         android:id="@+id/navigation_chat"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="room"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_weather"
