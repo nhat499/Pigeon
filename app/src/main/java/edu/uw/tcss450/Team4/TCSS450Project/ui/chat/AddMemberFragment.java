@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddMemberBinding;
@@ -62,13 +64,16 @@ public class AddMemberFragment extends Fragment {
 
         // Go back to chat room.
         mBinding.buttonAddMember.setOnClickListener(button ->
-                Navigation.findNavController(getView()).navigate(directions));
+                mAddMemberViewModel.addMember(mUserViewModel.getmJwt(), mBinding.editMemberName.getText().toString().trim(), args.getRoom()));
 
-        // Attaches response observer to handle when we cannot create the room.
+        mBinding.buttonRemoveYourself.setOnClickListener(button ->
+                mAddMemberViewModel.remove(mUserViewModel.getmJwt(), mUserViewModel.getEmail(), args.getRoom()));
+
         mAddMemberViewModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
     }
+
 
     /**
      * An observer on the HTTP Response from the web server. This observer should be
@@ -78,15 +83,21 @@ public class AddMemberFragment extends Fragment {
      */
     private void observeResponse(final JSONObject response) {
         if (response.length() > 0) {
-            if (response.has("code")) {
-                mBinding.editMemberName.setError("Please enter a name.");
+            if (response.has("code") || response.has("error")) {
+                try {
+                    mBinding.editMemberName.setError(response.getJSONObject("data").getString("message"));
+
+                } catch (JSONException e) {
+                    Log.e("JSON Parse Error", e.getMessage());
+                }
             } else {
-                // Go back to chat room list upon successful addition of chat room.
-//                Navigation.findNavController(getView())
-//                        .navigate(AddMemberFragmentDirections
-//                                .actionAddMemberFragmentToNavigationChat());
-//                mAddMemberViewModel.clearResponse();
+                Navigation.findNavController(getView())
+                        .navigate(AddMemberFragmentDirections
+                                .actionAddMemberFragmentToNavigationChat());
+                mAddMemberViewModel.clearResponse();
             }
+        } else {
+            Log.d("JSON Response", "No Response");
         }
     }
 }
