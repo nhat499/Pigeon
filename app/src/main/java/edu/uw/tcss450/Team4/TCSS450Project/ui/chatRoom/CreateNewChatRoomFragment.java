@@ -58,9 +58,6 @@ public class CreateNewChatRoomFragment extends Fragment {
 
         // Sets title of action bar.
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Create Chat Room");
-        // Binds buttons to their desired actions.
-        mBinding.buttonSearchUser.setOnClickListener(button ->
-                mNewChatRoomModel.searchUser());
 
         // Retrieve chat room name from the text field.
         mBinding.buttonCreateNewChatRoom.setOnClickListener(button ->
@@ -81,12 +78,12 @@ public class CreateNewChatRoomFragment extends Fragment {
     private void observeResponse(final JSONObject response) {
         if (response.length() > 0) {
             if (response.has("code")) {
-                // Set a response saying "wasnt successful" in the chat shit.
+                mBinding.editChatRoomName.setError("Please enter a name.");
             } else {
                 // Go back to chat room list upon successful addition of chat room.
-                Navigation.findNavController(getView())
-                        .navigate(CreateNewChatRoomFragmentDirections
-                                .actionCreateNewChatRoomFragmentToNavigationChatRoomList());
+//                Navigation.findNavController(getView())
+//                        .navigate(CreateNewChatRoomFragmentDirections
+//                                .actionCreateNewChatRoomFragmentToNavigationChatRoomList());
             }
         }
     }

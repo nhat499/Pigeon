@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.Charset;
@@ -27,6 +28,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 public class CreateNewChatRoomViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> mResponse;
+    private int success = 0;
 
     public CreateNewChatRoomViewModel(@NonNull Application application) {
         super(application);
@@ -45,12 +47,19 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
 
     public void createChatRoom(final String jwt, final String name) {
         String url = getApplication().getResources().getString(R.string.base_url_service) +
-                "chats/" + name + "/";
+                "chats/";
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("name", name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Request request = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
-                null, //no body for this get request
+                body,
                 this::handleSuccess,
                 this::handleError) {
 
@@ -78,19 +87,28 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
     }
 
     private void handleSuccess(final JSONObject response) {
-
+        mResponse.setValue(response);
     }
 
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
-            Log.e("NETWORK ERROR", error.getMessage());
-        }
-        else {
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        } else {
             String data = new String(error.networkResponse.data, Charset.defaultCharset());
-            Log.e("CLIENT ERROR",
-                    error.networkResponse.statusCode +
-                            " " +
-                            data);
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
         }
     }
 }
