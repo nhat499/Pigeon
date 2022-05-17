@@ -9,8 +9,6 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -19,10 +17,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +30,6 @@ import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -43,12 +38,8 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
-import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsRVAdapter;
-import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsViewModel;
 
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.ActivityMainBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.NewMessageCountViewModel;
@@ -298,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         // to display our dialog
         builder.show();
     }
-}
+
     @Override
     public void onResume() {
         super.onResume();

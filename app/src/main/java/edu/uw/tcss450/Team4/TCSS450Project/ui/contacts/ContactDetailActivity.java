@@ -27,7 +27,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         // initializing our views.
         nameTV = findViewById(R.id.profile_name);
         contactIV = findViewById(R.id.profile_image);
-        contactTV = findViewById(R.id.profile_number);
+        contactTV = findViewById(R.id.profile_email);
         nameTV.setText(contactName);
         contactTV.setText(contactNumber);
 

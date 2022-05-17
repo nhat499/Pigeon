@@ -9,31 +9,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import edu.uw.tcss450.Team4.TCSS450Project.MainActivity;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
-import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
-import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
 
 
 public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.ViewHolder> {
 
     // creating variables for context and array list.
     private Context context;
-    private ArrayList<ContactsViewModel> contactsModalArrayList ;
+    private ArrayList<Contacts> contactsModalArrayList ;
     private FragmentContactsListBinding binding;
 
     // creating a constructor
-    public ContactsRVAdapter(Context context, ArrayList<ContactsViewModel> contactsModalArrayList) {
+    public ContactsRVAdapter(Context context, ArrayList<Contacts> contactsModalArrayList) {
         this.context = context;
         this.contactsModalArrayList = contactsModalArrayList;
     }
@@ -47,7 +39,7 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     }
 
     // below method is use for filtering data in our array list
-    public void filterList(ArrayList<ContactsViewModel> filterllist) {
+    public void filterList(ArrayList<Contacts> filterllist) {
         // on below line we are passing filtered
         // array list in our original array list
         contactsModalArrayList = filterllist;
@@ -57,17 +49,17 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ContactsRVAdapter.ViewHolder holder, int position) {
         // getting data from array list in our modal.
-        ContactsViewModel modal = contactsModalArrayList.get(position);
+        Contacts modal = contactsModalArrayList.get(position);
         // on below line we are setting data to our text view.
-        holder.contactTV.setText(modal.getUserName());
+        holder.contactTV.setText(modal.getUserFirstName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // on below line we are opening a new activity and passing data to it.
                 Intent i = new Intent(context, ContactDetailActivity.class);
-                i.putExtra("name", modal.getUserName());
-                i.putExtra("contact", modal.getContactNumber());
+                i.putExtra("firstname", modal.getUserFirstName());
+                i.putExtra("email", modal.getContactEmail());
                 // on below line we are starting a new activity,
                 context.startActivity(i);
             }
