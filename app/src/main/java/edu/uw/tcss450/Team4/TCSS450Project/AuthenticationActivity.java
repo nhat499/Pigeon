@@ -1,4 +1,5 @@
 package edu.uw.tcss450.Team4.TCSS450Project;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +23,12 @@ public class AuthenticationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
         Pushy.listen(this);
         initiatePushyTokenRequest();
-        SharedPreferences settings = getSharedPreferences("settings", 0);
-        boolean isChecked = settings.getBoolean("dark_mode", false);
+        //Toggles dark mode on create
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        boolean isChecked = prefs.getBoolean(getString(R.string.keys_prefs_dark_mode), false);
         toggleDarkMode(isChecked);
     }
 

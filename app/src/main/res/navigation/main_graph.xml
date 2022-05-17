@@ -57,4 +57,13 @@
         android:id="@+id/contactDetailActivity"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactDetailActivity"
         android:label="ContactDetailActivity" />
+    <activity
+        android:id="@+id/authenticationActivity"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.AuthenticationActivity"
+        android:label="AuthenticationActivity" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.changePassword.ChangePasswordFragment"
+        android:label="@string/app_name_short"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>
