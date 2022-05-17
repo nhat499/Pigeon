@@ -22,7 +22,7 @@ public class ChatRoomListFragment extends Fragment {
 
     private FragmentChatRoomListBinding mBinding;
     private UserInfoViewModel mUserModel;
-    private ChatRoomViewModel mViewModel;
+    private ChatRoomViewModel mChatRoomModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -36,7 +36,7 @@ public class ChatRoomListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel .class);
-        mViewModel = new ViewModelProvider(getActivity()).get(ChatRoomViewModel.class);
+        mChatRoomModel = new ViewModelProvider(getActivity()).get(ChatRoomViewModel.class);
     }
 
     @Override
@@ -44,9 +44,9 @@ public class ChatRoomListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FragmentChatRoomListBinding binding = FragmentChatRoomListBinding.bind(getView());
 
-        mViewModel.addChatRoomListObserver(getViewLifecycleOwner(), ChatRoomList -> {
+        mChatRoomModel.addChatRoomListObserver(getViewLifecycleOwner(), ChatRoomList -> {
                 binding.listRoot.setAdapter(
-                        new ChatRoomRecyclerViewAdapter(ChatRoomGenerator.getBlogList())
+                        new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList())
                 );
         });
         mBinding.buttonToCreateChatRoom.setOnClickListener(button ->

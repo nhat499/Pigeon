@@ -14,6 +14,9 @@
             android:name="room"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_navigation_chat_to_addMemberFragment"
+            app:destination="@id/addMemberFragment" />
     </fragment>
 
     <fragment
@@ -72,5 +75,17 @@
         <action
             android:id="@+id/action_createNewChatRoomFragment_to_navigation_chat_room_list"
             app:destination="@id/navigation_chat_room_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMemberFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chat.AddMemberFragment"
+        android:label="AddMemberFragment" >
+        <action
+            android:id="@+id/action_addMemberFragment_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+        <argument
+            android:name="room"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
 </navigation>

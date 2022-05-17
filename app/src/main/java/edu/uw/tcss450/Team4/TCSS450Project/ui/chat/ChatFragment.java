@@ -10,11 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragmentDirections;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentArgs;
 
 /**
@@ -79,6 +81,19 @@ public class ChatFragment extends Fragment {
         binding.swipeContainer.setOnRefreshListener(() -> {
             mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         });
+
+        // To pass along the chat room id to be saved so we can navigate back
+        // to the original chat room.
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+
+        ChatFragmentDirections.ActionNavigationChatToAddMemberFragment directions =
+                ChatFragmentDirections.actionNavigationChatToAddMemberFragment();
+
+        directions.setRoom(args.getRoom());
+
+        // Go to add new member fragment.
+        binding.buttonAdd.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(directions));
 
         mChatModel.addMessageObserver(HARD_CODED_CHAT_ID, getViewLifecycleOwner(),
                 list -> {
