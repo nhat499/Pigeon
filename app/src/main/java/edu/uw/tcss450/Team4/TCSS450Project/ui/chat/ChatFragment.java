@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragmentDirections;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentArgs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +26,7 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
 
     //The chat ID for "global" chat
-    private static final int HARD_CODED_CHAT_ID = 1;
+    private int HARD_CODED_CHAT_ID;
 
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
@@ -36,6 +40,9 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        HARD_CODED_CHAT_ID = args.getRoom();
+        Log.d("ASd", HARD_CODED_CHAT_ID + "");
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
@@ -74,6 +81,19 @@ public class ChatFragment extends Fragment {
         binding.swipeContainer.setOnRefreshListener(() -> {
             mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         });
+
+        // To pass along the chat room id to be saved so we can navigate back
+        // to the original chat room.
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+
+        ChatFragmentDirections.ActionNavigationChatToAddMemberFragment directions =
+                ChatFragmentDirections.actionNavigationChatToAddMemberFragment();
+
+        directions.setRoom(args.getRoom());
+
+        // Go to add new member fragment.
+        binding.buttonAdd.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(directions));
 
         mChatModel.addMessageObserver(HARD_CODED_CHAT_ID, getViewLifecycleOwner(),
                 list -> {

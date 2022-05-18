@@ -30,10 +30,10 @@
 
     <TextView
         android:id="@+id/text_description"
-        android:layout_width="wrap_content"
+        android:layout_width="309dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/description_forgot_password"
+        android:text="@string/description_email_confirmation"
         app:layout_constraintStart_toStartOf="@+id/text_title"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
