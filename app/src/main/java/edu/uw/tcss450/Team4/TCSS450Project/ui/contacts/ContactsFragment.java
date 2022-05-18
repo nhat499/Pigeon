@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class ContactsFragment extends Fragment {
 //    private ContactsRVAdapter contactRVAdapter;
     private UserInfoViewModel mUserModel;
     private ContactsViewModel mContactsViewModel;
-    private static final int HARD_CODED_CHAT_ID = 1;
+    private static final int HARD_CODED_CHAT_ID = 0;
 
     public ContactsFragment(){
 
@@ -81,11 +82,25 @@ public class ContactsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(new ContactsRVAdapter(
-                getActivity(), (ArrayList<Contacts>) mContactsViewModel.getContactsListByMemberId(HARD_CODED_CHAT_ID)));
+                getActivity(), (ArrayList<Contacts>) mContactsViewModel.getContactsListByMemberId(133)));
         binding.buttonToCreateContact.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         ContactsFragmentDirections.actionNavigationContactsToCreateNewContactActivity()
                 ));
+
+        mContactsViewModel.addContactObserver(0, getViewLifecycleOwner(),
+                list -> {
+                    /*
+                     * This solution needs work on the scroll position. As a group,
+                     * you will need to come up with some solution to manage the
+                     * recyclerview scroll position. You also should consider a
+                     * solution for when the keyboard is on the screen.
+                     */
+                    //inform the RV that the underlying list has (possibly) changed
+                    rv.getAdapter().notifyDataSetChanged();
+                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
+                    //binding.swipeContainer.setRefreshing(false);
+                });
 
 
     }

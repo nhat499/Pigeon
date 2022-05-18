@@ -48,6 +48,10 @@ public class ContactsViewModel extends AndroidViewModel {
         return getOrCreateMapEntry(memberId).getValue();
     }
 
+    public List<Contacts> getContactsName(final int memberId,final String name) {
+       return getOrCreateMapEntry(memberId).getValue();
+    }
+
     private MutableLiveData<List<Contacts>> getOrCreateMapEntry(final int memberId) {
         if(!mContacts.containsKey(memberId)) {
             mContacts.put(memberId, new MutableLiveData<>(new ArrayList<>()));
@@ -93,6 +97,7 @@ public class ContactsViewModel extends AndroidViewModel {
 
     private void handelSuccess(final JSONArray array) {
         for(int j=0; j < array.length(); j++) {
+
             JSONObject response = null;
             try {
                 response = array.getJSONObject(j);
@@ -115,9 +120,10 @@ public class ContactsViewModel extends AndroidViewModel {
                 Log.d("CONTACTS", response.getString("firstname"));
                 Log.d("CONTACTS", response.getString("lastname"));
                 Log.d("CONTACTS", response.getString("email"));
+                contact.setMemberId(j);
                 if (!list.contains(contact)) {
                     // don't add a duplicate
-                    list.add(0, contact);
+                    list.add(contact.getMemberId(), contact);
                 } else {
                     // this shouldn't happen but could with the asynchronous
                     // nature of the application

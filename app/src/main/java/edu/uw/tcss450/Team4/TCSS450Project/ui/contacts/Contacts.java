@@ -51,6 +51,10 @@ public class Contacts {
     public int getMemberId() {
         return memberId;
     }
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
 
 
 
