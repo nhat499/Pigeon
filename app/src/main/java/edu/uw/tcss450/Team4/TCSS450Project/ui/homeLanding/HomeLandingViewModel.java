@@ -34,7 +34,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoom;
  */
 public class HomeLandingViewModel extends AndroidViewModel {
     public MutableLiveData<JSONObject> mResponse;
-
+    public HashMap<String, String> userInfo = new HashMap<>();
     public HomeLandingViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
@@ -69,14 +69,29 @@ public class HomeLandingViewModel extends AndroidViewModel {
     }
 
     private void handleSuccess(final JSONObject response) {
-        //List<ChatRoom> list = new ArrayList<ChatRoom>();
-//        try {
-//            JSONArray rooms = response.getJSONArray("rooms");
-//
-//        } catch (JSONException e) {
-//            Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
-//            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
-//        }
+        Log.e("test respond", "onCreateView: " +
+                response.toString());
+        try {
+            String name = response.getJSONObject("userInfo").getString("firstname") + " " +
+                          response.getJSONObject("userInfo").getString("lastname");
+            String email = response.getJSONObject("userInfo").getString("email");
+            userInfo.put("name", name);
+            userInfo.put("email", email);
+
+            String numOfContact = response.getString("numOfContact");
+            String numOfMessages = response.getString("numOfMessages");
+            userInfo.put("numOfContact", numOfContact);
+            userInfo.put("numOfMessages", numOfMessages);
+
+        } catch (JSONException e) {
+            Log.e("handleSuccess", "handleSuccess: " + e );
+        }
+
+
+
+
+
+
         mResponse.setValue(response);
     }
 

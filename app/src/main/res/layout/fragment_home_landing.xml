@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
     <TextView
-        android:id="@+id/num_of_friend"
+        android:id="@+id/num_of_contact"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
@@ -62,10 +62,10 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/num_of_friend" />
+        app:layout_constraintTop_toBottomOf="@+id/num_of_contact" />
 
     <TextView
-        android:id="@+id/num_of_contact"
+        android:id="@+id/num_of_message"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"

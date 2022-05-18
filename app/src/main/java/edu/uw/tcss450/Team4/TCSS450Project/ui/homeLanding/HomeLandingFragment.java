@@ -47,13 +47,7 @@ public class HomeLandingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-//        try{
-            Log.e("test respond", "onCreateView: " +
-                mHomeLandModel.mResponse.getValue().toString()); // tbd
-//        } catch (JSONException e) {
-//            Log.e("test respond", "onCreateView: " + e);
-//        }
+        //
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_landing, container, false);
@@ -62,8 +56,11 @@ public class HomeLandingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        UserInfoViewModel model = new ViewModelProvider(getActivity())
-                .get(UserInfoViewModel.class);
+//        UserInfoViewModel model = new ViewModelProvider(getActivity())
+//                .get(UserInfoViewModel.class);
+        mBinding.numOfContact.setText(mHomeLandModel.userInfo.get("numOfContact"));
+//        Log.e("test respond", "onCreateView: " +
+//                mHomeLandModel.mResponse.getValue().g);
     }
 
     /**
