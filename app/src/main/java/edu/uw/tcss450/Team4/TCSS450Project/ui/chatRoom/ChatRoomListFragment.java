@@ -47,9 +47,15 @@ public class ChatRoomListFragment extends Fragment {
 
         mChatRoomModel.addChatRoomListObserver(getViewLifecycleOwner(), ChatRoomList -> {
                 binding.listRoot.setAdapter(
-                        new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList())
+                        new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
                 );
         });
+
+        mChatRoomModel.addNotificationObserver(getViewLifecycleOwner(), ChatRoomList -> {
+                    binding.listRoot.setAdapter(
+                            new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
+                    );
+                });
         mBinding.buttonToCreateChatRoom.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         ChatRoomListFragmentDirections.actionNavigationChatRoomListToCreateNewChatRoomFragment()
