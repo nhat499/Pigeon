@@ -48,18 +48,9 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_contacts_list, container, false);
-////        contactsModalArrayList.get(0).setUserName("Shirwa Ahmed");
-////        contactsModalArrayList.get(0).setContactNumber("2064122111");
-//        contactRVAdapter = new ContactsRVAdapter(getActivity(), contactsModalArrayList);
-//        recyclerView = (RecyclerView) v.findViewById(R.id.RecyclerView_Contact);
-//        recyclerView.setHasFixedSize(true);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        layoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(contactRVAdapter);
-//        getContacts();
         return v;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

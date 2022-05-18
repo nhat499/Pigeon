@@ -29,8 +29,8 @@
             android:id="@+id/action_navigation_contacts_to_createNewContactActivity"
             app:destination="@id/createNewContactActivity" />
         <action
-            android:id="@+id/action_navigation_contacts_to_contactDetailActivity"
-            app:destination="@id/contactDetailActivity" />
+            android:id="@+id/action_navigation_contacts_to_contactsProfile"
+            app:destination="@id/contactsProfile" />
     </fragment>
 
     <fragment
@@ -42,9 +42,9 @@
         android:id="@+id/createNewContactActivity"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateNewContactActivity"
         android:label="CreateNewContactActivity" />
-    <activity
-        android:id="@+id/contactDetailActivity"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactDetailActivity"
-        android:label="ContactDetailActivity" />
+    <fragment
+        android:id="@+id/contactsProfile"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsProfile"
+        android:label="ContactsProfile" />
 
 </navigation>

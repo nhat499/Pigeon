@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -56,12 +57,8 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on below line we are opening a new activity and passing data to it.
-                Intent i = new Intent(context, ContactDetailActivity.class);
-                i.putExtra("firstname", modal.getUserFirstName());
-                i.putExtra("email", modal.getContactEmail());
-                // on below line we are starting a new activity,
-                context.startActivity(i);
+                Navigation.findNavController(v).navigate(
+                        ContactsFragmentDirections.actionNavigationContactsToContactsProfile());
             }
         });
     }

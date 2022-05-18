@@ -38,10 +38,10 @@ public class ContactsViewModel extends AndroidViewModel {
     }
 
 
-    public void addContactObserver(int chatId,
+    public void addContactObserver(int memberId,
                                    @NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super List<Contacts>> observer) {
-        getOrCreateMapEntry(chatId).observe(owner, observer);
+        getOrCreateMapEntry(memberId).observe(owner, observer);
     }
 
     public List<Contacts> getContactsListByMemberId(final int memberId) {
@@ -51,7 +51,7 @@ public class ContactsViewModel extends AndroidViewModel {
     public String getContactsName(final int memberId) {
         String name;
         List<Contacts> result = getOrCreateMapEntry(memberId).getValue();
-       return result.get(memberId).getUserFirstName();
+       return result.get(memberId).toString();
     }
 
     private MutableLiveData<List<Contacts>> getOrCreateMapEntry(final int memberId) {
