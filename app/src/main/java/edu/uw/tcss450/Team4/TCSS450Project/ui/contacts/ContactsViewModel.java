@@ -59,7 +59,7 @@ public class ContactsViewModel extends AndroidViewModel {
         String url = "https://team-4-tcss-450-web-service.herokuapp.com/"+
                 "Contact";
 
-        Request request = new JsonObjectRequest(
+        Request request = new JsonArrayRequest(
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
@@ -91,41 +91,48 @@ public class ContactsViewModel extends AndroidViewModel {
         getOrCreateMapEntry(memberId).setValue(list);
     }
 
-    private void handelSuccess(final JSONObject response) {
-
+    private void handelSuccess(final JSONArray array) {
+        for(int j=0; j < array.length(); j++) {
+            JSONObject response = null;
+            try {
+                response = array.getJSONObject(j);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             List<Contacts> list;
-            if (!response.has("memberid_a")) {
+            if (!response.has("memberid_b")) {
                 throw new IllegalStateException("Unexpected response in ContactViewModel: " + response);
             }
             try {
-                list = getContactsListByMemberId(response.getInt("memberid_a"));
-                JSONArray Contacts = response.getJSONArray("contacts");
-                for (int i = 0; i < Contacts.length(); i++) {
-                    JSONObject contact = Contacts.getJSONObject(i);
-
-                    Contacts cContact = new Contacts(
-                            contact.getString("firstname"),
-                            contact.getString("lastname"),
-                            contact.getString("email")
-                    );
-                    if (!list.contains(cContact)) {
-                        // don't add a duplicate
-                        list.add(0, cContact);
-                    } else {
-                        // this shouldn't happen but could with the asynchronous
-                        // nature of the application
-                        Log.wtf("Contact already received",
-                                "Or duplicate id:" + cContact.getMemberId());
-                    }
-
+                list = getContactsListByMemberId(response.getInt("memberid_b"));
+                //JSONArray contacts = response.getJSONArray("email");
+                //for (int i = 0; i < response.length(); i++) {
+                Contacts contact = new Contacts(
+                        response.getString("firstname"),
+                        response.getString("lastname"),
+                        response.getString("email")
+                );
+                Log.d("CONTACTS", response.getString("firstname"));
+                Log.d("CONTACTS", response.getString("lastname"));
+                Log.d("CONTACTS", response.getString("email"));
+                if (!list.contains(contact)) {
+                    // don't add a duplicate
+                    list.add(0, contact);
+                } else {
+                    // this shouldn't happen but could with the asynchronous
+                    // nature of the application
+                    Log.wtf("Contact already received",
+                            "Or duplicate id:" + contact.getMemberId());
                 }
+
+                //}
                 //inform observers of the change (setValue)
-                getOrCreateMapEntry(response.getInt("memberid_a")).setValue(list);
+                //getOrCreateMapEntry(response.getInt("chatId")).setValue(list);
             } catch (JSONException e) {
                 Log.e("JSON PARSE ERROR", "Found in handle Success ContactViewModel");
                 Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
             }
-
+        }
     }
 
     private void handleError(final VolleyError error) {
