@@ -48,7 +48,7 @@ public class Contacts {
     public void setContactNumber(String contactEmail) {
         this.contactEmail = contactEmail;
     }
-    public int getMessageId() {
+    public int getMemberId() {
         return memberId;
     }
 

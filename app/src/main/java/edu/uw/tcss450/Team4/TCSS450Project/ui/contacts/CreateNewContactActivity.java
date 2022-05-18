@@ -21,6 +21,8 @@ public class CreateNewContactActivity extends AppCompatActivity {
     // creating a new variable for our edit text and button.
     private EditText nameEdt, phoneEdt, emailEdt;
     private Button addContactEdt;
+    private ContactsViewModel mContactsViewModel;
+    private static final int HARD_CODED_CHAT_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class CreateNewContactActivity extends AppCompatActivity {
                     Toast.makeText(CreateNewContactActivity.this, "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
                 } else {
                     // calling a method to add contact.
-                    addContact(name, email, phone);
+                    //mContactsViewModel.addContactObserver(HARD_CODED_CHAT_ID);
                 }
             }
         });
