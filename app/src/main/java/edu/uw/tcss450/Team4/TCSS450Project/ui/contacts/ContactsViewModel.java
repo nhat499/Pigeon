@@ -48,8 +48,10 @@ public class ContactsViewModel extends AndroidViewModel {
         return getOrCreateMapEntry(memberId).getValue();
     }
 
-    public List<Contacts> getContactsName(final int memberId,final String name) {
-       return getOrCreateMapEntry(memberId).getValue();
+    public String getContactsName(final int memberId) {
+        String name;
+        List<Contacts> result = getOrCreateMapEntry(memberId).getValue();
+       return result.get(memberId).getUserFirstName();
     }
 
     private MutableLiveData<List<Contacts>> getOrCreateMapEntry(final int memberId) {
