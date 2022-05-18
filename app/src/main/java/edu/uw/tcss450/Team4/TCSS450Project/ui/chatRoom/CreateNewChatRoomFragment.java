@@ -23,6 +23,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatRoomListBindi
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentCreateNewChatRoomBinding;
 
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.AddMemberViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
 
 public class CreateNewChatRoomFragment extends Fragment {
@@ -32,6 +33,10 @@ public class CreateNewChatRoomFragment extends Fragment {
     private UserInfoViewModel mUserViewModel;
 
     private CreateNewChatRoomViewModel mNewChatRoomModel;
+
+    private AddMemberViewModel mAddMemberViewModel;
+
+    private ChatRoomViewModel mChatRoomModel;
 
     public CreateNewChatRoomFragment() {
         // Required empty public constructor
@@ -43,6 +48,8 @@ public class CreateNewChatRoomFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserViewModel = provider.get(UserInfoViewModel.class);
         mNewChatRoomModel = provider.get(CreateNewChatRoomViewModel.class);
+        mChatRoomModel = new ViewModelProvider(getActivity()).get(ChatRoomViewModel.class);
+        mAddMemberViewModel = provider.get(AddMemberViewModel.class);
     }
 
     @Override
@@ -80,11 +87,18 @@ public class CreateNewChatRoomFragment extends Fragment {
             if (response.has("code")) {
                 mBinding.editChatRoomName.setError("Please enter a name.");
             } else {
-                // Go back to chat room list upon successful addition of chat room.
-                Navigation.findNavController(getView())
-                        .navigate(CreateNewChatRoomFragmentDirections
-                                .actionCreateNewChatRoomFragmentToNavigationChatRoomList());
-                mNewChatRoomModel.clearResponse();
+                try {
+                    int chatID = response.getInt("chatID");
+                    mAddMemberViewModel.addMember(mUserViewModel.getmJwt(), mUserViewModel.getEmail(), chatID);
+                    // Go back to chat room list upon successful addition of chat room.
+                    Navigation.findNavController(getView())
+                            .navigate(CreateNewChatRoomFragmentDirections
+                                    .actionCreateNewChatRoomFragmentToNavigationChatRoomList());
+                    mNewChatRoomModel.clearResponse();
+                    mChatRoomModel.getRooms(mUserViewModel.getmJwt(), mUserViewModel.getEmail());
+                } catch (JSONException e) {
+                    Log.e("JSON Parse Error", e.getMessage());
+                }
             }
         }
     }

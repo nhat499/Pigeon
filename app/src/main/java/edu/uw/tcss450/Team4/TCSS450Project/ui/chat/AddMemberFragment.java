@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddMemberBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentCreateNewChatRoomBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomFragmentDirections;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomViewModel;
 
@@ -30,6 +31,9 @@ public class AddMemberFragment extends Fragment {
 
     private AddMemberViewModel mAddMemberViewModel;
 
+    private ChatRoomViewModel mChatRoomModel;
+
+
     public AddMemberFragment() {
         // Required empty public constructor
     }
@@ -39,6 +43,7 @@ public class AddMemberFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserViewModel = provider.get(UserInfoViewModel.class);
+        mChatRoomModel = new ViewModelProvider(getActivity()).get(ChatRoomViewModel.class);
         mAddMemberViewModel = provider.get(AddMemberViewModel.class);
     }
 
@@ -93,8 +98,9 @@ public class AddMemberFragment extends Fragment {
             } else {
                 Navigation.findNavController(getView())
                         .navigate(AddMemberFragmentDirections
-                                .actionAddMemberFragmentToNavigationChat());
+                                .actionAddMemberFragmentToNavigationChatRoomList());
                 mAddMemberViewModel.clearResponse();
+                mChatRoomModel.getRooms(mUserViewModel.getmJwt(), mUserViewModel.getEmail());
             }
         } else {
             Log.d("JSON Response", "No Response");

@@ -19,6 +19,8 @@ import org.json.JSONObject;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragmentDirections;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentArgs;
 
@@ -34,6 +36,7 @@ public class ChatFragment extends Fragment {
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
     private ChatSendViewModel mSendModel;
+    private CreateNewChatRoomViewModel mNewChatRoomModel;
 
 
     public ChatFragment() {
@@ -51,6 +54,7 @@ public class ChatFragment extends Fragment {
         mChatModel = provider.get(ChatViewModel.class);
         mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
+        mNewChatRoomModel = provider.get(CreateNewChatRoomViewModel.class);
     }
 
     @Override
@@ -91,6 +95,10 @@ public class ChatFragment extends Fragment {
                 ChatFragmentDirections.actionNavigationChatToAddMemberFragment();
 
         directions.setRoom(args.getRoom());
+
+        // To prevent automatic navigation back to the list because of the HTTP response previously.
+        binding.buttonAdd.setOnClickListener(button ->
+                mNewChatRoomModel.clearResponse());
 
         // Go to add new member fragment.
         binding.buttonAdd.setOnClickListener(button ->
