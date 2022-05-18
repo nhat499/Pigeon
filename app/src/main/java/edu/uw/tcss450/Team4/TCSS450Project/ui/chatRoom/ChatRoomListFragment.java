@@ -37,6 +37,7 @@ public class ChatRoomListFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel .class);
         mChatRoomModel = new ViewModelProvider(getActivity()).get(ChatRoomViewModel.class);
+        mChatRoomModel.getRooms(mUserModel.getmJwt(), mUserModel.getEmail());
     }
 
     @Override

@@ -81,14 +81,27 @@ public class ChatSendViewModel extends AndroidViewModel {
 
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
-            Log.e("NETWORK ERROR", error.getMessage());
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
         }
         else {
             String data = new String(error.networkResponse.data, Charset.defaultCharset());
-            Log.e("CLIENT ERROR",
-                    error.networkResponse.statusCode +
-                            " " +
-                            data);
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("CLIENT ERROR",
+                        error.networkResponse.statusCode +
+                                " " +
+                                data);
+            }
         }
     }
 }

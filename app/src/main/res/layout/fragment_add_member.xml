@@ -12,28 +12,49 @@
         android:layout_width="376dp"
         android:layout_height="54dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="60dp"
         android:hint="Enter Email Address"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/button_add_member"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <Button
         android:id="@+id/button_add_member"
         android:layout_width="378dp"
         android:layout_height="56dp"
+        android:layout_marginTop="140dp"
+        android:text="Add Member to Chat Group"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        app:layout_constraintBottom_toTopOf="@+id/button_remove_yourself"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_member"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button_remove_yourself"
+        android:layout_width="378dp"
+        android:layout_height="56dp"
         android:layout_margin="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="309dp"
         android:layout_marginEnd="9dp"
         android:layout_marginBottom="673dp"
-        android:text="Add Member to Chat Group"
+        android:text="Remove Yourself From This Chat"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.289" />
+        app:layout_constraintTop_toBottomOf="@+id/button_add_member"
+        app:layout_constraintVertical_bias="0.035" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

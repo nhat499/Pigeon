@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class ChatRoomViewModel extends AndroidViewModel {
 
     public ChatRoomViewModel(@NonNull Application application) {
         super(application);
-        mChatRoomList = new MutableLiveData<>(ChatRoomGenerator.getBlogList());
+        mChatRoomList = new MutableLiveData<>();
     }
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
@@ -58,42 +59,64 @@ public class ChatRoomViewModel extends AndroidViewModel {
         return null;
     }
 
+    // Get the list of chat room ids and chat room names HERE.
+    public void getRooms(final String jwt, final String email) {
+        String url = getApplication().getResources().getString(R.string.base_url_service) +
+                "chats/getRooms";
+
+        Request request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                this::handleSuccess,
+                this::handleError) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                headers.put("email", email);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+    }
+
     // Used when handling data from database.
     private void handleError(final VolleyError error) {
+
     }
 
-    private void handleResult(final JSONObject result) {
-    }
-
-    // Get the list of chat room ids and chat room names HERE.
-    public void connectGet() {
-//        String url = getApplication().getResources().getString(R.string.base_url_service) +
-//                "messages/" + chatId;
-//
-//        Request request = new JsonObjectRequest(
-//                Request.Method.GET,
-//                url,
-//                null, //no body for this get request
-//                this::handelSuccess,
-//                this::handleError) {
-//
-//            @Override
-//            public Map<String, String> getHeaders() {
-//                Map<String, String> headers = new HashMap<>();
-//                // add headers <key,value>
-//                headers.put("Authorization", jwt);
-//                return headers;
-//            }
-//        };
-//
-//        request.setRetryPolicy(new DefaultRetryPolicy(
-//                10_000,
-//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        //Instantiate the RequestQueue and add the request to the queue
-//        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
-//                .addToRequestQueue(request);
-//
-//        //code here will run
+    // Adds the rooms to the fragment.
+    private void handleSuccess(final JSONObject response) {
+        List<ChatRoom> list = new ArrayList<ChatRoom>();
+        try {
+            JSONArray rooms = response.getJSONArray("rooms");
+            for (int i = 0; i < rooms.length(); i++) {
+                JSONObject objectRoom = rooms.getJSONObject(i);
+                ChatRoom room = new ChatRoom.Builder(objectRoom.getString("name"),
+                        objectRoom.getInt("chatid")).build();
+                if (!list.contains(room)) {
+                    // don't add a duplicate
+                    list.add(0, room);
+                } else {
+                    // this shouldn't happen but could with the asynchronous
+                    // nature of the application
+                    Log.wtf("Chat message already received",
+                            "Or duplicate id:" + room.getTitle());
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
+            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
+        }
+        mChatRoomList.setValue(list);
     }
 }
