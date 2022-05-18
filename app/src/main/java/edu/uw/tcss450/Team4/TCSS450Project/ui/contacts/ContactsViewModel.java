@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.contacts;
 
 import android.app.Application;
+import android.text.Editable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -69,7 +70,7 @@ public class ContactsViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
-                this::handelSuccess,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -91,13 +92,76 @@ public class ContactsViewModel extends AndroidViewModel {
 
     }
 
-    public void addContact(final int memberId, final Contacts contact) {
-        List<Contacts> list = getContactsListByMemberId(memberId);
-        list.add(contact);
-        getOrCreateMapEntry(memberId).setValue(list);
+    public void addContact(final String jwt,final Editable email) {
+        String url = "https://team-4-tcss-450-web-service.herokuapp.com/"+
+                "Contact";
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("email",email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Request request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                body,
+                this::handleAdd,
+                this::handleError) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+    }
+    public void deleteContact(final String jwt,final String email) {
+        String url = "https://team-4-tcss-450-web-service.herokuapp.com/"+
+                "Contact/delete";
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("email",email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Request request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                body,
+                this::handleAdd,
+                this::handleError) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
     }
 
-    private void handelSuccess(final JSONArray array) {
+    private void handleSuccess(final JSONArray array) {
         for(int j=0; j < array.length(); j++) {
 
             JSONObject response = null;
@@ -111,7 +175,7 @@ public class ContactsViewModel extends AndroidViewModel {
                 throw new IllegalStateException("Unexpected response in ContactViewModel: " + response);
             }
             try {
-                list = getContactsListByMemberId(response.getInt("memberid_a"));
+                list = getContactsListByMemberId(response.getInt("memberid_b"));
                 //JSONArray contacts = response.getJSONArray("email");
                 //for (int i = 0; i < response.length(); i++) {
                 Contacts contact = new Contacts(
@@ -135,7 +199,7 @@ public class ContactsViewModel extends AndroidViewModel {
 
                 //}
                 //inform observers of the change (setValue)
-                getOrCreateMapEntry(response.getInt("memberid_a")).setValue(list);
+                getOrCreateMapEntry(response.getInt("memberid_b")).setValue(list);
             } catch (JSONException e) {
                 Log.e("JSON PARSE ERROR", "Found in handle Success ContactViewModel");
                 Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
@@ -155,4 +219,54 @@ public class ContactsViewModel extends AndroidViewModel {
                             data);
         }
     }
+
+    private void handleAdd(final JSONObject response) {
+
+            List<Contacts> list;
+            if (!response.has("newContact") ||!response.has("message") ) {
+                throw new IllegalStateException("Unexpected response in ContactViewModel: " + response);
+            }
+            try {
+                list = getContactsListByMemberId(response.getInt("memberid_b"));
+                //JSONArray contacts = response.getJSONArray("email");
+                //for (int i = 0; i < response.length(); i++) {
+                Contacts contact = new Contacts(
+                        response.getString("firstname"),
+                        response.getString("lastname"),
+                        response.getString("email")
+                );
+                Log.d("CONTACTS", response.getString("firstname"));
+                Log.d("CONTACTS", response.getString("lastname"));
+                Log.d("CONTACTS", response.getString("email"));
+                //contact.setMemberId();
+                if (!list.contains(contact)) {
+                    // don't add a duplicate
+                    list.add(contact.getMemberId(), contact);
+                } else {
+                    // this shouldn't happen but could with the asynchronous
+                    // nature of the application
+                    Log.wtf("Contact already received",
+                            "Or duplicate id:" + contact.getMemberId());
+                }
+
+                //}
+                //inform observers of the change (setValue)
+                getOrCreateMapEntry(response.getInt("memberid_b")).setValue(list);
+            } catch (JSONException e) {
+                Log.e("JSON PARSE ERROR", "Found in handle Success ContactViewModel");
+                Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
+            }
+        }
+
+//    private void handleDelete(final JSONObject response) {
+//
+//        List<Contacts> list = null;
+//        if (!response.has("message") ) {
+//            throw new IllegalStateException("Unexpected response in ContactViewModel: " + response);
+//        }
+//            Contacts contact = response.;
+//
+//            getOrCreateMapEntry(contact.getMemberId()).setValue(list);
+//
+//    }
 }

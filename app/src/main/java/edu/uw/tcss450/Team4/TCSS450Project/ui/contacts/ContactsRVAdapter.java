@@ -52,7 +52,7 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
         // getting data from array list in our modal.
         Contacts modal = contactsModalArrayList.get(position);
         // on below line we are setting data to our text view.
-        holder.contactTV.setText(modal.getUserFirstName());
+        holder.contactTV.setText(modal.getFullName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

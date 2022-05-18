@@ -1,11 +1,13 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.contacts;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,22 +15,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsProfileBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddContactsBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 
-public class ContactsProfile extends Fragment {
+public class CreateContact extends Fragment {
 
     private ContactsViewModel mContactsViewModel;
-    private FragmentContactsProfileBinding mBinding;
     private UserInfoViewModel mUserModel;
-    private Button profileDelete;
+    private FragmentAddContactsBinding mBinding;
+    private Button addContact;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = FragmentContactsProfileBinding.inflate(inflater);
+        mBinding = FragmentAddContactsBinding.inflate(inflater);
         return mBinding.getRoot();
     }
     @Override
@@ -38,28 +37,31 @@ public class ContactsProfile extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mContactsViewModel = provider.get(ContactsViewModel.class);
         mUserModel = provider.get(UserInfoViewModel.class);
-
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profileDelete = mBinding.buttonProfileDelete;
+        addContact = mBinding.AddContact;
         // on below line we are adding on click listener for our button.
-        profileDelete.setOnClickListener(new View.OnClickListener() {
+        addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("test respond", "onClick: " + mBinding.profileEmail.toString() );
-                mContactsViewModel.deleteContact(mUserModel.getmJwt(),"shirwaa331@gmail.com");
+                Editable name = mBinding.edit2ContactName.getText();
+                Editable email = mBinding.edit2ContactEmail.getText();
 
-                Navigation.findNavController(v).navigate(
-                        ContactsProfileDirections.actionContactsProfileToNavigationContacts2());
+                // on below line we are making a text validation.
+                if (TextUtils.isEmpty(name) && TextUtils.isEmpty(email)) {
+                    Toast.makeText(getActivity(), "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    mContactsViewModel.addContact(mUserModel.getmJwt(),mBinding.edit2ContactEmail.getText());
+                    Navigation.findNavController(v).navigate(
+                            CreateContactDirections.actionCreateContactToNavigationContacts());
+                }
+
             }
         });
-       //contactName = mContactsViewModel.getContactsName(133);
-        //Log.e("contact name: ", contactName);
-       // contactEmail = mContactsViewModel.g
 
-        mBinding.profileName.setText("non");
-        mBinding.profileEmail.setText("hello@gmail.com");
     }
+
 }

@@ -55,6 +55,8 @@ public class Contacts {
         this.memberId = memberId;
     }
 
+    public String getFullName() { return userFirstName + " " + userLastName; }
+
 
 
 

@@ -4,11 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_add_contacts.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_card.xml" value="0.15625" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_list.xml" value="0.19523809523809524" />
-        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_profile.xml" value="0.16983695652173914" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_profile.xml" value="0.2" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/drawable-anydpi/ic_send.xml" value="0.1" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.28854166666666664" />
