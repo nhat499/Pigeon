@@ -48,9 +48,9 @@ public class HomeLandingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //try{
-            //Log.e("test respond", "onCreateView: " +
-                //mHomeLandModel.mResponse; // tbd
+//        try{
+            Log.e("test respond", "onCreateView: " +
+                mHomeLandModel.mResponse.getValue().toString()); // tbd
 //        } catch (JSONException e) {
 //            Log.e("test respond", "onCreateView: " + e);
 //        }
@@ -64,7 +64,6 @@ public class HomeLandingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
-
     }
 
     /**

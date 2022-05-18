@@ -3,6 +3,8 @@ package edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom;
 import java.util.Arrays;
 import java.util.List;
 
+
+// DONT NEED THIS SHIT ANYMORE :)
 public class ChatRoomGenerator {
 
     private static final ChatRoom[] Chats;

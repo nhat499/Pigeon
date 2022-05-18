@@ -12,15 +12,19 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoom;
 
 /**
  * View model for the HomeLanding Fragment
@@ -43,7 +47,7 @@ public class HomeLandingViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null,
-                mResponse::setValue,
+                this::handleSuccess,
                 this::handleError) {
             @Override
             public Map<String, String> getHeaders() {
@@ -64,6 +68,17 @@ public class HomeLandingViewModel extends AndroidViewModel {
         //code here will run
     }
 
+    private void handleSuccess(final JSONObject response) {
+        //List<ChatRoom> list = new ArrayList<ChatRoom>();
+//        try {
+//            JSONArray rooms = response.getJSONArray("rooms");
+//
+//        } catch (JSONException e) {
+//            Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
+//            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
+//        }
+        mResponse.setValue(response);
+    }
 
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {

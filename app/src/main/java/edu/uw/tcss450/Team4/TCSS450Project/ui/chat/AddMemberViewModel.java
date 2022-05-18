@@ -40,49 +40,61 @@ public class AddMemberViewModel extends AndroidViewModel {
         mResponse.observe(owner, observer);
     }
 
-    public void addMember(final String jwt, final String name) {
-//        String url = getApplication().getResources().getString(R.string.base_url_service) +
-//                "chats/";
-//
-//        JSONObject body = new JSONObject();
-//        try {
-//            body.put("name", name);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Request request = new JsonObjectRequest(
-//                Request.Method.POST,
-//                url,
-//                body,
-//                this::handleSuccess,
-//                this::handleError) {
-//
-//            @Override
-//            public Map<String, String> getHeaders() {
-//                Map<String, String> headers = new HashMap<>();
-//                // add headers <key,value>
-//                headers.put("Authorization", jwt);
-//                return headers;
-//            }
-//        };
-//        request.setRetryPolicy(new DefaultRetryPolicy(
-//                10_000,
-//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        //Instantiate the RequestQueue and add the request to the queue
-//        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
-//                .addToRequestQueue(request);
+    public void addMember(final String jwt, final String email, final int id) {
+        String url = getApplication().getResources().getString(R.string.base_url_service) +
+                "chats/" + id + "/" + email + "/";
+
+        Request request = new JsonObjectRequest(
+                Request.Method.PUT,
+                url,
+                null,
+                mResponse::setValue,
+                this::handleError) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
 
     }
 
-    public void addUsers(final int chatId, final String jwt) {
+    public void remove(final String jwt, final String email, final int id) {
+        String url = getApplication().getResources().getString(R.string.base_url_service) +
+                "chats/" + id + "/" + email + "/";
 
+        Request request = new JsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                mResponse::setValue,
+                this::handleError) {
 
-    }
-
-    private void handleSuccess(final JSONObject response) {
-        mResponse.setValue(response);
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
     }
 
     private void handleError(final VolleyError error) {

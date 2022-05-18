@@ -28,12 +28,15 @@ import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 public class CreateNewChatRoomViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> mResponse;
+    private MutableLiveData<JSONObject> mChatIDReturn;
     private int success = 0;
 
     public CreateNewChatRoomViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
+        mChatIDReturn = new MutableLiveData<>();
+        mChatIDReturn.setValue(new JSONObject());
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
@@ -78,11 +81,6 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
-
-    }
-
-    public void addUsers(final int chatId, final String jwt) {
-
 
     }
 
