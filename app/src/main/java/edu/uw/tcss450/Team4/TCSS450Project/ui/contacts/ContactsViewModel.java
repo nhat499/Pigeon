@@ -100,11 +100,11 @@ public class ContactsViewModel extends AndroidViewModel {
                 e.printStackTrace();
             }
             List<Contacts> list;
-            if (!response.has("memberid_b")) {
+            if (!response.has("memberid_a")) {
                 throw new IllegalStateException("Unexpected response in ContactViewModel: " + response);
             }
             try {
-                list = getContactsListByMemberId(response.getInt("memberid_b"));
+                list = getContactsListByMemberId(response.getInt("memberid_a"));
                 //JSONArray contacts = response.getJSONArray("email");
                 //for (int i = 0; i < response.length(); i++) {
                 Contacts contact = new Contacts(
@@ -127,7 +127,7 @@ public class ContactsViewModel extends AndroidViewModel {
 
                 //}
                 //inform observers of the change (setValue)
-                //getOrCreateMapEntry(response.getInt("chatId")).setValue(list);
+                getOrCreateMapEntry(response.getInt("memberid_a")).setValue(list);
             } catch (JSONException e) {
                 Log.e("JSON PARSE ERROR", "Found in handle Success ContactViewModel");
                 Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
