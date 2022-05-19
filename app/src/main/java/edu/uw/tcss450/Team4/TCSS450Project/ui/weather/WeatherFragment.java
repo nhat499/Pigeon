@@ -37,47 +37,48 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentWeatherBinding;
 public class WeatherFragment extends Fragment {
 
     private WeatherViewModel mSendWeatherModel;
+    private WeatherViewModel mSendWeatherModelHD;
     private FragmentWeatherBinding binding;
     static WeatherFragment instance;
-    private String cityName;
+    //private String cityName;
 
     //empty constructor
     public WeatherFragment() {
 
     }
 
-    public static WeatherFragment getInstance(){
-        if (instance==null){
-            instance = new WeatherFragment();}
-        return instance;
-    }
+   // public static WeatherFragment getInstance(){
+     //   if (instance==null){
+     //       instance = new WeatherFragment();}
+    //    return instance;
+   // }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_weather, container, false);
+
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSendWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
-
-
+       mSendWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+       mSendWeatherModelHD = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //mSendWeatherModel.getConnectWeather();
-        //mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(), this::observeCurrentWeather);
-        //mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(),weatherTemp -> binding.textTemperature.setText(weatherTemp.optJSONArray()));
-        //binding.buttonSearchCity.setOnClickListener(button -> mSendWeatherModel.connectPost()); //calling the connectGet() method from viewModel
-
-
+        mSendWeatherModel.getConnectWeather();
+        mSendWeatherModelHD.getConnectWeatherHD();
+        mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(),
+                this::observeWeather);
+        mSendWeatherModelHD.addResponseObserver(getViewLifecycleOwner(),this::observeWeatherHD);
 
     }
+
     /**
      * This method gets the current weather and formats it.
      * @param response the json
@@ -111,7 +112,7 @@ public class WeatherFragment extends Fragment {
     }
 
     /**
-     * Gets the 5 day and hourly forecasts and formats it.
+     * This method gets the 7 day and hourly forecasts and formats it.
      * @param response the json
      * @throws JSONException json
      */
@@ -169,16 +170,16 @@ public class WeatherFragment extends Fragment {
         binding.textDay7.setText(df.format(cal.getTime()));
         binding.textDay7Temp.setText(temps.get(6) + "°F");
 
-        //HOURLY
+        //the hours (data)
         ArrayList<Integer> hourTemps = new ArrayList<Integer>();
         ArrayList<String> unixTime = new ArrayList<String>();
         ArrayList<String> hourDescriptions = new ArrayList<String>();
         JSONArray jsonHourly = jsonMessage.getJSONArray("hourly");
 
-        //The temps
+        //The temps per hour
         for(int i = 0; i < 24; i++) {
             JSONObject jsonInnerHourly = new JSONObject(jsonHourly.getString(i));
-            //get unix time
+            //getting unix time
             unixTime.add(jsonInnerHourly.getString("dt"));
             //rest
             String thisTemp = jsonInnerHourly.getString("temp");
@@ -186,15 +187,11 @@ public class WeatherFragment extends Fragment {
             int temperature = (int)convertToFar(kelvin);
             hourTemps.add(temperature);
         }
-        Log.i("HOURLY TEMPS", hourTemps.toString());
 
-        //The Descriptions
-        for(int i = 0; i < 24; i++) {
-            JSONObject jsonInnerHourly = new JSONObject(jsonHourly.getString(i));
-            JSONArray descArr = new JSONArray(jsonInnerHourly.getString("weather"));
-            JSONObject hourWeather = new JSONObject(descArr.getString(0));
-            hourDescriptions.add(hourWeather.getString("description"));
-        }
+        //ADD ICON DATA LATER
+
+
+        Log.i("HOURLY TEMPS", hourTemps.toString());
 
         Log.i("UNIX TIME", unixTime.toString());
         Date time = new Date(Long.parseLong(unixTime.get(0)) * 1000);
@@ -229,22 +226,87 @@ public class WeatherFragment extends Fragment {
         Date hour23 = new Date(Long.parseLong(unixTime.get(22)) * 1000);
         Date hour24 = new Date(Long.parseLong(unixTime.get(23)) * 1000);
 
+        //ADD ICONS LATER!!
 
         binding.textHour1.setText(timeFormat.format(hour1));
         binding.textTemp1.setText(hourTemps.get(0) + "°F");
 
         binding.textHour2.setText(timeFormat.format(hour2));
         binding.textTemp2.setText(hourTemps.get(1) + "°F");
-        // keep going until 24 NOT DONE
+
+        binding.textHour3.setText(timeFormat.format(hour3));
+        binding.textTemp3.setText(hourTemps.get(2) + "°F");
+
+        binding.textHour4.setText(timeFormat.format(hour4));
+        binding.textTemp4.setText(hourTemps.get(3) + "°F");
+
+        binding.textHour5.setText(timeFormat.format(hour5));
+        binding.textTemp5.setText(hourTemps.get(4) + "°F");
+
+        binding.textHour6.setText(timeFormat.format(hour6));
+        binding.textTemp6.setText(hourTemps.get(5) + "°F");
+
+        binding.textHour7.setText(timeFormat.format(hour7));
+        binding.textTemp7.setText(hourTemps.get(6) + "°F");
+
+        binding.textHour8.setText(timeFormat.format(hour8));
+        binding.textTemp8.setText(hourTemps.get(7) + "°F");
+
+        binding.textHour9.setText(timeFormat.format(hour9));
+        binding.textTemp9.setText(hourTemps.get(8) + "°F");
+
+        binding.textHour10.setText(timeFormat.format(hour10));
+        binding.textTemp10.setText(hourTemps.get(9) + "°F");
+
+        binding.textHour11.setText(timeFormat.format(hour11));
+        binding.textTemp11.setText(hourTemps.get(10) + "°F");
+
+        binding.textHour12.setText(timeFormat.format(hour12));
+        binding.textTemp12.setText(hourTemps.get(11) + "°F");
+
+        binding.textHour13.setText(timeFormat.format(hour13));
+        binding.textTemp13.setText(hourTemps.get(12) + "°F");
+
+        binding.textHour14.setText(timeFormat.format(hour14));
+        binding.textTemp14.setText(hourTemps.get(13) + "°F");
+
+        binding.textHour15.setText(timeFormat.format(hour15));
+        binding.textTemp15.setText(hourTemps.get(14) + "°F");
+
+        binding.textHour16.setText(timeFormat.format(hour16));
+        binding.textTemp16.setText(hourTemps.get(15) + "°F");
+
+        binding.textHour17.setText(timeFormat.format(hour2));
+        binding.textTemp17.setText(hourTemps.get(16) + "°F");
+
+        binding.textHour18.setText(timeFormat.format(hour2));
+        binding.textTemp18.setText(hourTemps.get(17) + "°F");
+
+        binding.textHour19.setText(timeFormat.format(hour19));
+        binding.textTemp19.setText(hourTemps.get(18) + "°F");
+
+        binding.textHour20.setText(timeFormat.format(hour20));
+        binding.textTemp20.setText(hourTemps.get(19) + "°F");
+
+        binding.textHour21.setText(timeFormat.format(hour21));
+        binding.textTemp21.setText(hourTemps.get(20) + "°F");
+
+        binding.textHour22.setText(timeFormat.format(hour22));
+        binding.textTemp22.setText(hourTemps.get(21) + "°F");
+
+        binding.textHour23.setText(timeFormat.format(hour23));
+        binding.textTemp23.setText(hourTemps.get(22) + "°F");
+
+        binding.textHour24.setText(timeFormat.format(hour2));
+        binding.textTemp24.setText(hourTemps.get(23) + "°F");
+    } //end of method
 
 
-
-    }
     /**
      * Gets the weather information for the current conditions.
      * @param response the json
      */
-    private void observeCurrentWeather(JSONObject response) {
+    private void observeWeather(JSONObject response) {
         if (response.length() > 0) {
             if (response.has("code")) {
                 try {
@@ -257,6 +319,34 @@ public class WeatherFragment extends Fragment {
             } else {
                 try {
                     getCurrentWeather(response);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+    }
+
+    /**
+     * This method gets the weather conditions for both the 7 day and hourly temperatures.
+     * @param response the json
+     */
+    private void observeWeatherHD(JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code")) {
+                try {
+                    binding.textTemperature.setError(
+                            "Error Authenticating: " +
+                                    response.getJSONObject("data").getString("message"));
+                } catch (JSONException e) {
+                    Log.e("JSON Parse Error", e.getMessage());
+                }
+            } else {
+                try {
+                    getMultipleWeather(response);
 
 
                 } catch (JSONException e) {
