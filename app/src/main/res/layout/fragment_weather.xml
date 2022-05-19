@@ -6,6 +6,7 @@
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/weather_background"
     tools:context=".ui.weather.WeatherFragment">
 
 
@@ -20,19 +21,22 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="City Name"
+            android:text="Tacoma"
+            android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <EditText
             android:id="@+id/text_enter_city_name"
+            android:textColor="@color/white"
             android:layout_width="376dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:hint="Enter City Name"
+            android:hint="@string/hint_city_name"
+            android:backgroundTint="@color/secondaryLightColor"
             android:inputType="textPersonName"
             android:paddingLeft="15dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Search"
+            android:text="@string/title_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.084"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +68,8 @@
                 android:layout_height="29dp"
                 android:layout_marginBottom="4dp"
                 android:gravity="center"
-                android:text="Cloudy"
+                android:textColor="@color/white"
+                android:text="@string/text_curr_condition"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.088"
@@ -89,7 +94,8 @@
                 android:layout_height="56dp"
                 android:layout_marginEnd="76dp"
                 android:gravity="center"
-                android:text="Temperature"
+                android:text="@string/text_curr_temperature"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -113,7 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="HOURLY FORECAST"
+                android:text="@string/title_hourly_forecast"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -129,22 +136,780 @@
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck">
+
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
+                    <TextView
+                        android:id="@+id/text_hour1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="Now"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/text_hour2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="2HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour1"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="3HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour2"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="4HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour3"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="5HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour4"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="6HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour5"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="7HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour6"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="8HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour7"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="9HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour8"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="10HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour9"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="11HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour10"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="12HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour11"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="13HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour12"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="14HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour13"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="15HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour14"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="16HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour15"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="17HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour16"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="18HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour17"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="19HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour18"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="20HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour19"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="21HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour20"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="22HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour21"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="23HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour22"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_hour24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="24dp"
+                        android:text="24HR"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour23"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/image_hour1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour1" />
+
+                    <ImageView
+                        android:id="@+id/image_hour2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour1"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour2" />
+                    <ImageView
+                        android:id="@+id/image_hour3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour2"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour3" />
+                    <ImageView
+                        android:id="@+id/image_hour4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour3"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour4" />
+                    <ImageView
+                        android:id="@+id/image_hour5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour4"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour5" />
+                    <ImageView
+                        android:id="@+id/image_hour6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour5"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour6" />
+                    <ImageView
+                        android:id="@+id/image_hour7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour6"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour7" />
+                    <ImageView
+                        android:id="@+id/image_hour8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour7"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour8" />
+                    <ImageView
+                        android:id="@+id/image_hour9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour8"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour9" />
+                    <ImageView
+                        android:id="@+id/image_hour10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour9"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour10" />
+                    <ImageView
+                        android:id="@+id/image_hour11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour10"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour11" />
+                    <ImageView
+                        android:id="@+id/image_hour12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour11"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour12" />
+                    <ImageView
+                        android:id="@+id/image_hour13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour12"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour13" />
+                    <ImageView
+                        android:id="@+id/image_hour14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour13"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour14" />
+                    <ImageView
+                        android:id="@+id/image_hour15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour14"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour15" />
+                    <ImageView
+                        android:id="@+id/image_hour16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour15"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour16" />
+                    <ImageView
+                        android:id="@+id/image_hour17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour16"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour17" />
+                    <ImageView
+                        android:id="@+id/image_hour18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour17"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour18" />
+                    <ImageView
+                        android:id="@+id/image_hour19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour18"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour19" />
+                    <ImageView
+                        android:id="@+id/image_hour20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour19"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour20" />
+                    <ImageView
+                        android:id="@+id/image_hour21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour20"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour21" />
+                    <ImageView
+                        android:id="@+id/image_hour22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour21"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour22" />
+                    <ImageView
+                        android:id="@+id/image_hour23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour22"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour23" />
+
+                    <ImageView
+                        android:id="@+id/image_hour24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="44dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_weather_black_24dp"
+                        app:layout_constraintStart_toEndOf="@+id/image_hour23"
+                        app:layout_constraintTop_toBottomOf="@+id/text_hour24" />
+
+                    <TextView
+                        android:id="@+id/text_temp1"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP1"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour1" />
+
+                    <TextView
+                        android:id="@+id/text_temp2"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP2"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp1"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour2" />
+                    <TextView
+                        android:id="@+id/text_temp3"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP3"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp2"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour3" />
+                    <TextView
+                        android:id="@+id/text_temp4"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP4"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp3"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour4" />
+                    <TextView
+                        android:id="@+id/text_temp5"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP5"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp4"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour5" />
+                    <TextView
+                        android:id="@+id/text_temp6"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP6"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp5"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour6" />
+                    <TextView
+                        android:id="@+id/text_temp7"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP7"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp6"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour7" />
+                    <TextView
+                        android:id="@+id/text_temp8"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP8"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp7"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour8" />
+                    <TextView
+                        android:id="@+id/text_temp9"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TMP9"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp8"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour9" />
+                    <TextView
+                        android:id="@+id/text_temp10"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP10"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp9"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour10" />
+                    <TextView
+                        android:id="@+id/text_temp11"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP11"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp10"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour11" />
+                    <TextView
+                        android:id="@+id/text_temp12"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP12"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp11"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour12" />
+                    <TextView
+                        android:id="@+id/text_temp13"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP13"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp12"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour13" />
+                    <TextView
+                        android:id="@+id/text_temp14"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP14"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp13"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour14" />
+                    <TextView
+                        android:id="@+id/text_temp15"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP15"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp14"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour15" />
+                    <TextView
+                        android:id="@+id/text_temp16"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP16"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp15"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour16" />
+                    <TextView
+                        android:id="@+id/text_temp17"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP17"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp16"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour17" />
+                    <TextView
+                        android:id="@+id/text_temp18"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP18"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp17"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour18" />
+                    <TextView
+                        android:id="@+id/text_temp19"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP19"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp18"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour19" />
+                    <TextView
+                        android:id="@+id/text_temp20"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP20"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp19"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour20" />
+                    <TextView
+                        android:id="@+id/text_temp21"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP21"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp20"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour21" />
+                    <TextView
+                        android:id="@+id/text_temp22"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP22"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp21"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour22" />
+                    <TextView
+                        android:id="@+id/text_temp23"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP23"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp22"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour23" />
+                    <TextView
+                        android:id="@+id/text_temp24"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="TP24"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@+id/text_temp23"
+                        app:layout_constraintTop_toBottomOf="@+id/image_hour24" />
+
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             </HorizontalScrollView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="386dp"
-            android:layout_height="235dp"
+            android:id="@+id/constraintLayout"
+            android:layout_width="391dp"
+            android:layout_height="388dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -157,14 +922,15 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="7 - DAY FORECAST"
+                android:text="@string/title_7_day_forecast"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="366dp"
-                android:layout_height="180dp"
+                android:layout_width="375dp"
+                android:layout_height="336dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,67 +939,299 @@
                 <TextView
                     android:id="@+id/text_day1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="19dp"
                     android:text="Today"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text_day2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="21dp"
                     android:text="Day 2"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_day1" />
 
                 <TextView
                     android:id="@+id/text_day3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="21dp"
                     android:text="Day 3"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_day2" />
 
                 <TextView
                     android:id="@+id/text_day4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="21dp"
                     android:text="Day 4"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_day3" />
 
                 <TextView
                     android:id="@+id/text_day5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="21dp"
                     android:text="Day 5"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_day4" />
 
                 <TextView
                     android:id="@+id/text_day6"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="21dp"
                     android:text="Day 6"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_day5" />
+
+                <TextView
+                    android:id="@+id/text_day7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Day 7"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_day6" />
+
+                <ImageView
+                    android:id="@+id/image_day1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="68dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_weather_black_24dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_day1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_day2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginTop="44dp"
+                    android:src="@drawable/ic_weather_black_24dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_day2"
+                    app:layout_constraintTop_toTopOf="@+id/image_day1" />
+
+                <ImageView
+                    android:id="@+id/image_day3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginTop="44dp"
+                    android:src="@drawable/ic_weather_black_24dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_day3"
+                    app:layout_constraintTop_toTopOf="@+id/image_day2" />
+
+                <ImageView
+                    android:id="@+id/image_day4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginTop="44dp"
+                    android:src="@drawable/ic_weather_black_24dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_day4"
+                    app:layout_constraintTop_toTopOf="@+id/image_day3" />
+
+                <ImageView
+                    android:id="@+id/image_day5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginTop="48dp"
+                    android:src="@drawable/ic_weather_black_24dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_day5"
+                    app:layout_constraintTop_toTopOf="@+id/image_day4" />
+
+                <ImageView
+                    android:id="@+id/image_day6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginTop="44dp"
+                    android:src="@drawable/ic_weather_black_24dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_day6"
+                    app:layout_constraintTop_toTopOf="@+id/image_day5" />
+
+                <ImageView
+                    android:id="@+id/image_day7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginTop="44dp"
+                    android:src="@drawable/ic_weather_black_24dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_day7"
+                    app:layout_constraintTop_toTopOf="@+id/image_day6" />
+
+                <TextView
+                    android:id="@+id/text_day1_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Temp1"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/image_day1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_day2_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="44dp"
+                    android:text="Temp2"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/image_day2"
+                    app:layout_constraintTop_toTopOf="@+id/text_day1_temp" />
+                <TextView
+                    android:id="@+id/text_day3_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="44dp"
+                    android:text="Temp3"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/image_day3"
+                    app:layout_constraintTop_toTopOf="@+id/text_day2_temp" />
+                <TextView
+                    android:id="@+id/text_day4_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="44dp"
+                    android:text="Temp4"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/image_day4"
+                    app:layout_constraintTop_toTopOf="@+id/text_day3_temp" />
+
+                <TextView
+                    android:id="@+id/text_day5_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="48dp"
+                    android:text="Temp5"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/image_day5"
+                    app:layout_constraintTop_toTopOf="@+id/text_day4_temp" />
+
+                <TextView
+                    android:id="@+id/text_day6_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="44dp"
+                    android:text="Temp6"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/image_day6"
+                    app:layout_constraintTop_toTopOf="@+id/text_day5_temp" />
+                <TextView
+                    android:id="@+id/text_day7_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="44dp"
+                    android:text="Temp7"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/image_day7"
+                    app:layout_constraintTop_toTopOf="@+id/text_day6_temp" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="387dp"
+            android:layout_height="322dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <TextView
+                android:id="@+id/text_conditions"
+                android:layout_width="98dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/title_conditions"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/text_humidity"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="108dp"
+                android:gravity="center"
+                android:text="@string/title_humidity"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_wind_speed"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="152dp"
+                android:layout_marginTop="108dp"
+                android:gravity="center"
+                android:text="@string/title_windspeed"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/text_humidity"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_sunrise"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="68dp"
+                android:gravity="center"
+                android:text="@string/title_sunrise"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_humidity" />
+
+            <TextView
+                android:id="@+id/text_sunset"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="152dp"
+                android:layout_marginTop="68dp"
+                android:gravity="center"
+                android:text="@string/title_sunset"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/text_sunrise"
+                app:layout_constraintTop_toBottomOf="@+id/text_wind_speed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

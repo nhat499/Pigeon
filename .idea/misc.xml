@@ -7,16 +7,21 @@
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_add_contacts.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts.xml" value="0.25416666666666665" />
+
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/drawable-anydpi/ic_send.xml" value="0.1" />
+        <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.28854166666666664" />
+        <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
+        <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat_message.xml" value="0.14722222222222223" />
+
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_card.xml" value="0.15625" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_list.xml" value="0.19523809523809524" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_profile.xml" value="0.2" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/drawable-anydpi/ic_send.xml" value="0.1" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.28854166666666664" />
-<<<<<<< HEAD
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat_message.xml" value="0.14722222222222223" />
-=======
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/chat_room_card.xml" value="0.27395833333333336" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/chat_room_fragment.xml" value="0.27395833333333336" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_add_contacts.xml" value="0.13333333333333333" />
@@ -25,7 +30,6 @@
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat_message.xml" value="0.25" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat_room_card.xml" value="0.4361567635903919" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat_room_list.xml" value="0.33" />
->>>>>>> main
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts.xml" value="0.33" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_registration.xml" value="0.31716417910447764" />
         <entry key="..\:/Users/eugen/Desktop/Team-4-TCSS-450B/app/src/main/res/layout/fragment_sign_in.xml" value="0.25" />
@@ -33,10 +37,8 @@
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.18262411347517732" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts.xml" value="0.18262411347517732" />
-        <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_email_confirmation.xml" value="0.371875" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_email_verification.xml" value="0.371875" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_forgot_password.xml" value="0.347682119205298" />
-        <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_forgot_password_confirmation.xml" value="0.371875" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_home_landing.xml" value="0.18085106382978725" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_registration.xml" value="0.18262411347517732" />
         <entry key="..\:/Users/fcol3/AndroidStudioProjects/Team-4-TCSS-450B/app/src/main/res/layout/fragment_sign_in.xml" value="0.18262411347517732" />
@@ -79,7 +81,7 @@
         <entry key="app/src/main/res/layout/fragment_home_landing.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_home_landing_view_model.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.34193840579710144" />
-        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.31235958620798676" />
       </map>
     </option>
   </component>
