@@ -37,7 +37,7 @@ public class ContactsViewModel extends AndroidViewModel {
 
     public void addContactObserver(@NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super List<Contacts>> observer) {
-        getContactList().observe(owner, observer);
+        mContacts.observe(owner, observer);
     }
 
     /**
@@ -128,6 +128,7 @@ public class ContactsViewModel extends AndroidViewModel {
                 Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
             }
         }
+        mContacts.setValue(mContacts.getValue());
     }
 
     public void addContact(final String jwt, final String email) {
