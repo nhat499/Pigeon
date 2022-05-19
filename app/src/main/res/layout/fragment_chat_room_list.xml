@@ -25,4 +25,28 @@
         tools:context="edu.uw.tcss450.uiandnavigationlab.ui.blog.BlogListFragment"
         tools:listitem="@layout/fragment_chat_room_card" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_to_create_chat_room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="585dp"
+        android:layout_marginEnd="371dp"
+        android:layout_marginBottom="670dp"
+        android:src="@drawable/ic_add_black_24dp"
+        app:fabCustomSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.926"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

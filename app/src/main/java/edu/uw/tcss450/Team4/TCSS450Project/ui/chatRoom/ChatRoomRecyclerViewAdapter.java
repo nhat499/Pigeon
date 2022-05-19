@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -30,8 +31,11 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
     //Chat rooms to present.
     private final List<ChatRoom> mChatRooms;
 
-    public ChatRoomRecyclerViewAdapter(@NonNull List<ChatRoom> items) {
+    private final List<Integer> mNotificationList;
+
+    public ChatRoomRecyclerViewAdapter(@NonNull List<ChatRoom> items, List<Integer> notificationList) {
         this.mChatRooms = items;
+        this.mNotificationList = notificationList;
         mExpandedFlags = mChatRooms.stream()
                 .collect(Collectors.toMap(Function.identity(), blog -> false));
     }
@@ -63,16 +67,20 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
         public FragmentChatRoomCardBinding binding;
         private ChatRoom mChatRoom;
 
+
         public ChatRoomViewHolder(View view) {
             super(view);
             mView = view;
             binding = FragmentChatRoomCardBinding.bind(view);
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ChatRoomListFragmentDirections.ActionNavigationChatRoomListToNavigationChat directions =
+                            ChatRoomListFragmentDirections.actionNavigationChatRoomListToNavigationChat();
+                    directions.setRoom(mChatRoom.getRoomNumber());
                     Navigation.findNavController(view)
-                            .navigate(ChatRoomListFragmentDirections
-                                    .actionNavigationChatRoomListToNavigationChat());
+                            .navigate(directions);
                 }
             });
 //            binding.bu.setOnClickListener(this::handleMoreOrLess);
@@ -106,6 +114,22 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
         void setChatRoom(final ChatRoom chat) {
             mChatRoom = chat;
             binding.textTitle.setText(chat.getTitle());
+
+            // This handles setting the number of notifications of each chat room by looping
+            // through the current notification list and if the given chatID matches with any
+            // number in the notification list, we +1 to the notification number to the room.
+            if (!(mNotificationList == null) && !mNotificationList.isEmpty()) {
+                int count = 0;
+                for (int i = 0; i < mNotificationList.size(); i++) {
+                    if (mNotificationList.get(i) == mChatRoom.getRoomNumber()) {
+                        count++;
+                    }
+                }
+                if (count != 0) {
+                    binding.textNotification.setText(count + "");
+                    binding.textNotification.setTextColor(Color.RED);
+                }
+            }
 //            binding.buttonFullPost.setOnClickListener(view -> {
 //                Navigation.findNavController(mView).navigate(
 //                        ChatRoomListFragmentDirections.actionNavigationBlogsToBlogPostFragment(blog));

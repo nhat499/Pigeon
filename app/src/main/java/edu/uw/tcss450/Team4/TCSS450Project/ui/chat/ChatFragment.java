@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragmentDirections;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentArgs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,11 +31,12 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
 
     //The chat ID for "global" chat
-    private static final int HARD_CODED_CHAT_ID = 1;
+    private int HARD_CODED_CHAT_ID;
 
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
     private ChatSendViewModel mSendModel;
+    private CreateNewChatRoomViewModel mNewChatRoomModel;
 
 
     public ChatFragment() {
@@ -36,12 +46,15 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        HARD_CODED_CHAT_ID = args.getRoom();
+        Log.d("ASd", HARD_CODED_CHAT_ID + "");
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
         mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
-
+        mNewChatRoomModel = provider.get(CreateNewChatRoomViewModel.class);
     }
 
     @Override
@@ -56,7 +69,6 @@ public class ChatFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
-
         //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
         binding.swipeContainer.setRefreshing(true);
 
@@ -67,13 +79,30 @@ public class ChatFragment extends Fragment {
                         mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
                         mUserModel.getEmail()));
 
-
+        mSendModel.addResponseObserver(getViewLifecycleOwner(), this::observeResponse);
 
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() -> {
             mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         });
+
+        // To pass along the chat room id to be saved so we can navigate back
+        // to the original chat room.
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+
+        ChatFragmentDirections.ActionNavigationChatToAddMemberFragment directions =
+                ChatFragmentDirections.actionNavigationChatToAddMemberFragment();
+
+        directions.setRoom(args.getRoom());
+
+        // To prevent automatic navigation back to the list because of the HTTP response previously.
+        binding.buttonAdd.setOnClickListener(button ->
+                mNewChatRoomModel.clearResponse());
+
+        // Go to add new member fragment.
+        binding.buttonAdd.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(directions));
 
         mChatModel.addMessageObserver(HARD_CODED_CHAT_ID, getViewLifecycleOwner(),
                 list -> {
@@ -98,4 +127,28 @@ public class ChatFragment extends Fragment {
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
     }
+
+    /**
+     * An observer on the HTTP Response from the web server. This observer should be
+     * attached to SignInViewModel.
+     *
+     * @param response the Response from the server
+     */
+    private void observeResponse(final JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code")) {
+                try {
+                    binding.editMessage.setError(
+                                    response.getJSONObject("data").getString("message"));
+                } catch (JSONException e) {
+                    Log.e("JSON Parse Error", e.getMessage());
+                }
+            } else {
+
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+    }
+
 }

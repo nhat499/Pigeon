@@ -13,28 +13,20 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import edu.uw.tcss450.Team4.TCSS450Project.MainActivity;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
-import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
-import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
 
 
 public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.ViewHolder> {
 
     // creating variables for context and array list.
-    private Context context;
-    private ArrayList<ContactsViewModel> contactsModalArrayList ;
+
+    private ArrayList<Contacts> contactsModalArrayList ;
     private FragmentContactsListBinding binding;
 
     // creating a constructor
-    public ContactsRVAdapter(Context context, ArrayList<ContactsViewModel> contactsModalArrayList) {
-        this.context = context;
+    public ContactsRVAdapter(ArrayList<Contacts> contactsModalArrayList) {
         this.contactsModalArrayList = contactsModalArrayList;
     }
 
@@ -42,34 +34,26 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     @Override
     public ContactsRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // passing our layout file for displaying our card item
-        return new ContactsRVAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.fragment_contacts_card, parent, false));
+        return new ContactsRVAdapter.ViewHolder(LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.fragment_contacts_card, parent, false));
 
     }
 
-    // below method is use for filtering data in our array list
-    public void filterList(ArrayList<ContactsViewModel> filterllist) {
-        // on below line we are passing filtered
-        // array list in our original array list
-        contactsModalArrayList = filterllist;
-        notifyDataSetChanged();
-    }
 
     @Override
     public void onBindViewHolder(@NonNull ContactsRVAdapter.ViewHolder holder, int position) {
         // getting data from array list in our modal.
-        ContactsViewModel modal = contactsModalArrayList.get(position);
+        Contacts modal = contactsModalArrayList.get(position);
         // on below line we are setting data to our text view.
-        holder.contactTV.setText(modal.getUserName());
+        holder.contactTV.setText(modal.getFullName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on below line we are opening a new activity and passing data to it.
-                Intent i = new Intent(context, ContactDetailActivity.class);
-                i.putExtra("name", modal.getUserName());
-                i.putExtra("contact", modal.getContactNumber());
-                // on below line we are starting a new activity,
-                context.startActivity(i);
+                Navigation.findNavController(v).navigate(
+                        ContactsFragmentDirections.actionNavigationContactsToContactsProfile(
+                                modal.getFullName(), modal.getContactEmail()));
             }
         });
     }
