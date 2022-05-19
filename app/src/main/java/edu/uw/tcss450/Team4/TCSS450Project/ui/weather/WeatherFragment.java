@@ -121,8 +121,8 @@ public class WeatherFragment extends Fragment {
             JSONObject jsonDay = new JSONObject(jsonDaily.getString(i));
             JSONObject jsonTemp = new JSONObject(jsonDay.getString("temp"));
           //  Float kelvin = Float.parseFloat(jsonTemp.getString("day"));
-            int temperature = (int)convertToFar(kelvin);
-            temps.add(temperature);
+          //  int temperature = (int)convertToFar(kelvin);
+          //  temps.add(temperature);
         }
 
         Log.i("TEMPS", temps.toString());
@@ -163,18 +163,18 @@ public class WeatherFragment extends Fragment {
         ArrayList<Integer> hourTemps = new ArrayList<Integer>();
         ArrayList<String> unixTime = new ArrayList<String>();
         ArrayList<String> hourDescriptions = new ArrayList<String>();
-        JSONArray jsonHourly = jsonMessage.getJSONArray("hourly");
+      //  JSONArray jsonHourly = jsonMessage.getJSONArray("hourly");
 
         //The temps per hour
         for(int i = 0; i < 24; i++) {
-            JSONObject jsonInnerHourly = new JSONObject(jsonHourly.getString(i));
+           // JSONObject jsonInnerHourly = new JSONObject(jsonHourly.getString(i));
             //getting unix time
-            unixTime.add(jsonInnerHourly.getString("dt"));
+          //  unixTime.add(jsonInnerHourly.getString("dt"));
             //rest
-            String thisTemp = jsonInnerHourly.getString("temp");
-            Float kelvin = Float.parseFloat(thisTemp);
-            int temperature = (int)convertToFar(kelvin);
-            hourTemps.add(temperature);
+          //  String thisTemp = jsonInnerHourly.getString("temp");
+         //   Float kelvin = Float.parseFloat(thisTemp);
+          //  int temperature = (int)convertToFar(kelvin);
+          //  hourTemps.add(temperature);
         }
 
         //ADD ICON DATA LATER
