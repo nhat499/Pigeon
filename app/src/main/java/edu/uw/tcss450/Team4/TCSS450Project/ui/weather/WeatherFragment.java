@@ -5,12 +5,25 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentWeatherBinding;
@@ -26,32 +39,12 @@ public class WeatherFragment extends Fragment {
     private WeatherViewModel mSendWeatherModel;
     private FragmentWeatherBinding binding;
     static WeatherFragment instance;
+    private String cityName;
 
-    //city name and user's response
+    //empty constructor
+    public WeatherFragment() {
 
-    //current today weather
-    ImageView icon_weather;
-    TextView text_weather_description, text_temperature, text_city_name;
-
-    //hourly weather
-    ImageView image_hour1,image_hour2,image_hour3,image_hour4,image_hour5,image_hour6,image_hour7,image_hour8,image_hour9,image_hour10,image_hour11,image_hour12;
-    ImageView image_hour13,image_hour14,image_hour15,image_hour16,image_hour17,image_hour18,image_hour19,image_hour20,image_hour21,image_hour22,
-            image_hour23,image_hour24;
-    TextView text_hour1, text_hour2, text_hour3,text_hour4,text_hour5,text_hour6,text_hour7,text_hour8,text_hour9,text_hour10,text_hour11,text_hour12;
-    TextView text_hour13, text_hour14, text_hour15,text_hour16,text_hour17,text_hour18,text_hour19,text_hour20,text_hour21,text_hour22,text_hour23,text_hour24;
-    TextView text_temp1,text_temp2, text_temp3, text_temp4,text_temp5,text_temp6,text_temp7,text_temp8,text_temp9,text_temp10,text_temp11,text_temp12,
-            text_temp13, text_temp14,text_temp15,text_temp16,text_temp17,text_temp18,text_temp19,text_temp20,text_temp21,text_temp22,text_temp23,text_temp24;
-
-    //7-day forecast
-    TextView text_day1,text_day2,text_day3,text_day4,text_day5,text_day6,text_day7;
-    ImageView image_day1,image_day2,image_day3,image_day4,image_day5,image_day6,image_day7;
-    TextView text_day1_temp,text_day2_temp,text_day3_temp,text_day4_temp,text_day5_temp,text_day6_temp,text_day7_temp;
-
-    //weather conditions
-    TextView text_humidity,text_wind_speed,text_sunrise,text_sunset;
-
-
-
+    }
 
     public static WeatherFragment getInstance(){
         if (instance==null){
@@ -68,8 +61,8 @@ public class WeatherFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        mSendWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
 
 
     }
@@ -77,10 +70,215 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //mSendWeatherModel.getConnectWeather();
+        //mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(), this::observeCurrentWeather);
+        //mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(),weatherTemp -> binding.textTemperature.setText(weatherTemp.optJSONArray()));
+        //binding.buttonSearchCity.setOnClickListener(button -> mSendWeatherModel.connectPost()); //calling the connectGet() method from viewModel
+
 
 
     }
+    /**
+     * This method gets the current weather and formats it.
+     * @param response the json
+     * @throws JSONException json
+     */
+    public void getCurrentWeather(JSONObject response) throws JSONException{
+        //To get the message json
+        JSONObject jsonMessage = new JSONObject(response.getString("WeatherInfo"));
+        Log.i("TESTING", jsonMessage.toString());
 
+        //binding.cityName.setText(response.getString("message"));
+        //binding.weatherCityCountry.setText(jsonMessage.getString("name"));
+
+        //to get the main json, then the temp
+        JSONObject jsonMain = new JSONObject(jsonMessage.getString("main"));
+        Float kelvin = Float.parseFloat(jsonMain.getString("temp"));
+        Log.i("json", jsonMessage.toString());
+        int temperature = (int)convertToFar(kelvin);
+        binding.textTemperature.setText(String.valueOf(temperature + "°F"));
+
+        //gets the data array held in the 'weather' section
+        JSONArray jsonWeatherArray = new JSONArray(jsonMessage
+                .getString("weather"));
+
+        //converts the above array into a string to be cast into JSONObject
+        String str = jsonWeatherArray.getString(0);
+
+        //Casts into JSONObject and extract the description for the fragment
+        String jsonWeather = new JSONObject(str).getString("description");
+        binding.textWeatherDescription.setText(jsonWeather);
+    }
+
+    /**
+     * Gets the 5 day and hourly forecasts and formats it.
+     * @param response the json
+     * @throws JSONException json
+     */
+    public void getMultipleWeather(JSONObject response) throws JSONException{
+        ArrayList<Integer> temps = new ArrayList<Integer>();
+        ArrayList<String> descriptions = new ArrayList<String>();
+
+        JSONObject jsonMessage = new JSONObject(response.getString("message"));
+        Log.i("DAILY", jsonMessage.getString("daily"));
+        JSONArray jsonDaily = jsonMessage.getJSONArray("daily");
+
+        // loops for the weather for 7 days
+        for(int i = 0; i < 7; i++) {
+            JSONObject jsonDay = new JSONObject(jsonDaily.getString(i));
+            JSONObject jsonTemp = new JSONObject(jsonDay.getString("temp"));
+            Float kelvin = Float.parseFloat(jsonTemp.getString("day"));
+            int temperature = (int)convertToFar(kelvin);
+            temps.add(temperature);
+        }
+
+
+
+        Log.i("TEMPS", temps.toString());
+        Log.i("DESCS", descriptions.toString());
+
+        DateFormat df = new SimpleDateFormat("EE MMM dd:   ");
+        Calendar cal = Calendar.getInstance();
+        //String tod = df.format(today);
+
+        //Manually add the 5 day forecast
+        binding.textDay1.setText(df.format(cal.getTime()));
+        binding.textDay1Temp.setText(temps.get(0) + "°F");
+
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        binding.textDay2.setText(df.format(cal.getTime()));
+        binding.textDay2Temp.setText(temps.get(1) + "°F");
+
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        binding.textDay3.setText(df.format(cal.getTime()));
+        binding.textDay3Temp.setText(temps.get(2) + "°F");
+
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        binding.textDay4.setText(df.format(cal.getTime()));
+        binding.textDay4Temp.setText(temps.get(3) + "°F");
+
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        binding.textDay5.setText(df.format(cal.getTime()));
+        binding.textDay5Temp.setText(temps.get(4) + "°F");
+
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        binding.textDay6.setText(df.format(cal.getTime()));
+        binding.textDay6Temp.setText(temps.get(5) + "°F");
+
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        binding.textDay7.setText(df.format(cal.getTime()));
+        binding.textDay7Temp.setText(temps.get(6) + "°F");
+
+        //HOURLY
+        ArrayList<Integer> hourTemps = new ArrayList<Integer>();
+        ArrayList<String> unixTime = new ArrayList<String>();
+        ArrayList<String> hourDescriptions = new ArrayList<String>();
+        JSONArray jsonHourly = jsonMessage.getJSONArray("hourly");
+
+        //The temps
+        for(int i = 0; i < 24; i++) {
+            JSONObject jsonInnerHourly = new JSONObject(jsonHourly.getString(i));
+            //get unix time
+            unixTime.add(jsonInnerHourly.getString("dt"));
+            //rest
+            String thisTemp = jsonInnerHourly.getString("temp");
+            Float kelvin = Float.parseFloat(thisTemp);
+            int temperature = (int)convertToFar(kelvin);
+            hourTemps.add(temperature);
+        }
+        Log.i("HOURLY TEMPS", hourTemps.toString());
+
+        //The Descriptions
+        for(int i = 0; i < 24; i++) {
+            JSONObject jsonInnerHourly = new JSONObject(jsonHourly.getString(i));
+            JSONArray descArr = new JSONArray(jsonInnerHourly.getString("weather"));
+            JSONObject hourWeather = new JSONObject(descArr.getString(0));
+            hourDescriptions.add(hourWeather.getString("description"));
+        }
+
+        Log.i("UNIX TIME", unixTime.toString());
+        Date time = new Date(Long.parseLong(unixTime.get(0)) * 1000);
+        String exp = time.toString();
+        //Log.i("UNIX TIME!!!!!", exp);
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss -    ");
+        Log.i("TIME", timeFormat.format(time));
+
+        //time of day in hour:min:sec
+        Date hour1 = new Date(Long.parseLong(unixTime.get(0)) * 1000);
+        Date hour2 = new Date(Long.parseLong(unixTime.get(1)) * 1000);
+        Date hour3 = new Date(Long.parseLong(unixTime.get(2)) * 1000);
+        Date hour4 = new Date(Long.parseLong(unixTime.get(3)) * 1000);
+        Date hour5 = new Date(Long.parseLong(unixTime.get(4)) * 1000);
+        Date hour6 = new Date(Long.parseLong(unixTime.get(5)) * 1000);
+        Date hour7 = new Date(Long.parseLong(unixTime.get(6)) * 1000);
+        Date hour8 = new Date(Long.parseLong(unixTime.get(7)) * 1000);
+        Date hour9 = new Date(Long.parseLong(unixTime.get(8)) * 1000);
+        Date hour10 = new Date(Long.parseLong(unixTime.get(9)) * 1000);
+        Date hour11 = new Date(Long.parseLong(unixTime.get(10)) * 1000);
+        Date hour12 = new Date(Long.parseLong(unixTime.get(11)) * 1000);
+        Date hour13 = new Date(Long.parseLong(unixTime.get(12)) * 1000);
+        Date hour14 = new Date(Long.parseLong(unixTime.get(13)) * 1000);
+        Date hour15 = new Date(Long.parseLong(unixTime.get(14)) * 1000);
+        Date hour16 = new Date(Long.parseLong(unixTime.get(15)) * 1000);
+        Date hour17 = new Date(Long.parseLong(unixTime.get(16)) * 1000);
+        Date hour18 = new Date(Long.parseLong(unixTime.get(17)) * 1000);
+        Date hour19 = new Date(Long.parseLong(unixTime.get(18)) * 1000);
+        Date hour20 = new Date(Long.parseLong(unixTime.get(19)) * 1000);
+        Date hour21 = new Date(Long.parseLong(unixTime.get(20)) * 1000);
+        Date hour22 = new Date(Long.parseLong(unixTime.get(21)) * 1000);
+        Date hour23 = new Date(Long.parseLong(unixTime.get(22)) * 1000);
+        Date hour24 = new Date(Long.parseLong(unixTime.get(23)) * 1000);
+
+
+        binding.textHour1.setText(timeFormat.format(hour1));
+        binding.textTemp1.setText(hourTemps.get(0) + "°F");
+
+        binding.textHour2.setText(timeFormat.format(hour2));
+        binding.textTemp2.setText(hourTemps.get(1) + "°F");
+        // keep going until 24 NOT DONE
+
+
+
+    }
+    /**
+     * Gets the weather information for the current conditions.
+     * @param response the json
+     */
+    private void observeCurrentWeather(JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code")) {
+                try {
+                    binding.textTemperature.setError(
+                            "Error Authenticating: " +
+                                    response.getJSONObject("data").getString("message"));
+                } catch (JSONException e) {
+                    Log.e("JSON Parse Error", e.getMessage());
+                }
+            } else {
+                try {
+                    getCurrentWeather(response);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+    }
+
+
+    /**
+     * This method Converts Kelvin to Farenheit
+     * @param theInt
+     * @return long
+     */
+    public long convertToFar(Float theInt) {
+        //If 9.0 and 5.0 not stated as doubles then they will use int division and result in 1
+        double temp = (theInt * (9.0/5.0)) - 459.67;
+        return Math.round(temp);
+    }
 
 
 
