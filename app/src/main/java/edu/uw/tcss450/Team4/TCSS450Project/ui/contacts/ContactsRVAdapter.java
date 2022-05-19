@@ -21,13 +21,12 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBindi
 public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.ViewHolder> {
 
     // creating variables for context and array list.
-    private Context context;
+
     private ArrayList<Contacts> contactsModalArrayList ;
     private FragmentContactsListBinding binding;
 
     // creating a constructor
-    public ContactsRVAdapter(Context context, ArrayList<Contacts> contactsModalArrayList) {
-        this.context = context;
+    public ContactsRVAdapter(ArrayList<Contacts> contactsModalArrayList) {
         this.contactsModalArrayList = contactsModalArrayList;
     }
 
@@ -35,17 +34,19 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     @Override
     public ContactsRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // passing our layout file for displaying our card item
-        return new ContactsRVAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.fragment_contacts_card, parent, false));
+        return new ContactsRVAdapter.ViewHolder(LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.fragment_contacts_card, parent, false));
 
     }
 
     // below method is use for filtering data in our array list
-    public void filterList(ArrayList<Contacts> filterllist) {
-        // on below line we are passing filtered
-        // array list in our original array list
-        contactsModalArrayList = filterllist;
-        notifyDataSetChanged();
-    }
+//    public void filterList(ArrayList<Contacts> filterllist) {
+//        // on below line we are passing filtered
+//        // array list in our original array list
+//        contactsModalArrayList = filterllist;
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public void onBindViewHolder(@NonNull ContactsRVAdapter.ViewHolder holder, int position) {
@@ -58,7 +59,8 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(
-                        ContactsFragmentDirections.actionNavigationContactsToContactsProfile());
+                        ContactsFragmentDirections.actionNavigationContactsToContactsProfile(
+                                modal.getFullName(), modal.getContactEmail()));
             }
         });
     }

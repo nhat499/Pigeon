@@ -9,56 +9,39 @@ import androidx.annotation.Nullable;
  * @version May 2022
  */
 public class Contacts {
-    // variables for our user name
-    // and contact number.
+
     private int memberId;
+
     private String userFirstName;
+
     private String userLastName;
+
     private String contactEmail;
 
-    // constructor
-    public Contacts(String userFirstName, String userLastName, String contactEmail) {
+    public Contacts(String userFirstName, String userLastName, String contactEmail, int memberId) {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.contactEmail = contactEmail;
+        this.memberId = memberId;
     }
 
-    // on below line we have
-    // created getter and setter
     public String getUserFirstName() {
         return userFirstName;
-    }
-
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
     }
 
     public String getUserLastName() {
         return userLastName;
     }
 
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
-    }
-
     public String getContactEmail() {
         return contactEmail;
     }
 
-    public void setContactNumber(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
     public int getMemberId() {
         return memberId;
     }
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
-    }
 
-    public String getFullName() { return userFirstName + " " + userLastName; }
-
-
-
+    public String getFullName() { return getUserFirstName() + " " + getUserLastName(); }
 
     /**
      * Provides equality solely based on MessageId.

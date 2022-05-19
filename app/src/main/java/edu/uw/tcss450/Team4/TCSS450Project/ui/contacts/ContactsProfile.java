@@ -23,12 +23,14 @@ public class ContactsProfile extends Fragment {
 
     private ContactsViewModel mContactsViewModel;
     private FragmentContactsProfileBinding mBinding;
+    private Bundle mArgs;
     private UserInfoViewModel mUserModel;
     private Button profileDelete;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentContactsProfileBinding.inflate(inflater);
+        mArgs = getArguments();
         return mBinding.getRoot();
     }
     @Override
@@ -43,23 +45,23 @@ public class ContactsProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profileDelete = mBinding.buttonProfileDelete;
-        // on below line we are adding on click listener for our button.
-        profileDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("test respond", "onClick: " + mBinding.profileEmail.toString() );
-                mContactsViewModel.deleteContact(mUserModel.getmJwt(),"shirwaa331@gmail.com");
-
-                Navigation.findNavController(v).navigate(
-                        ContactsProfileDirections.actionContactsProfileToNavigationContacts2());
-            }
-        });
+//        profileDelete = mBinding.buttonProfileDelete;
+//        // on below line we are adding on click listener for our button.
+//        profileDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.e("test respond", "onClick: " + mBinding.profileEmail.toString() );
+//                mContactsViewModel.deleteContact(mUserModel.getmJwt(),"shirwaa331@gmail.com");
+//
+//                Navigation.findNavController(v).navigate(
+//                        ContactsProfileDirections.actionContactsProfileToNavigationContacts2());
+//            }
+//        });
        //contactName = mContactsViewModel.getContactsName(133);
         //Log.e("contact name: ", contactName);
        // contactEmail = mContactsViewModel.g
 
-        mBinding.profileName.setText("non");
-        mBinding.profileEmail.setText("hello@gmail.com");
+        mBinding.profileName.setText(mArgs.getString("name"));
+        mBinding.profileEmail.setText(mArgs.getString("email"));
     }
 }

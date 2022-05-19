@@ -45,6 +45,12 @@
         <action
             android:id="@+id/action_contactsProfile_to_navigation_contacts2"
             app:destination="@id/navigation_contacts" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/createContact"
