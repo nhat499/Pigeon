@@ -33,12 +33,13 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoom;
  * @version May 2022
  */
 public class HomeLandingViewModel extends AndroidViewModel {
-    public MutableLiveData<JSONObject> mResponse;
-    public HashMap<String, String> userInfo = new HashMap<>();
+    public MutableLiveData<HashMap<String, String>> mResponse;
+    //public HashMap<String, String> userInfo = new HashMap<>();
+
     public HomeLandingViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
-        mResponse.setValue(new JSONObject());
+        //mResponse.setValue(new JSONObject());
     }
 
     public void connect(final String email, String jwt) {
@@ -64,14 +65,22 @@ public class HomeLandingViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
-
+//nhat is gay and fat LOL kekw
         //code here will run
     }
 
     private void handleSuccess(final JSONObject response) {
-        Log.e("test respond", "onCreateView: " +
-                response.toString());
+        HashMap<String, String> userInfo = new HashMap<>();
+
         try {
+            Log.d("test respond2", "onHandleSuccess: " +
+                    response.toString());
+
+            Log.d("test respond2", "onCreateView: " +
+                    response.getJSONObject("userInfo").getString("firstname"));
+
+            Log.d("test respond2", "onCreateView: " + "hello");
+
             String name = response.getJSONObject("userInfo").getString("firstname") + " " +
                           response.getJSONObject("userInfo").getString("lastname");
             String email = response.getJSONObject("userInfo").getString("email");
@@ -82,39 +91,16 @@ public class HomeLandingViewModel extends AndroidViewModel {
             String numOfMessages = response.getString("numOfMessages");
             userInfo.put("numOfContact", numOfContact);
             userInfo.put("numOfMessages", numOfMessages);
+            Log.d("test", "handleSuccess: " + name + email + numOfContact + numOfMessages);
 
         } catch (JSONException e) {
             Log.e("handleSuccess", "handleSuccess: " + e );
         }
-
-
-
-
-
-
-        mResponse.setValue(response);
+        mResponse.postValue(userInfo);
+        //Log.d("test", "handleSuccess: "+ mResponse.toString());
     }
 
     private void handleError(final VolleyError error) {
-        if (Objects.isNull(error.networkResponse)) {
-            try {
-                mResponse.setValue(new JSONObject("{" +
-                        "error:\"" + error.getMessage() +
-                        "\"}"));
-            } catch (JSONException e) {
-                Log.e("JSON PARSE", "JSON Parse Error in handleError");
-            }
-        }
-        else {
-            String data = new String(error.networkResponse.data, Charset.defaultCharset());
-            try {
-                mResponse.setValue(new JSONObject("{" +
-                        "code:" + error.networkResponse.statusCode +
-                        ", data:" + data +
-                        "}"));
-            } catch (JSONException e) {
-                Log.e("JSON PARSE", "JSON Parse Error in handleError");
-            }
-        }
+
     }
 }

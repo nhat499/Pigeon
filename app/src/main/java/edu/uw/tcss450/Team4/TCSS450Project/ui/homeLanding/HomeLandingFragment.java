@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentHomeLandingBinding;
@@ -30,7 +32,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentHomeLandingBindin
 public class HomeLandingFragment extends Fragment {
     private FragmentHomeLandingBinding mBinding;
     private HomeLandingViewModel mHomeLandModel;
-
+    //public HashMap<String, String> userInfo = new HashMap<>();
+    //MutableLiveData<JSONObject> userInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,19 +41,24 @@ public class HomeLandingFragment extends Fragment {
         HomeLandingFragmentArgs  args = HomeLandingFragmentArgs
                 .fromBundle(getActivity().getIntent().getExtras());
 
-        Log.e("test respond", "onCreateView: " + args.getJwt());
+
+        //Log.e("test respond", "onCreateView: " + args.getJwt());
         mHomeLandModel = new ViewModelProvider(getActivity())
                 .get(HomeLandingViewModel.class);
+
         mHomeLandModel.connect(args.getJwt(), args.getEmail()); // should be swap once fix
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //
+        mBinding = FragmentHomeLandingBinding.inflate(inflater);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_landing, container, false);
+        return mBinding.getRoot();
+//        return inflater.inflate(R.layout.fragment_home_landing, container, false);
     }
 
     @Override
@@ -58,7 +66,13 @@ public class HomeLandingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        UserInfoViewModel model = new ViewModelProvider(getActivity())
 //                .get(UserInfoViewModel.class);
-        mBinding.numOfContact.setText(mHomeLandModel.userInfo.get("numOfContact"));
+//        Log.e("test", "onViewCreated: " + mHomeLandModel.userInfo.get("numOfContact") );
+        //mBinding.numOfContact.setText(mHomeLandModel.mResponse.getValue().get("numOfContact"));
+        //String a = mHomeLandModel.mResponse.getValue().toString();
+        //Log.d("test", "onViewCreated: " + a);
+        mBinding.numOfContact.setText(mHomeLandModel.mResponse.getValue().toString());
+
+
 //        Log.e("test respond", "onCreateView: " +
 //                mHomeLandModel.mResponse.getValue().g);
     }
