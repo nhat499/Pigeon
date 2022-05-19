@@ -188,6 +188,7 @@ public class ContactsViewModel extends AndroidViewModel {
             Log.e("JSON PARSE ERROR", "Found in handle Success ContactViewModel");
             Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
+        mContacts.setValue(mContacts.getValue());
     }
 
     private void handleError(final VolleyError error) {
