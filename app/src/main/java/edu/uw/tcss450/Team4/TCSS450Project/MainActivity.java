@@ -41,6 +41,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragmentArgs;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
 
 /**
  * Class that defines the lifecycle for the Main Activity
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView contactTV, nameTV;
     private ImageView contactIV, callIV, messageIV;
     private TextView user_email,user_uid;
+
+    private MainActivityArgs args;
+
     private AppBarConfiguration mAppBarConfiguration;
 
     private MainPushMessageReceiver mPushMessageReceiver;
@@ -65,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     private ChatViewModel mChatModel;
 
     private ActivityMainBinding binding;
+
+    private HomeLandingViewModel mHomeLanding;
 
 
     @Override
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         contextOfApplication = getApplicationContext();
 
-        MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
+        args = MainActivityArgs.fromBundle(getIntent().getExtras());
 
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getJwt(),args.getEmail())
@@ -90,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         mChatRoomModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         mChatModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        mHomeLanding = new ViewModelProvider(this).get(HomeLandingViewModel.class);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -365,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
                 mModel.addMessage(intent.getIntExtra("chatid", -1), cm);
                 //Inform the chat room view model of notification of a specific room.
                 mChatRoomModel.addNotification(intent.getIntExtra("chatid", -1));
+                mHomeLanding.connect(args.getJwt(), args.getEmail());
             }
         }
     }

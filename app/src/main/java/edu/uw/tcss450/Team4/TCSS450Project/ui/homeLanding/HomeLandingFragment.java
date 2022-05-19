@@ -41,7 +41,6 @@ public class HomeLandingFragment extends Fragment {
         mHomeLandModel = new ViewModelProvider(getActivity())
                 .get(HomeLandingViewModel.class);
         mHomeLandModel.connect(args.getJwt(), args.getEmail()); // should be swap once fix
-
     }
 
     @Override
@@ -65,7 +64,7 @@ public class HomeLandingFragment extends Fragment {
         //String a = mHomeLandModel.mResponse.getValue().toString();
         //Log.d("test", "onViewCreated: " + a);
         ///while(mHomeLandModel.mResponse.getValue().isEmpty()) {}
-        FragmentHomeLandingBinding binding = FragmentHomeLandingBinding.bind(getView());
+        // FragmentHomeLandingBinding binding = FragmentHomeLandingBinding.bind(getView());
 //
 //        mHomeLandModel.HomeLandingObserver(getViewLifecycleOwner(), s -> {
 //            binding.layoutRoot.set
