@@ -29,6 +29,21 @@ import android.widget.TextView;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+//COMMENTED IMPORTS
+/**
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+**/
+import java.util.ArrayList;
+import java.util.List;
+
+
 import java.util.Collections;
 import java.util.List;
 
@@ -175,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.action_dark_mode);
         item.setChecked(isChecked);
 
-        //requestPermissions();
         MenuItem searchViewItem = menu.findItem(R.id.search);
         // on below line we are creating a variable for our search view.
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
@@ -242,54 +256,7 @@ public class MainActivity extends AppCompatActivity {
     {
         return contextOfApplication;
     }
-    //    private void requestPermissions() {
-//        // below line is use to request
-//        // permission in the current activity.
-//        Dexter.withActivity(this)
-//                // below line is use to request the number of
-//                // permissions which are required in our app.
-//                .withPermissions(Manifest.permission.READ_CONTACTS,
-//                        // below is the list of permissions
-//                        Manifest.permission.CALL_PHONE,
-//                        Manifest.permission.SEND_SMS, Manifest.permission.WRITE_CONTACTS)
-//                // after adding permissions we are
-//                // calling an with listener method.
-//                .withListener(new MultiplePermissionsListener() {
-//                    @Override
-//                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-//                        // this method is called when all permissions are granted
-//                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
-//                            // do you work now
-//                            //getContacts();
-//                            Toast.makeText(MainActivity.this, "All the permissions are granted..", Toast.LENGTH_SHORT).show();
-//                        }
-//                        // check for permanent denial of any permission
-//                        if (multiplePermissionsReport.isAnyPermissionPermanentlyDenied()) {
-//                            // permission is denied permanently,
-//                            // we will show user a dialog message.
-//                            showSettingsDialog();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
-//                        // this method is called when user grants some
-//                        // permission and denies some of them.
-//                        permissionToken.continuePermissionRequest();
-//                    }
-//                }).withErrorListener(new PermissionRequestErrorListener() {
-//            // this method is use to handle error
-//            // in runtime permissions
-//            @Override
-//            public void onError(DexterError error) {
-//                // we are displaying a toast message for error message.
-//                Toast.makeText(getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
-//            }
-//        })
-//                // below line is use to run the permissions
-//                // on same thread and to check the permissions
-//                .onSameThread().check();
-//    }
+
     private void showSettingsDialog() {
         // we are displaying an alert dialog for permissions
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

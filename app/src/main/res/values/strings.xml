@@ -32,7 +32,7 @@
     <string name="title_weather">WEATHER</string>
     <string name="title_contacts">CONTACTS</string>
     <string name="title_chat">CHAT</string>
-    // for email page
+    // For email page
     <string name="title_email_verify"><b>Email sent</b></string>
     <string name="description_email_confirmation">We sent an email to ? with a link to ...</string>
     <string name="action_email_verify">Back to sign in</string>
@@ -41,11 +41,29 @@
     <string name="action_sign_out">Sign out</string>
     // For search bar
     <string name="title_search">Search</string>
+
+    //For weather
+    <string name="hint_city_name">Enter City Name</string>
+    <string name="title_city_name">City Name</string>
+    <string name="text_curr_condition">Cloudy</string>
+    <string name="text_curr_temperature">Temperature</string>
+    <string name="title_hourly_forecast">HOURLY FORECAST</string>
+    <string name="title_7_day_forecast">7 - DAY FORECAST</string>
+    <string name="title_conditions">CONDITIONS</string>
+    <string name="title_humidity">Humidity</string>
+    <string name="title_windspeed">Wind Speed</string>
+    <string name="title_sunset">Sunset</string>
+    <string name="title_sunrise">Sunrise</string>
+    <string name="title_feels_like">Feels Like</string>
+    <string name="title_pressure">Pressure</string>
+
+
     // For shared preferences
     <string name="keys_shared_prefs">Shared Prefs</string>
     <string name="keys_prefs_jwt">Shared Prefs JWT</string>
     <string name="keys_prefs_dark_mode">Shared Prefs Dark</string>
     // For HTTP requests
+
     <string name="base_url_service">https://team-4-tcss-450-web-service.herokuapp.com/</string>
     <string name="base_url_auth">https://team-4-tcss-450-web-service.herokuapp.com/</string>
     // IDK
