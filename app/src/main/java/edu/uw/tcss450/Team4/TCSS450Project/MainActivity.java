@@ -78,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-       // String email = mUser.gotEmail();
+        // String email = mUser.gotEmail();
         //String current_user_uid = mUser.getUid();
 
-       // user_email.setText(email);
-       // user_uid.setText(current_user_uid);
+        // user_email.setText(email);
+        // user_uid.setText(current_user_uid);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
     {
         return contextOfApplication;
     }
-//    private void requestPermissions() {
+    //    private void requestPermissions() {
 //        // below line is use to request
 //        // permission in the current activity.
 //        Dexter.withActivity(this)

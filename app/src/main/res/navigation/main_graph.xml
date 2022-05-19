@@ -34,11 +34,11 @@
             android:id="@+id/action_navigation_contacts_to_navigation_chat"
             app:destination="@id/navigation_chat" />
         <action
-            android:id="@+id/action_navigation_contacts_to_createNewContactActivity"
-            app:destination="@id/createNewContactActivity" />
+            android:id="@+id/action_navigation_contacts_to_contactsProfile"
+            app:destination="@id/contactsProfile" />
         <action
-            android:id="@+id/action_navigation_contacts_to_contactDetailActivity"
-            app:destination="@id/contactDetailActivity" />
+            android:id="@+id/action_navigation_contacts_to_createContact"
+            app:destination="@id/createContact" />
     </fragment>
 
     <fragment
@@ -67,14 +67,28 @@
             app:destination="@id/createNewChatRoomFragment" />
     </fragment>
 
-    <activity
-        android:id="@+id/createNewContactActivity"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateNewContactActivity"
-        android:label="CreateNewContactActivity" />
-    <activity
-        android:id="@+id/contactDetailActivity"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactDetailActivity"
-        android:label="ContactDetailActivity" />
+    <fragment
+        android:id="@+id/contactsProfile"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsProfile"
+        android:label="ContactsProfile" >
+        <action
+            android:id="@+id/action_contactsProfile_to_navigation_contacts2"
+            app:destination="@id/navigation_contacts" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/createContact"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateContact"
+        android:label="CreateContact" >
+        <action
+            android:id="@+id/action_createContact_to_navigation_contacts"
+            app:destination="@id/navigation_contacts" />
+    </fragment>
     <fragment
         android:id="@+id/createNewChatRoomFragment"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomFragment"
