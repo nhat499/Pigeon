@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.contacts;
 
 import android.app.Application;
+import android.text.Editable;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -131,7 +132,7 @@ public class ContactsViewModel extends AndroidViewModel {
         mContacts.setValue(mContacts.getValue());
     }
 
-    public void addContact(final String jwt, final String email) {
+    public void addContact(final String jwt, final Editable email) {
         String url = "https://team-4-tcss-450-web-service.herokuapp.com/"
                 + "contact";
 
@@ -217,7 +218,7 @@ public class ContactsViewModel extends AndroidViewModel {
                 Request.Method.POST,
                 url,
                 body,
-                this::handleAdd,
+                this::handleDelete,
                 this::handleError) {
             @Override
             public Map<String, String> getHeaders() {
@@ -236,10 +237,6 @@ public class ContactsViewModel extends AndroidViewModel {
     }
 
     private void handleDelete(final JSONObject response) {
-        if (!response.has("message") ) {
-            throw new IllegalStateException("Unexpected response in ContactViewModel: " + response);
-        }
-        //might need to change the delete endpoint to return the deleted contact so
-        //it can be removed from the list on the client side
+        mContacts.getValue().remove(response);
     }
 }

@@ -45,21 +45,18 @@ public class ContactsProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        profileDelete = mBinding.buttonProfileDelete;
-//        // on below line we are adding on click listener for our button.
-//        profileDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.e("test respond", "onClick: " + mBinding.profileEmail.toString() );
-//                mContactsViewModel.deleteContact(mUserModel.getmJwt(),"shirwaa331@gmail.com");
-//
-//                Navigation.findNavController(v).navigate(
-//                        ContactsProfileDirections.actionContactsProfileToNavigationContacts2());
-//            }
-//        });
-       //contactName = mContactsViewModel.getContactsName(133);
-        //Log.e("contact name: ", contactName);
-       // contactEmail = mContactsViewModel.g
+        profileDelete = mBinding.buttonProfileDelete;
+        // on below line we are adding on click listener for our button.
+        profileDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("test respond", "onClick: " + mBinding.profileEmail.toString() );
+                mContactsViewModel.deleteContact(mUserModel.getmJwt(),mArgs.getString("email"));
+
+                Navigation.findNavController(v).navigate(
+                        ContactsProfileDirections.actionContactsProfileToNavigationContacts2());
+            }
+        });
 
         mBinding.profileName.setText(mArgs.getString("name"));
         mBinding.profileEmail.setText(mArgs.getString("email"));

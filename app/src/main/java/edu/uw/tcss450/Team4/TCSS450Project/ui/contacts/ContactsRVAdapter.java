@@ -40,13 +40,6 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
 
     }
 
-    // below method is use for filtering data in our array list
-//    public void filterList(ArrayList<Contacts> filterllist) {
-//        // on below line we are passing filtered
-//        // array list in our original array list
-//        contactsModalArrayList = filterllist;
-//        notifyDataSetChanged();
-//    }
 
     @Override
     public void onBindViewHolder(@NonNull ContactsRVAdapter.ViewHolder holder, int position) {

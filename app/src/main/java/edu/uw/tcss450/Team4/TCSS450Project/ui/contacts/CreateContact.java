@@ -3,6 +3,7 @@ package edu.uw.tcss450.Team4.TCSS450Project.ui.contacts;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,15 +51,15 @@ public class CreateContact extends Fragment {
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Editable name = mBinding.edit2ContactName.getText();
                 Editable email = mBinding.edit2ContactEmail.getText();
 
                 // on below line we are making a text validation.
-                if (TextUtils.isEmpty(name) && TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getActivity(), "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //mContactsViewModel.addContact(mUserModel.getmJwt(),mBinding.edit2ContactEmail.getText());
+                    mContactsViewModel.addContact(mUserModel.getmJwt(),mBinding.edit2ContactEmail.getText());
+                    Log.e("test respond", "onClick: " + mBinding.edit2ContactEmail.getText() );
                     Navigation.findNavController(v).navigate(
                             CreateContactDirections.actionCreateContactToNavigationContacts());
                 }
