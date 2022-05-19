@@ -88,6 +88,9 @@ public class WeatherViewModel extends AndroidViewModel {
     private void handleResult(final JSONObject result) {
 
         mResponse.setValue(result);
+        //try{
+        //    JSONObject current = result.getJSON
+       // }
     }
     private void handleResultHD(final JSONObject result) {
 

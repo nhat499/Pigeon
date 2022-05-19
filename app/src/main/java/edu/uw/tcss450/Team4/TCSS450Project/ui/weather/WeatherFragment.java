@@ -57,7 +57,9 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+       // return inflater.inflate(R.layout.fragment_weather, container, false);
+        binding = FragmentWeatherBinding.inflate(inflater);
+        return binding.getRoot();
 
     }
 
@@ -86,18 +88,9 @@ public class WeatherFragment extends Fragment {
      */
     public void getCurrentWeather(JSONObject response) throws JSONException{
         //To get the message json
-        JSONObject jsonMessage = new JSONObject(response.getString("WeatherInfo"));
+        JSONObject jsonMessage = new JSONObject(response.getString("current"));
         Log.i("TESTING", jsonMessage.toString());
-
-        //binding.cityName.setText(response.getString("message"));
-        //binding.weatherCityCountry.setText(jsonMessage.getString("name"));
-
-        //to get the main json, then the temp
-        JSONObject jsonMain = new JSONObject(jsonMessage.getString("main"));
-        Float kelvin = Float.parseFloat(jsonMain.getString("temp"));
-        Log.i("json", jsonMessage.toString());
-        int temperature = (int)convertToFar(kelvin);
-        binding.textTemperature.setText(String.valueOf(temperature + "°F"));
+        binding.textTemperature.setText(String.valueOf(jsonMessage.getString("temp") + "°F"));
 
         //gets the data array held in the 'weather' section
         JSONArray jsonWeatherArray = new JSONArray(jsonMessage
@@ -116,27 +109,23 @@ public class WeatherFragment extends Fragment {
      * @param response the json
      * @throws JSONException json
      */
-    public void getMultipleWeather(JSONObject response) throws JSONException{
+    public void getWeatherHD(JSONObject response) throws JSONException{
         ArrayList<Integer> temps = new ArrayList<Integer>();
-        ArrayList<String> descriptions = new ArrayList<String>();
 
-        JSONObject jsonMessage = new JSONObject(response.getString("message"));
-        Log.i("DAILY", jsonMessage.getString("daily"));
-        JSONArray jsonDaily = jsonMessage.getJSONArray("daily");
+        JSONObject jsonMessageDaily = new JSONObject(response.getString("daily"));
+        //Log.i("DAILY", jsonMessageDaily.getString("daily"));
+        JSONArray jsonDaily = jsonMessageDaily.getJSONArray("daily");
 
         // loops for the weather for 7 days
         for(int i = 0; i < 7; i++) {
             JSONObject jsonDay = new JSONObject(jsonDaily.getString(i));
             JSONObject jsonTemp = new JSONObject(jsonDay.getString("temp"));
-            Float kelvin = Float.parseFloat(jsonTemp.getString("day"));
+          //  Float kelvin = Float.parseFloat(jsonTemp.getString("day"));
             int temperature = (int)convertToFar(kelvin);
             temps.add(temperature);
         }
 
-
-
         Log.i("TEMPS", temps.toString());
-        Log.i("DESCS", descriptions.toString());
 
         DateFormat df = new SimpleDateFormat("EE MMM dd:   ");
         Calendar cal = Calendar.getInstance();
@@ -346,7 +335,7 @@ public class WeatherFragment extends Fragment {
                 }
             } else {
                 try {
-                    getMultipleWeather(response);
+                    getWeatherHD(response);
 
 
                 } catch (JSONException e) {
@@ -357,19 +346,4 @@ public class WeatherFragment extends Fragment {
             Log.d("JSON Response", "No Response");
         }
     }
-
-
-    /**
-     * This method Converts Kelvin to Farenheit
-     * @param theInt
-     * @return long
-     */
-    public long convertToFar(Float theInt) {
-        //If 9.0 and 5.0 not stated as doubles then they will use int division and result in 1
-        double temp = (theInt * (9.0/5.0)) - 459.67;
-        return Math.round(temp);
-    }
-
-
-
 }
