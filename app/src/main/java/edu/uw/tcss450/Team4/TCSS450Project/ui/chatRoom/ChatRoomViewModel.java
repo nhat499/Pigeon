@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +40,12 @@ public class ChatRoomViewModel extends AndroidViewModel {
      * A Map of Lists of Chat Rooms ids.
      */
     private MutableLiveData<List<ChatRoom>> mChatRoomList;
-    private MutableLiveData<List<String>> mChatRoomName;
+    private MutableLiveData<List<Integer>> mChatRoomNotifications;
 
     public ChatRoomViewModel(@NonNull Application application) {
         super(application);
         mChatRoomList = new MutableLiveData<>();
+        mChatRoomNotifications = new MutableLiveData<>();
     }
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
@@ -51,12 +53,48 @@ public class ChatRoomViewModel extends AndroidViewModel {
         mChatRoomList.observe(owner, observer);
     }
 
-    public List<ChatRoom> getChatList() {
-        return mChatRoomList.getValue();
+    public void addNotificationObserver(@NonNull LifecycleOwner owner,
+                                        @NonNull Observer<? super List<Integer>> observer) {
+        mChatRoomNotifications.observe(owner, observer);
     }
 
-    public List<ChatRoom> getChatRoomName(int chatID) {
-        return null;
+    public List<ChatRoom> getChatList() {
+        List<ChatRoom> result = new ArrayList<ChatRoom>();
+        if (!(mChatRoomList.getValue() == null)) {
+            result = mChatRoomList.getValue();
+        }
+        return result;
+    }
+
+    public List<Integer> getNotificationList() {
+        List<Integer> result = new ArrayList<Integer>();
+        if (!(mChatRoomNotifications.getValue() == null)) {
+            result = mChatRoomNotifications.getValue();
+        }
+        return result;
+    }
+
+    public void clearNotificationForRoom(int room) {
+        List<Integer> result = new ArrayList<Integer>();
+        if (!(mChatRoomNotifications.getValue() == null)) {
+            result = mChatRoomNotifications.getValue();
+            result.removeAll(Collections.singleton(room));
+            mChatRoomNotifications.setValue(result);
+        }
+    }
+
+    // No "add" method directly to mutablelivedata, this is a workaround to add an element.
+    public void addNotification(int i) {
+        List<Integer> result = new ArrayList<Integer>();
+
+        // If there are no notifications, it handles it here.
+        if (mChatRoomNotifications.getValue() == null) {
+            result.add(i);
+        } else {
+            result = mChatRoomNotifications.getValue();
+            result.add(i);
+        }
+        mChatRoomNotifications.setValue(result);
     }
 
     // Get the list of chat room ids and chat room names HERE.

@@ -150,4 +150,5 @@ public class ChatFragment extends Fragment {
             Log.d("JSON Response", "No Response");
         }
     }
+
 }

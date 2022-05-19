@@ -37,9 +37,26 @@ public class ChatViewModel extends AndroidViewModel {
      */
     private Map<Integer, MutableLiveData<List<ChatMessage>>> mMessages;
 
+    // Current room.
+    private MutableLiveData<Integer> room;
+
     public ChatViewModel(@NonNull Application application) {
         super(application);
         mMessages = new HashMap<>();
+        // No room yet.
+        room = new MutableLiveData<>();
+    }
+
+    public void setCurrentRoom(int i) {
+        room.setValue(i);
+    }
+
+    public int getCurrentRoom() {
+        int result = -1;
+        if (!(room.getValue() == null)) {
+            result = room.getValue();
+        }
+        return result;
     }
 
     /**
@@ -52,6 +69,11 @@ public class ChatViewModel extends AndroidViewModel {
                                    @NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super List<ChatMessage>> observer) {
         getOrCreateMapEntry(chatId).observe(owner, observer);
+    }
+
+    public void addRoomObserver(@NonNull LifecycleOwner owner,
+                                @NonNull Observer<? super Integer> observer) {
+        room.observe(owner, observer);
     }
 
     /**
@@ -182,6 +204,7 @@ public class ChatViewModel extends AndroidViewModel {
             throw new IllegalStateException("Unexpected response in ChatViewModel: " + response);
         }
         try {
+            room.setValue(response.getInt("chatId"));
             list = getMessageListByChatId(response.getInt("chatId"));
             JSONArray messages = response.getJSONArray("rows");
             for(int i = 0; i < messages.length(); i++) {
@@ -198,8 +221,8 @@ public class ChatViewModel extends AndroidViewModel {
                 } else {
                     // this shouldn't happen but could with the asynchronous
                     // nature of the application
-                    Log.wtf("Chat message already received",
-                            "Or duplicate id:" + cMessage.getMessageId());
+//                    Log.wtf("Chat message already received",
+//                            "Or duplicate id:" + cMessage.getMessageId());
                 }
 
             }

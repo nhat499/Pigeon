@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,12 +28,19 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Collections;
+import java.util.List;
+
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.ActivityMainBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.NewMessageCountViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.services.PushReceiver;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
 
 /**
  * Class that defines the lifecycle for the Main Activity
@@ -51,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
     private MainPushMessageReceiver mPushMessageReceiver;
 
     private NewMessageCountViewModel mNewMessageModel;
+
+    private ChatRoomViewModel mChatRoomModel;
+
+    private ChatViewModel mChatModel;
 
     private ActivityMainBinding binding;
 
@@ -75,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getJwt(),args.getEmail())
         ).get(UserInfoViewModel.class);
+
+        mChatRoomModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
+        mChatModel = new ViewModelProvider(this).get(ChatViewModel.class);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -102,11 +117,22 @@ public class MainActivity extends AppCompatActivity {
                 //When the user navigates to the chats page, reset the new message count.
                 //This will need some extra logic for your project as it should have
                 //multiple chat rooms.
-                mNewMessageModel.reset();
+                mChatRoomModel.getNotificationList();
             }
         });
+
+        // Observe current room changes. Clears notifications for the room that has been clicked on.
+        mChatModel.addRoomObserver(this, count -> {
+            if (!(mChatRoomModel.getNotificationList() == null)) {
+                List<Integer> notifications = mChatRoomModel.getNotificationList();
+                notifications.removeAll(Collections.singleton((mChatModel.getCurrentRoom())));
+                int length = notifications.size();
+                mNewMessageModel.setEqual(length);
+            }
+        });
+
         mNewMessageModel.addMessageCountObserver(this, count -> {
-            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_chat);
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_chat_room_list);
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 //new messages! update and show the notification badge.
@@ -330,12 +356,15 @@ public class MainActivity extends AppCompatActivity {
                 ChatMessage cm = (ChatMessage) intent.getSerializableExtra("chatMessage");
                 //If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.navigation_chat) {
+                if (nd.getId() != R.id.navigation_chat || (nd.getId() == R.id.navigation_chat &&
+                        !(mChatModel.getCurrentRoom() == intent.getIntExtra("chatid", -1)))) {
                     mNewMessageModel.increment();
                 }
                 //Inform the view model holding chatroom messages of the new
                 //message.
                 mModel.addMessage(intent.getIntExtra("chatid", -1), cm);
+                //Inform the chat room view model of notification of a specific room.
+                mChatRoomModel.addNotification(intent.getIntExtra("chatid", -1));
             }
         }
     }
