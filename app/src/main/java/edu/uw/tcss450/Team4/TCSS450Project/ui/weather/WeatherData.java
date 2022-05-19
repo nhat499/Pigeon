@@ -5,17 +5,20 @@ import androidx.annotation.NonNull;
 public class WeatherData {
     /**
      * A class that represents the current weather data.
-     * not finished
+     * NOT FINISHED!!!
      */
     public class Weather {
 
         private final String condition;
+        //private final int sunrise;
+      //  private final int sunset;
+       // private final double feels_like;
+
         private final double temp;
         private final double humidity;
         private final double windspeed;
         private final String description;
         private final String icon;
-       // private final int dt;
        // private final int sunset;
        // private final int
 
