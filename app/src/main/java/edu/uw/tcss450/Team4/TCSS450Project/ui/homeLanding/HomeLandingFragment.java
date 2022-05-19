@@ -32,20 +32,14 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentHomeLandingBindin
 public class HomeLandingFragment extends Fragment {
     private FragmentHomeLandingBinding mBinding;
     private HomeLandingViewModel mHomeLandModel;
-    //public HashMap<String, String> userInfo = new HashMap<>();
-    //MutableLiveData<JSONObject> userInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         HomeLandingFragmentArgs  args = HomeLandingFragmentArgs
                 .fromBundle(getActivity().getIntent().getExtras());
-
-
-        //Log.e("test respond", "onCreateView: " + args.getJwt());
         mHomeLandModel = new ViewModelProvider(getActivity())
                 .get(HomeLandingViewModel.class);
-
         mHomeLandModel.connect(args.getJwt(), args.getEmail()); // should be swap once fix
 
     }
@@ -70,9 +64,22 @@ public class HomeLandingFragment extends Fragment {
         //mBinding.numOfContact.setText(mHomeLandModel.mResponse.getValue().get("numOfContact"));
         //String a = mHomeLandModel.mResponse.getValue().toString();
         //Log.d("test", "onViewCreated: " + a);
-        mBinding.numOfContact.setText(mHomeLandModel.mResponse.getValue().toString());
+        ///while(mHomeLandModel.mResponse.getValue().isEmpty()) {}
+        FragmentHomeLandingBinding binding = FragmentHomeLandingBinding.bind(getView());
+//
+//        mHomeLandModel.HomeLandingObserver(getViewLifecycleOwner(), s -> {
+//            binding.layoutRoot.set
+//        });
 
+        Observer<HashMap<String,String>> userInfoObserver = map -> {
+            mBinding.numOfContact.setText(map.get("numOfContact"));
+            mBinding.numOfMessage.setText(map.get("numOfMessages"));
+            mBinding.profileName.setText(map.get("name"));
+            mBinding.profileEmail.setText(map.get("email"));
+        };
+        mHomeLandModel.HomeLandingObserver(getViewLifecycleOwner(), userInfoObserver);
 
+        //System.out.println("testetst" + mHomeLandModel.getMResponse().toString());
 //        Log.e("test respond", "onCreateView: " +
 //                mHomeLandModel.mResponse.getValue().g);
     }
