@@ -356,7 +356,8 @@ public class MainActivity extends AppCompatActivity {
                 ChatMessage cm = (ChatMessage) intent.getSerializableExtra("chatMessage");
                 //If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.navigation_chat) {
+                if (nd.getId() != R.id.navigation_chat || (nd.getId() == R.id.navigation_chat &&
+                        !(mChatModel.getCurrentRoom() == intent.getIntExtra("chatid", -1)))) {
                     mNewMessageModel.increment();
                 }
                 //Inform the view model holding chatroom messages of the new
