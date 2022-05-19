@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,14 @@ import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatRoomListBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentRegistrationBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
 
 public class ChatRoomListFragment extends Fragment {
 
     private FragmentChatRoomListBinding mBinding;
     private UserInfoViewModel mUserModel;
     private ChatRoomViewModel mChatRoomModel;
+    private ChatViewModel mChatModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -37,6 +40,7 @@ public class ChatRoomListFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel .class);
         mChatRoomModel = new ViewModelProvider(getActivity()).get(ChatRoomViewModel.class);
+        mChatModel = new ViewModelProvider(getActivity()).get(ChatViewModel.class);
         mChatRoomModel.getRooms(mUserModel.getmJwt(), mUserModel.getEmail());
     }
 
@@ -50,8 +54,10 @@ public class ChatRoomListFragment extends Fragment {
                         new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
                 );
         });
-
+        // Upon going back to the fragment, this fixes the bug of user seeing notifications for their own messages.
+        mChatRoomModel.clearNotificationForRoom(mChatModel.getCurrentRoom());
         mChatRoomModel.addNotificationObserver(getViewLifecycleOwner(), ChatRoomList -> {
+
                     binding.listRoot.setAdapter(
                             new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
                     );

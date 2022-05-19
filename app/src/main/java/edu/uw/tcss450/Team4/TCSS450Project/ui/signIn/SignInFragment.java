@@ -22,6 +22,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.PushyTokenViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.AddMemberViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 
 /**
@@ -37,6 +38,8 @@ public class SignInFragment extends Fragment {
     private SignInViewModel mSignInModel;
 
     private PushyTokenViewModel mPushyTokenViewModel;
+
+    private AddMemberViewModel mAddMemberViewModel;
 
     private UserInfoViewModel mUserViewModel;
 
@@ -76,6 +79,7 @@ public class SignInFragment extends Fragment {
                 .get(SignInViewModel.class);
         mPushyTokenViewModel = new ViewModelProvider(getActivity())
                 .get(PushyTokenViewModel.class);
+        mAddMemberViewModel = new ViewModelProvider(getActivity()).get(AddMemberViewModel.class);
         // disable back button
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -159,6 +163,11 @@ public class SignInFragment extends Fragment {
      * @param jwt the JSON Web Token supplied by the server
      */
     private void navigateToSuccess(final String email, final String jwt) {
+        // Adds users to the global and test chat rooms upon sign in.
+        // Can change this to be upon registration instead.
+        mAddMemberViewModel.addMember(jwt, email, 0);
+        mAddMemberViewModel.addMember(jwt, email, 1);
+        mAddMemberViewModel.addMember(jwt, email, 2);
         //Save jwt if remember me is checked for auto sign in
         if (mBinding.checkBoxRememberMe.isChecked()) {
             SharedPreferences prefs =
@@ -167,6 +176,7 @@ public class SignInFragment extends Fragment {
                             Context.MODE_PRIVATE);
             prefs.edit().putString(getString(R.string.keys_prefs_jwt), jwt).apply();
         }
+
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
                         .actionSignInFragmentToMainActivity(email, jwt));

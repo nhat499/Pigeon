@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,6 @@ public class ChatRoomViewModel extends AndroidViewModel {
         super(application);
         mChatRoomList = new MutableLiveData<>();
         mChatRoomNotifications = new MutableLiveData<>();
-        Log.e("ASDADDSA", "CHATROOMVIEWMODEL INSTATIATION");
     }
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
@@ -72,6 +72,15 @@ public class ChatRoomViewModel extends AndroidViewModel {
             result = mChatRoomNotifications.getValue();
         }
         return result;
+    }
+
+    public void clearNotificationForRoom(int room) {
+        List<Integer> result = new ArrayList<Integer>();
+        if (!(mChatRoomNotifications.getValue() == null)) {
+            result = mChatRoomNotifications.getValue();
+            result.removeAll(Collections.singleton(room));
+            mChatRoomNotifications.setValue(result);
+        }
     }
 
     // No "add" method directly to mutablelivedata, this is a workaround to add an element.
