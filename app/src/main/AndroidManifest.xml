@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -18,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TCSS450Project">
         <activity android:name=".ui.contacts.CreateNewContactActivity"></activity>
-        <activity android:name=".ui.contacts.ContactDetailActivity"></activity>
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" > </activity>
         <activity

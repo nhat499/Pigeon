@@ -23,6 +23,14 @@ public class NewMessageCountViewModel extends ViewModel {
         mNewMessageCount.setValue(mNewMessageCount.getValue() + 1);
     }
 
+    public void setEqual(int i) {
+        mNewMessageCount.setValue(i);
+    }
+
+    public void subtract(int i) {
+        mNewMessageCount.setValue(mNewMessageCount.getValue() - i);
+    }
+
     public void reset() {
         mNewMessageCount.setValue(0);
     }

@@ -9,7 +9,15 @@
         android:id="@+id/navigation_chat"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="room"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <action
+            android:id="@+id/action_navigation_chat_to_addMemberFragment"
+            app:destination="@id/addMemberFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_weather"
@@ -26,18 +34,25 @@
             android:id="@+id/action_navigation_contacts_to_navigation_chat"
             app:destination="@id/navigation_chat" />
         <action
-            android:id="@+id/action_navigation_contacts_to_createNewContactActivity"
-            app:destination="@id/createNewContactActivity" />
+            android:id="@+id/action_navigation_contacts_to_contactsProfile"
+            app:destination="@id/contactsProfile" />
         <action
-            android:id="@+id/action_navigation_contacts_to_contactDetailActivity"
-            app:destination="@id/contactDetailActivity" />
+            android:id="@+id/action_navigation_contacts_to_createContact"
+            app:destination="@id/createContact" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home_landing" />
+        tools:layout="@layout/fragment_home_landing" >
+        <argument
+            android:name="jwt"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_chat_room_list"
@@ -47,14 +62,63 @@
         <action
             android:id="@+id/action_navigation_chat_room_list_to_navigation_chat"
             app:destination="@id/navigation_chat" />
+        <action
+            android:id="@+id/action_navigation_chat_room_list_to_createNewChatRoomFragment"
+            app:destination="@id/createNewChatRoomFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/contactsProfile"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsProfile"
+        android:label="ContactsProfile" >
+        <action
+            android:id="@+id/action_contactsProfile_to_navigation_contacts2"
+            app:destination="@id/navigation_contacts" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/createContact"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateContact"
+        android:label="CreateContact" >
+        <action
+            android:id="@+id/action_createContact_to_navigation_contacts"
+            app:destination="@id/navigation_contacts" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNewChatRoomFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomFragment"
+        android:label="CreateNewChatRoomFragment" >
+        <action
+            android:id="@+id/action_createNewChatRoomFragment_to_navigation_chat_room_list"
+            app:destination="@id/navigation_chat_room_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMemberFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chat.AddMemberFragment"
+        android:label="AddMemberFragment" >
+        <action
+            android:id="@+id/action_addMemberFragment_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+        <argument
+            android:name="room"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_navigation_chat_room_list"
+            app:destination="@id/navigation_chat_room_list" />
+    </fragment>
     <activity
-        android:id="@+id/createNewContactActivity"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateNewContactActivity"
-        android:label="CreateNewContactActivity" />
-    <activity
-        android:id="@+id/contactDetailActivity"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactDetailActivity"
-        android:label="ContactDetailActivity" />
+        android:id="@+id/authenticationActivity"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.AuthenticationActivity"
+        android:label="AuthenticationActivity" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.changePassword.ChangePasswordFragment"
+        android:label="@string/app_name_short"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>

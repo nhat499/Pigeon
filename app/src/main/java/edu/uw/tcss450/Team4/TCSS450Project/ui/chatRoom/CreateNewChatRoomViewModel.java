@@ -1,4 +1,4 @@
-package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
+package edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom;
 
 import android.app.Application;
 import android.util.Log;
@@ -25,14 +25,18 @@ import java.util.Objects;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 
-public class ChatSendViewModel extends AndroidViewModel {
+public class CreateNewChatRoomViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<JSONObject> mResponse;
+    private MutableLiveData<JSONObject> mResponse;
+    private MutableLiveData<JSONObject> mChatIDReturn;
+    private int success = 0;
 
-    public ChatSendViewModel(@NonNull Application application) {
+    public CreateNewChatRoomViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
+        mChatIDReturn = new MutableLiveData<>();
+        mChatIDReturn.setValue(new JSONObject());
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
@@ -40,14 +44,17 @@ public class ChatSendViewModel extends AndroidViewModel {
         mResponse.observe(owner, observer);
     }
 
-    public void sendMessage(final int chatId, final String jwt, final String message) {
+    public void searchUser() {
+
+    }
+
+    public void createChatRoom(final String jwt, final String name) {
         String url = getApplication().getResources().getString(R.string.base_url_service) +
-                "messages";
+                "chats/";
 
         JSONObject body = new JSONObject();
         try {
-            body.put("message", message);
-            body.put("chatId", chatId);
+            body.put("name", name);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,8 +62,8 @@ public class ChatSendViewModel extends AndroidViewModel {
         Request request = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
-                body, //push token found in the JSONObject body
-                mResponse::setValue, // we get a response but do nothing with it
+                body,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -67,7 +74,6 @@ public class ChatSendViewModel extends AndroidViewModel {
                 return headers;
             }
         };
-
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -75,9 +81,12 @@ public class ChatSendViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
+
     }
 
-
+    private void handleSuccess(final JSONObject response) {
+        mResponse.setValue(response);
+    }
 
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
@@ -88,8 +97,7 @@ public class ChatSendViewModel extends AndroidViewModel {
             } catch (JSONException e) {
                 Log.e("JSON PARSE", "JSON Parse Error in handleError");
             }
-        }
-        else {
+        } else {
             String data = new String(error.networkResponse.data, Charset.defaultCharset());
             try {
                 mResponse.setValue(new JSONObject("{" +
@@ -97,11 +105,13 @@ public class ChatSendViewModel extends AndroidViewModel {
                         ", data:" + data +
                         "}"));
             } catch (JSONException e) {
-                Log.e("CLIENT ERROR",
-                        error.networkResponse.statusCode +
-                                " " +
-                                data);
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
             }
         }
+    }
+
+    public void clearResponse() {
+        mResponse = new MutableLiveData<>();
+        mResponse.setValue(new JSONObject());
     }
 }
