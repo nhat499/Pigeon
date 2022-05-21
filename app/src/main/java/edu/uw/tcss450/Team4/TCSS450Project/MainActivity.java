@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.MenuItemCompat;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -19,6 +20,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +28,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -40,15 +47,23 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 **/
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.ActivityMainBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 import edu.uw.tcss450.Team4.TCSS450Project.model.NewMessageCountViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.services.PushReceiver;
@@ -88,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
     private HomeLandingViewModel mHomeLanding;
 
+    private MutableLiveData<JSONObject> mRemoveTokenResponse;
+
 
     @Override
     protected void onStart(){
@@ -109,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getJwt(),args.getEmail())
         ).get(UserInfoViewModel.class);
+
+        // For removing the jwt on sign out.
+        mRemoveTokenResponse = new MutableLiveData<>();
+        mRemoveTokenResponse.setValue(new JSONObject());
 
         mChatRoomModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         mChatModel = new ViewModelProvider(this).get(ChatViewModel.class);
@@ -243,6 +264,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
+        // Remove the pushy token on sign out.
+        removeToken(args.getEmail());
         SharedPreferences prefs =
                 getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
@@ -345,4 +368,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void removeToken(final String jwt) {
+        Log.e("JWT: ", jwt);
+        String url = getApplication().getResources().getString(R.string.base_url_service) +
+                "auth/";
+        Request request = new JsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null, //no body for this get request
+                mRemoveTokenResponse::setValue,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+    }
+
+    private void handleError(final VolleyError error) {
+        if (Objects.isNull(error.networkResponse)) {
+            try {
+                mRemoveTokenResponse.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        } else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            try {
+                mRemoveTokenResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
+    }
 }
