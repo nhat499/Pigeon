@@ -74,6 +74,12 @@ public class AddMemberFragment extends Fragment {
         mBinding.buttonRemoveYourself.setOnClickListener(button ->
                 mAddMemberViewModel.remove(mUserViewModel.getmJwt(), mUserViewModel.getEmail(), args.getRoom()));
 
+        mBinding.buttonAddFromContacts.setOnClickListener(button ->
+                Navigation.findNavController(getView())
+                    .navigate(AddMemberFragmentDirections
+                        .actionAddMemberFragmentToAddFromContactsFragment())
+                );
+
         mAddMemberViewModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
