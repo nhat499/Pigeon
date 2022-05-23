@@ -63,6 +63,7 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
         public FragmentChatRoomCardBinding binding;
         private ChatRoom mChatRoom;
 
+
         public ChatRoomViewHolder(View view) {
             super(view);
             mView = view;
@@ -70,9 +71,11 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ChatRoomListFragmentDirections.ActionNavigationChatRoomListToNavigationChat directions =
+                            ChatRoomListFragmentDirections.actionNavigationChatRoomListToNavigationChat();
+                    directions.setRoom(mChatRoom.getRoomNumber());
                     Navigation.findNavController(view)
-                            .navigate(ChatRoomListFragmentDirections
-                                    .actionNavigationChatRoomListToNavigationChat());
+                            .navigate(directions);
                 }
             });
 //            binding.bu.setOnClickListener(this::handleMoreOrLess);

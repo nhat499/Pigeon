@@ -35,8 +35,6 @@ import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-//COMMENTED IMPORTS
-/**
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -45,7 +43,7 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-**/
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,11 +159,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isChecked = settings.getBoolean("dark_mode", false);
         MenuItem item = menu.findItem(R.id.action_dark_mode);
         item.setChecked(isChecked);
-
-        /** COMMENTED
-    // requestPermissions();
-        **/
-
+    requestPermissions();
         MenuItem searchViewItem = menu.findItem(R.id.search);
         // on below line we are creating a variable for our search view.
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
@@ -219,9 +213,6 @@ public class MainActivity extends AppCompatActivity {
     {
         return contextOfApplication;
     }
-
-    //START OF COMMENTS
-    /**
     private void requestPermissions() {
         // below line is use to request
         // permission in the current activity.
@@ -270,8 +261,6 @@ public class MainActivity extends AppCompatActivity {
                 // on same thread and to check the permissions
                 .onSameThread().check();
     }
-    **/
-    // END OF COMMENTS
     private void showSettingsDialog() {
         // we are displaying an alert dialog for permissions
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
