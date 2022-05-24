@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentRecentMessageListBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentHomeLandingBinding;
 
@@ -33,6 +34,8 @@ public class HomeLandingFragment extends Fragment {
     private FragmentHomeLandingBinding mBinding;
     private HomeLandingViewModel mHomeLandModel;
 
+    private RecentMessageListViewModel mMessages;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,11 @@ public class HomeLandingFragment extends Fragment {
         mHomeLandModel = new ViewModelProvider(getActivity())
                 .get(HomeLandingViewModel.class);
         mHomeLandModel.connect(args.getJwt(), args.getEmail()); // should be swap once fix
+
+        mMessages = new ViewModelProvider(getActivity()).get(RecentMessageListViewModel.class);
+        mMessages.connectGet(args.getEmail());
+
+
     }
 
     @Override
@@ -57,18 +65,6 @@ public class HomeLandingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        UserInfoViewModel model = new ViewModelProvider(getActivity())
-//                .get(UserInfoViewModel.class);
-//        Log.e("test", "onViewCreated: " + mHomeLandModel.userInfo.get("numOfContact") );
-        //mBinding.numOfContact.setText(mHomeLandModel.mResponse.getValue().get("numOfContact"));
-        //String a = mHomeLandModel.mResponse.getValue().toString();
-        //Log.d("test", "onViewCreated: " + a);
-        ///while(mHomeLandModel.mResponse.getValue().isEmpty()) {}
-        // FragmentHomeLandingBinding binding = FragmentHomeLandingBinding.bind(getView());
-//
-//        mHomeLandModel.HomeLandingObserver(getViewLifecycleOwner(), s -> {
-//            binding.layoutRoot.set
-//        });
 
         Observer<HashMap<String,String>> userInfoObserver = map -> {
             mBinding.numOfContact.setText(map.get("numOfContact"));
@@ -78,9 +74,12 @@ public class HomeLandingFragment extends Fragment {
         };
         mHomeLandModel.HomeLandingObserver(getViewLifecycleOwner(), userInfoObserver);
 
-        //System.out.println("testetst" + mHomeLandModel.getMResponse().toString());
-//        Log.e("test respond", "onCreateView: " +
-//                mHomeLandModel.mResponse.getValue().g);
+        mMessages.addRecentMessageObserver(getViewLifecycleOwner(), m -> {
+            mBinding.listRoot.setAdapter(
+//                        new MessageRecylerViewAdapter(messageList)
+                    new MessageRecylerViewAdapter(mMessages.getmRecentMessageList())
+            );
+        });
     }
 
     /**

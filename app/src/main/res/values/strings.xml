@@ -157,4 +157,9 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
 
+
+    <string name="recent_message_test">
+        test test test test test test test
+    </string>
+
 </resources>

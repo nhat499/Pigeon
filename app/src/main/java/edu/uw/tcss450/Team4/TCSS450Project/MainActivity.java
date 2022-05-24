@@ -73,6 +73,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragmentArgs;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.RecentMessageListViewModel;
 
 /**
  * Class that defines the lifecycle for the Main Activity
@@ -105,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MutableLiveData<JSONObject> mRemoveTokenResponse;
 
+    private RecentMessageListViewModel mMessages;
 
     @Override
     protected void onStart(){
@@ -174,9 +176,13 @@ public class MainActivity extends AppCompatActivity {
                 mNewMessageModel.setEqual(length);
             }
         });
+        mMessages = new ViewModelProvider(this).get(RecentMessageListViewModel.class);
+
 
         mNewMessageModel.addMessageCountObserver(this, count -> {
             BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_chat_room_list);
+            mMessages.connectGet(args.getEmail());
+
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 //new messages! update and show the notification badge.
