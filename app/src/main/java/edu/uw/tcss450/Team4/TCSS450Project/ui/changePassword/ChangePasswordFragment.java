@@ -27,35 +27,50 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChangePasswordBin
 import edu.uw.tcss450.Team4.TCSS450Project.utils.PasswordValidator;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Java class that defines the lifecycle for the ChangePasswordFragment.
  */
 public class ChangePasswordFragment extends Fragment {
 
+    /* Reference to the bindings for the change password fragment */
     private FragmentChangePasswordBinding mBinding;
 
+    /* Reference to the Change password view model */
     private ChangePasswordViewModel mChangeModel;
 
+    /* Validator for checking if the password has at least 7 characters */
     private final PasswordValidator mPassWordValidatorLength = checkPwdLength(7);
 
+    /* Validator for checking if the password has a uppercase letter */
     private final PasswordValidator mPassWordValidatorUppercase = checkPwdUpperCase();
 
+    /* Validator for checking if the password has a lowercase letter */
     private final PasswordValidator mPassWordValidatorLowercase = checkPwdLowerCase();
 
+    /* Validator for checking if the password has a number */
     private final PasswordValidator mPassWordValidatorNumber = checkPwdDigit();
 
+    /* Validator for checking if the password has a special character */
     private final PasswordValidator mPassWordValidatorSymbol = checkPwdSpecialChar();
 
+    /* Validator for checking if the password has no white space */
     private final PasswordValidator mPassWordValidatorSpace = checkExcludeWhiteSpace();
 
+    /* Validator for checking the password for all requirements */
     private final PasswordValidator mPassWordValidator = checkPwdLength(7)
             .and(checkPwdSpecialChar())
             .and(checkExcludeWhiteSpace())
             .and(checkPwdDigit())
             .and(checkPwdLowerCase().and(checkPwdUpperCase()));
 
+    /* Validator for checking if passwords are the same */
     private final PasswordValidator mPassWordValidatorMatch = checkClientPredicate(pwd ->
             pwd.equals(mBinding.editPassword3.getText().toString().trim()));
 
+    /* Validator for checking if passwords are different */
+    private final PasswordValidator mPassWordValidatorNotMatch = checkClientPredicate(pwd ->
+            !pwd.equals(mBinding.editPassword2.getText().toString().trim()));
+
+    /* Marks for password requirement error message */
     private String lengthMark, uppercaseMark, lowercaseMark, numberMark, symbolMark, spaceMark = "";
 
     @Override
@@ -80,10 +95,18 @@ public class ChangePasswordFragment extends Fragment {
                 this::observeResponse);
     }
 
+    /**
+     * Begins the password validation process.
+     *
+     * @param button not really sure why this is here
+     */
     private void attemptRequest(final View button) { validatePasswordRequirements(); }
 
+    /**
+     * Checks to see if the new password meets the password requirements.
+     *
+     */
     private void validatePasswordRequirements() {
-        // Are used to set the individual check marks or x marks.
         mPassWordValidatorLength.processResult(
                 mPassWordValidatorLength.apply(mBinding.editPassword2.getText().toString()),
                 this::setLengthMarkCheck,
@@ -120,13 +143,33 @@ public class ChangePasswordFragment extends Fragment {
                         spaceMark + " No spaces"));
     }
 
+    /**
+     * Checks to see if the user entered the new password correctly.
+     *
+     */
     private void validatePasswordsMatch() {
         mPassWordValidatorMatch.processResult(
                 mPassWordValidatorMatch.apply(mBinding.editPassword2.getText().toString().trim()),
-                this::verifyAuthWithServer,
+                this::validatePasswordDifferent,
                 result -> mBinding.editPassword2.setError("Passwords must match."));
     }
 
+    /**
+     * Checks to see if the new password is different from the old password.
+     *
+     */
+    private void validatePasswordDifferent() {
+        mPassWordValidatorNotMatch.processResult(
+                mPassWordValidatorNotMatch.apply(mBinding.editPassword1.getText().toString().trim()),
+                this::verifyAuthWithServer,
+                result -> mBinding.editPassword2.setError("New password must be different"
+                        + " than your current password"));
+    }
+
+    /**
+     * Checks to see if the entered password matches the password in the database.
+     *
+     */
     private void verifyAuthWithServer() {
         SharedPreferences prefs =
                 getActivity().getSharedPreferences(
@@ -142,7 +185,8 @@ public class ChangePasswordFragment extends Fragment {
         );
     }
 
-    // Having a method for processResult is required, so this is here as placeholder.
+    // The following methods are used to set the status of the password requirements
+    // within the error message
     private void setLengthMarkCheck() {
         lengthMark = "✓";
     }
@@ -159,23 +203,34 @@ public class ChangePasswordFragment extends Fragment {
         symbolMark = "✓";
     }
     private void setSpaceMarkCheck() { spaceMark = "✓"; }
-
     private void setXMark(int choose) {
-        if (choose == 1) {
-            lengthMark = "✕";
-        } else if (choose == 2) {
-            uppercaseMark = "✕";
-        } else if (choose == 3) {
-            lowercaseMark = "✕";
-        } else if (choose == 4) {
-            numberMark = "✕";
-        } else if (choose == 5) {
-            symbolMark = "✕";
-        } else if (choose == 6) {
-            spaceMark = "✕";
+        switch (choose) {
+            case 1:
+                lengthMark = "✕";
+                break;
+            case 2:
+                uppercaseMark = "✕";
+                break;
+            case 3:
+                lowercaseMark = "✕";
+                break;
+            case 4:
+                numberMark = "✕";
+                break;
+            case 5:
+                symbolMark = "✕";
+                break;
+            case 6:
+                spaceMark = "✕";
+                break;
         }
     }
 
+    /**
+     * On successful password change, the user is signed out
+     * and must sign in using their new password.
+     *
+     */
     private void navigateToMainActivity() {
         SharedPreferences prefs =
                 getActivity().getSharedPreferences(

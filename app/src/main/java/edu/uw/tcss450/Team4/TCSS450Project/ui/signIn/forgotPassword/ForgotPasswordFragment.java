@@ -146,10 +146,6 @@ public class ForgotPasswordFragment extends Fragment {
                 mBinding.editEmail.getText().toString(),
                 mBinding.editPassword1.getText().toString()
         );
-//        navigateToConfirmation(
-//                mBinding.editEmail.getText().toString(),
-//                mBinding.editPassword1.getText().toString()
-//        );
     }
 
     // Having a method for processResult is required, so this is here as placeholder.
@@ -206,8 +202,7 @@ public class ForgotPasswordFragment extends Fragment {
             if (response.has("code")) {
                 try {
                     mBinding.editEmail.setError(
-                            "Error Authenticating: " +
-                                    response.getJSONObject("data").getString("message"));
+                            response.getJSONObject("data").getString("message"));
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }

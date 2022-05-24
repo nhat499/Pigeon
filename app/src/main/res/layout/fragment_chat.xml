@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="72dp"
         android:layout_marginBottom="16dp"
+        app:tint="#1976d2"
         android:contentDescription="TODO"
         android:src="@drawable/ic_send_dark"
         app:layout_constraintBottom_toBottomOf="parent"
