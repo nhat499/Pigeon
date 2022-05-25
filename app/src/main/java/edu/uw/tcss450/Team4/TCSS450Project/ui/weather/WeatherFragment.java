@@ -1,5 +1,6 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.weather;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -47,17 +48,17 @@ public class WeatherFragment extends Fragment {
 
     }
 
-   // public static WeatherFragment getInstance(){
-     //   if (instance==null){
-     //       instance = new WeatherFragment();}
+    // public static WeatherFragment getInstance(){
+    //   if (instance==null){
+    //       instance = new WeatherFragment();}
     //    return instance;
-   // }
+    // }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       // return inflater.inflate(R.layout.fragment_weather, container, false);
+        // return inflater.inflate(R.layout.fragment_weather, container, false);
         binding = FragmentWeatherBinding.inflate(inflater);
         return binding.getRoot();
 
@@ -66,8 +67,8 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       mSendWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
-       mSendWeatherModelHD = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+        mSendWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+        mSendWeatherModelHD = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
     }
 
     @Override
@@ -88,20 +89,36 @@ public class WeatherFragment extends Fragment {
      */
     public void getCurrentWeather(JSONObject response) throws JSONException{
         //To get the message json
-        JSONObject jsonMessage = new JSONObject(response.getString("current"));
-        Log.i("TESTING", jsonMessage.toString());
-        binding.textTemperature.setText(String.valueOf(jsonMessage.getString("temp") + "°F"));
+        //ADD CONDITIONS and ICON
+        JSONObject jsonCurrent = new JSONObject(response.getString("current"));
+        Log.i("TESTING", jsonCurrent.toString());
+        binding.textTemperature.setText(String.valueOf(jsonCurrent.getString("temp") + "°F"));
 
         //gets the data array held in the 'weather' section
-        JSONArray jsonWeatherArray = new JSONArray(jsonMessage
+        JSONArray jsonWeatherArray = new JSONArray(jsonCurrent
                 .getString("weather"));
 
         //converts the above array into a string to be cast into JSONObject
         String str = jsonWeatherArray.getString(0);
 
         //Casts into JSONObject and extract the description for the fragment
-        String jsonWeather = new JSONObject(str).getString("description");
-        binding.textWeatherDescription.setText(jsonWeather);
+        String jsonWeatherDescription = new JSONObject(str).getString("description");
+        binding.textWeatherDescription.setText(jsonWeatherDescription);
+
+        String jsonWeatherIcon = new JSONObject(str).getString("icon");
+       // binding.iconWeather.setImageIcon();
+
+        //CONDITIONS
+        DateFormat timeFormat = new SimpleDateFormat("h:mm a");
+
+        binding.textHumidity.setText(jsonCurrent.getString("humidity")+" %\nHumidity");
+        binding.textWindSpeed.setText(jsonCurrent.getString("wind_speed")+" mph\nWind Speed");
+        binding.textSunrise.setText(timeFormat.format(new Date(Long.parseLong(jsonCurrent.getString("sunrise")) * 1000))+"\nSunrise");
+        binding.textSunset.setText(timeFormat.format(new Date(Long.parseLong(jsonCurrent.getString("sunset")) * 1000))+"\nSunset");
+
+
+
+
     }
 
     /**
@@ -110,6 +127,7 @@ public class WeatherFragment extends Fragment {
      * @throws JSONException json
      */
     public void getWeatherHD(JSONObject response) throws JSONException{
+
         JSONArray jsonMessageHourly = response.getJSONArray("hourly");
         ArrayList<TextView> tempText = new ArrayList<TextView>() {
             {
@@ -139,11 +157,16 @@ public class WeatherFragment extends Fragment {
                 add(binding.textTemp24);
             }
         };
+
+
+
         for (int i = 0; i < 24; i++) {
             JSONObject hour = jsonMessageHourly.getJSONObject(i);
             tempText.get(i).setText(hour.getString("temp") + "°F");
         }
+        Log.i("HOURLY TEMPS", tempText.toString());
 
+        //Temperatures for the days of the week
         JSONArray jsonMessageDaily = response.getJSONArray("daily");
         ArrayList<TextView> dailyTempText = new ArrayList<TextView>() {
             {
@@ -156,185 +179,120 @@ public class WeatherFragment extends Fragment {
                 add(binding.textDay7Temp);
             }
         };
+
         for (int i = 0; i < 7; i++) {
             JSONObject day = jsonMessageDaily.getJSONObject(i);
             JSONObject temp = day.getJSONObject("temp");
             dailyTempText.get(i).setText(temp.getString("day") + "°F");
         }
+        ArrayList<TextView> nameOfDays = new ArrayList<TextView>() {
+            {
+                add(binding.textDay1);
+                add(binding.textDay2);
+                add(binding.textDay3);
+                add(binding.textDay4);
+                add(binding.textDay5);
+                add(binding.textDay6);
+                add(binding.textDay7);
+            }
+        };
 
-//        // loops for the weather for 7 days
-//        for(int i = 0; i < 7; i++) {
-//            JSONObject jsonDay = new JSONObject(jsonDaily.getString(i));
-//            JSONObject jsonTemp = new JSONObject(jsonDay.getString("temp"));
-//          //  Float kelvin = Float.parseFloat(jsonTemp.getString("day"));
-//          //  int temperature = (int)convertToFar(kelvin);
-//          //  temps.add(temperature);
-//        }
+        //Manually adding the next 7 days date
+        DateFormat df = new SimpleDateFormat("EE M/d");
+        Calendar cal = Calendar.getInstance();
+        DateFormat timeFormat2 = new SimpleDateFormat("EEE, MMM d, yyyy");
 
-//        Log.i("TEMPS", temps.toString());
-
-//        DateFormat df = new SimpleDateFormat("EE MMM dd:   ");
-//        Calendar cal = Calendar.getInstance();
-        //String tod = df.format(today);
-
-//        //Manually add the 5 day forecast
-//        binding.textDay1.setText(df.format(cal.getTime()));
-//        binding.textDay1Temp.setText(temps.get(0) + "°F");
-//
-//        cal.add(Calendar.DAY_OF_YEAR, 1);
-//        binding.textDay2.setText(df.format(cal.getTime()));
-//        binding.textDay2Temp.setText(temps.get(1) + "°F");
-//
-//        cal.add(Calendar.DAY_OF_YEAR, 1);
-//        binding.textDay3.setText(df.format(cal.getTime()));
-//        binding.textDay3Temp.setText(temps.get(2) + "°F");
-//
-//        cal.add(Calendar.DAY_OF_YEAR, 1);
-//        binding.textDay4.setText(df.format(cal.getTime()));
-//        binding.textDay4Temp.setText(temps.get(3) + "°F");
-//
-//        cal.add(Calendar.DAY_OF_YEAR, 1);
-//        binding.textDay5.setText(df.format(cal.getTime()));
-//        binding.textDay5Temp.setText(temps.get(4) + "°F");
-//
-//        cal.add(Calendar.DAY_OF_YEAR, 1);
-//        binding.textDay6.setText(df.format(cal.getTime()));
-//        binding.textDay6Temp.setText(temps.get(5) + "°F");
-//
-//        cal.add(Calendar.DAY_OF_YEAR, 1);
-//        binding.textDay7.setText(df.format(cal.getTime()));
-//        binding.textDay7Temp.setText(temps.get(6) + "°F");
-
-        //the hours (data)
-//        ArrayList<Integer> hourTemps = new ArrayList<Integer>();
-//        ArrayList<String> unixTime = new ArrayList<String>();
-//        ArrayList<String> hourDescriptions = new ArrayList<String>();
-      //  JSONArray jsonHourly = jsonMessage.getJSONArray("hourly");
-
-        //The temps per hour
-//        for(int i = 0; i < 24; i++) {
-           // JSONObject jsonInnerHourly = new JSONObject(jsonHourly.getString(i));
-            //getting unix time
-          //  unixTime.add(jsonInnerHourly.getString("dt"));
-            //rest
-          //  String thisTemp = jsonInnerHourly.getString("temp");
-         //   Float kelvin = Float.parseFloat(thisTemp);
-          //  int temperature = (int)convertToFar(kelvin);
-          //  hourTemps.add(temperature);
+        //String tod = df.format(today)
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        binding.textDate.setText(timeFormat2.format(cal.getTime()));
+        for (int i = 1; i < 7; i++) {
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            nameOfDays.get(i).setText(df.format(cal.getTime()));
         }
 
+
+        // Adding manually the hours data
+
+        ArrayList<TextView> hoursText = new ArrayList<TextView>() {
+            {
+                add(binding.textHour1);
+                add(binding.textHour2);
+                add(binding.textHour3);
+                add(binding.textHour4);
+                add(binding.textHour5);
+                add(binding.textHour6);
+                add(binding.textHour7);
+                add(binding.textHour8);
+                add(binding.textHour9);
+                add(binding.textHour10);
+                add(binding.textHour11);
+                add(binding.textHour12);
+                add(binding.textHour13);
+                add(binding.textHour14);
+                add(binding.textHour15);
+                add(binding.textHour16);
+                add(binding.textHour17);
+                add(binding.textHour18);
+                add(binding.textHour19);
+                add(binding.textHour20);
+                add(binding.textHour21);
+                add(binding.textHour22);
+                add(binding.textHour23);
+                add(binding.textHour24);
+            }
+        };
+
+
+        DateFormat timeFormat = new SimpleDateFormat("h a");
+        ArrayList<String> unixTime = new ArrayList<String>();
+
+        for (int i = 0; i < 24; i++) {
+            JSONObject hour = jsonMessageHourly.getJSONObject(i);
+            unixTime.add(hour.getString("dt")); //getting unix time
+            hoursText.get(i).setText(timeFormat.format(new Date(Long.parseLong(unixTime.get(i)) * 1000)));
+        }
+            hoursText.get(0).setText("Now");
+
+
+
         //ADD ICON DATA LATER
+        ArrayList<ImageView> hourIcons = new ArrayList<ImageView>() {
+            {
+                add(binding.imageHour1);
+                add(binding.imageHour2);
+                add(binding.imageHour3);
+                add(binding.imageHour4);
+                add(binding.imageHour5);
+                add(binding.imageHour6);
+                add(binding.imageHour7);
+                add(binding.imageHour8);
+                add(binding.imageHour9);
+                add(binding.imageHour10);
+                add(binding.imageHour11);
+                add(binding.imageHour12);
+                add(binding.imageHour13);
+                add(binding.imageHour14);
+                add(binding.imageHour15);
+                add(binding.imageHour16);
+                add(binding.imageHour17);
+                add(binding.imageHour18);
+                add(binding.imageHour19);
+                add(binding.imageHour20);
+                add(binding.imageHour21);
+                add(binding.imageHour22);
+                add(binding.imageHour23);
+                add(binding.imageHour24);
+            }
+        };
+        for (int i = 0; i < 24; i++) {
+           // JSONObject hour = jsonMessageHourly.getJSONObject(i);
+           // unixTime.add(hour.getString("dt")); //getting unix time
+           // hoursText.get(i).setText(timeFormat.format(new Date(Long.parseLong(unixTime.get(i)) * 1000)));
+        }
 
 
-//        Log.i("HOURLY TEMPS", hourTemps.toString());
-//
-//        Log.i("UNIX TIME", unixTime.toString());
-//        Date time = new Date(Long.parseLong(unixTime.get(0)) * 1000);
-//        String exp = time.toString();
-//        //Log.i("UNIX TIME!!!!!", exp);
-//        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss -    ");
-//        Log.i("TIME", timeFormat.format(time));
-//
-//        //time of day in hour:min:sec
-//        Date hour1 = new Date(Long.parseLong(unixTime.get(0)) * 1000);
-//        Date hour2 = new Date(Long.parseLong(unixTime.get(1)) * 1000);
-//        Date hour3 = new Date(Long.parseLong(unixTime.get(2)) * 1000);
-//        Date hour4 = new Date(Long.parseLong(unixTime.get(3)) * 1000);
-//        Date hour5 = new Date(Long.parseLong(unixTime.get(4)) * 1000);
-//        Date hour6 = new Date(Long.parseLong(unixTime.get(5)) * 1000);
-//        Date hour7 = new Date(Long.parseLong(unixTime.get(6)) * 1000);
-//        Date hour8 = new Date(Long.parseLong(unixTime.get(7)) * 1000);
-//        Date hour9 = new Date(Long.parseLong(unixTime.get(8)) * 1000);
-//        Date hour10 = new Date(Long.parseLong(unixTime.get(9)) * 1000);
-//        Date hour11 = new Date(Long.parseLong(unixTime.get(10)) * 1000);
-//        Date hour12 = new Date(Long.parseLong(unixTime.get(11)) * 1000);
-//        Date hour13 = new Date(Long.parseLong(unixTime.get(12)) * 1000);
-//        Date hour14 = new Date(Long.parseLong(unixTime.get(13)) * 1000);
-//        Date hour15 = new Date(Long.parseLong(unixTime.get(14)) * 1000);
-//        Date hour16 = new Date(Long.parseLong(unixTime.get(15)) * 1000);
-//        Date hour17 = new Date(Long.parseLong(unixTime.get(16)) * 1000);
-//        Date hour18 = new Date(Long.parseLong(unixTime.get(17)) * 1000);
-//        Date hour19 = new Date(Long.parseLong(unixTime.get(18)) * 1000);
-//        Date hour20 = new Date(Long.parseLong(unixTime.get(19)) * 1000);
-//        Date hour21 = new Date(Long.parseLong(unixTime.get(20)) * 1000);
-//        Date hour22 = new Date(Long.parseLong(unixTime.get(21)) * 1000);
-//        Date hour23 = new Date(Long.parseLong(unixTime.get(22)) * 1000);
-//        Date hour24 = new Date(Long.parseLong(unixTime.get(23)) * 1000);
 
-        //ADD ICONS LATER!!
-
-//        binding.textHour1.setText(timeFormat.format(hour1));
-//        binding.textTemp1.setText(hourTemps.get(0) + "°F");
-//
-//        binding.textHour2.setText(timeFormat.format(hour2));
-//        binding.textTemp2.setText(hourTemps.get(1) + "°F");
-//
-//        binding.textHour3.setText(timeFormat.format(hour3));
-//        binding.textTemp3.setText(hourTemps.get(2) + "°F");
-//
-//        binding.textHour4.setText(timeFormat.format(hour4));
-//        binding.textTemp4.setText(hourTemps.get(3) + "°F");
-//
-//        binding.textHour5.setText(timeFormat.format(hour5));
-//        binding.textTemp5.setText(hourTemps.get(4) + "°F");
-//
-//        binding.textHour6.setText(timeFormat.format(hour6));
-//        binding.textTemp6.setText(hourTemps.get(5) + "°F");
-//
-//        binding.textHour7.setText(timeFormat.format(hour7));
-//        binding.textTemp7.setText(hourTemps.get(6) + "°F");
-//
-//        binding.textHour8.setText(timeFormat.format(hour8));
-//        binding.textTemp8.setText(hourTemps.get(7) + "°F");
-//
-//        binding.textHour9.setText(timeFormat.format(hour9));
-//        binding.textTemp9.setText(hourTemps.get(8) + "°F");
-//
-//        binding.textHour10.setText(timeFormat.format(hour10));
-//        binding.textTemp10.setText(hourTemps.get(9) + "°F");
-//
-//        binding.textHour11.setText(timeFormat.format(hour11));
-//        binding.textTemp11.setText(hourTemps.get(10) + "°F");
-//
-//        binding.textHour12.setText(timeFormat.format(hour12));
-//        binding.textTemp12.setText(hourTemps.get(11) + "°F");
-//
-//        binding.textHour13.setText(timeFormat.format(hour13));
-//        binding.textTemp13.setText(hourTemps.get(12) + "°F");
-//
-//        binding.textHour14.setText(timeFormat.format(hour14));
-//        binding.textTemp14.setText(hourTemps.get(13) + "°F");
-//
-//        binding.textHour15.setText(timeFormat.format(hour15));
-//        binding.textTemp15.setText(hourTemps.get(14) + "°F");
-//
-//        binding.textHour16.setText(timeFormat.format(hour16));
-//        binding.textTemp16.setText(hourTemps.get(15) + "°F");
-//
-//        binding.textHour17.setText(timeFormat.format(hour2));
-//        binding.textTemp17.setText(hourTemps.get(16) + "°F");
-//
-//        binding.textHour18.setText(timeFormat.format(hour2));
-//        binding.textTemp18.setText(hourTemps.get(17) + "°F");
-//
-//        binding.textHour19.setText(timeFormat.format(hour19));
-//        binding.textTemp19.setText(hourTemps.get(18) + "°F");
-//
-//        binding.textHour20.setText(timeFormat.format(hour20));
-//        binding.textTemp20.setText(hourTemps.get(19) + "°F");
-//
-//        binding.textHour21.setText(timeFormat.format(hour21));
-//        binding.textTemp21.setText(hourTemps.get(20) + "°F");
-//
-//        binding.textHour22.setText(timeFormat.format(hour22));
-//        binding.textTemp22.setText(hourTemps.get(21) + "°F");
-//
-//        binding.textHour23.setText(timeFormat.format(hour23));
-//        binding.textTemp23.setText(hourTemps.get(22) + "°F");
-//
-//        binding.textHour24.setText(timeFormat.format(hour2));
-//        binding.textTemp24.setText(hourTemps.get(23) + "°F");
-    //} //end of method
+    }//end of method
 
 
     /**
