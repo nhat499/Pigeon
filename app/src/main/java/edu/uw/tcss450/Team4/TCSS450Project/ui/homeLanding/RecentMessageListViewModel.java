@@ -43,14 +43,6 @@ public class RecentMessageListViewModel extends AndroidViewModel {
 
     public void connectGet(String jwt) {
         Log.d("TAG", "connectGet: " + jwt);
-//        List<String> Messages = new ArrayList<String>();
-//        Messages.add("Nhat: hello");
-//        Messages.add("Egugene: heyyy");
-//        Messages.add("Egugene: heyyy2");
-//        Messages.add("Egugene: heyyy3");
-//        Messages.add("Egugene: heyyy4");
-//        Messages.add("Egugene: heyyy5");
-//        mRecentMessageList.setValue(Messages);
         String url =
                 "https://team-4-tcss-450-web-service.herokuapp.com/messages/recent/recent/recent";
         Request request = new JsonArrayRequest(

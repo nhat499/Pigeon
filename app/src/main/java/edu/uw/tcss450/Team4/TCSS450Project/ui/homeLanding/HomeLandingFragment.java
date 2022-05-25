@@ -5,23 +5,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import edu.uw.tcss450.Team4.TCSS450Project.R;
-import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentRecentMessageListBinding;
-import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentHomeLandingBinding;
 
 /**
@@ -33,7 +31,6 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentHomeLandingBindin
 public class HomeLandingFragment extends Fragment {
     private FragmentHomeLandingBinding mBinding;
     private HomeLandingViewModel mHomeLandModel;
-
     private RecentMessageListViewModel mMessages;
 
     @Override
@@ -47,8 +44,6 @@ public class HomeLandingFragment extends Fragment {
 
         mMessages = new ViewModelProvider(getActivity()).get(RecentMessageListViewModel.class);
         mMessages.connectGet(args.getEmail());
-
-
     }
 
     @Override
@@ -80,19 +75,5 @@ public class HomeLandingFragment extends Fragment {
                     new MessageRecylerViewAdapter(mMessages.getmRecentMessageList())
             );
         });
-    }
-
-    /**
-     * An observer on the HTTP Response from the web server. This observer should be
-     * attached to SignInViewModel.
-     *
-     * @param response the Response from the server
-     */
-    private void observeResponse(final JSONObject response) {
-        if (response.length() > 0) {
-
-        } else {
-
-        }
     }
 }
