@@ -27,6 +27,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import edu.uw.tcss450.Team4.TCSS450Project.R;
+
 public class RecentMessageListViewModel extends AndroidViewModel {
     private MutableLiveData<List<HashMap<String,String>>> mRecentMessageList;
 
@@ -44,7 +46,7 @@ public class RecentMessageListViewModel extends AndroidViewModel {
     public void connectGet(String jwt) {
         Log.d("TAG", "connectGet: " + jwt);
         String url =
-                "https://team-4-tcss-450-web-service.herokuapp.com/messages/recent/recent/recent";
+                getApplication().getResources().getString(R.string.base_url_service) + "messages/recent/recent/recent";
         Request request = new JsonArrayRequest(
                 Request.Method.GET,
                 url,
