@@ -61,11 +61,6 @@
         app:layout_constraintStart_toEndOf="@+id/button_send" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="0dp"
