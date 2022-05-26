@@ -16,6 +16,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddFromContactsBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddFromContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatRoomCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.Contacts;
@@ -58,15 +60,13 @@ public class AddFromContactsRecyclerViewAdapter extends RecyclerView.Adapter<Add
      */
     public class AddFromContactsViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public FragmentContactsCardBinding binding;
+        public FragmentAddFromContactsCardBinding binding;
         private Contacts mContact;
 
         public AddFromContactsViewHolder(View view) {
             super(view);
             mView = view;
-            binding = FragmentContactsCardBinding.bind(view);
-            binding.contactName.setText("ASdf");
-            Log.e("ASDFADSDSFDAS", "asdfSAFSAFDAS");
+            binding = FragmentAddFromContactsCardBinding.bind(view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -86,7 +86,7 @@ public class AddFromContactsRecyclerViewAdapter extends RecyclerView.Adapter<Add
 
         void setContact(final Contacts contact) {
             mContact = contact;
-            binding.contactName.setText("AEIOU");
+            binding.textName.setText(contact.getFullName());
         }
     }
 }

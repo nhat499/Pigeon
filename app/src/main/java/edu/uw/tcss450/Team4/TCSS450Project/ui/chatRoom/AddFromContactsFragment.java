@@ -41,14 +41,13 @@ public class AddFromContactsFragment extends Fragment {
         mAddFromContacts = new ViewModelProvider(getActivity()).get(AddFromContactsViewModel.class);
         mContacts = new ViewModelProvider(getActivity()).get(ContactsViewModel.class);
         mUserModel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
+        mContacts.getFirstContacts(mUserModel.getmJwt());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentAddFromContactsBinding binding = FragmentAddFromContactsBinding.bind(getView());
-
-        mContacts.getFirstContacts(mUserModel.getmJwt());
         mContacts.addContactObserver(getViewLifecycleOwner(), contacts -> {
 //            Log.e("Contact List", mContacts.getContactListValue().get(0).getUserFirstName());
 
