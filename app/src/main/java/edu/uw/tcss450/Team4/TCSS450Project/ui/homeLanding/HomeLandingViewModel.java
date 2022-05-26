@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 
 /**
@@ -52,7 +53,7 @@ public class HomeLandingViewModel extends AndroidViewModel {
     }
 
     public void connect(final String email, String jwt) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/contact/" + email;
+        String url = getApplication().getResources().getString(R.string.base_url_service) + "contact/" + email;
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -78,7 +79,7 @@ public class HomeLandingViewModel extends AndroidViewModel {
     }
 
     public void getRecentMessages(String jwt) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/messages";
+        String url = getApplication().getResources().getString(R.string.base_url_service) + "messages";
         Request request = new JsonArrayRequest(
                 Request.Method.GET,
                 url,

@@ -17,6 +17,8 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+import edu.uw.tcss450.Team4.TCSS450Project.R;
+
 /**
  * View model for the Registration Fragment
  *
@@ -65,7 +67,7 @@ public class RegistrationViewModel extends AndroidViewModel {
                         final String last,
                         final String email,
                         final String password) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/auth";
+        String url = getApplication().getResources().getString(R.string.base_url_service) + "auth";
         JSONObject body = new JSONObject();
         try {
             body.put("first", first);
