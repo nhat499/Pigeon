@@ -1,6 +1,8 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,10 +125,44 @@ public class ChatFragment extends Fragment {
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });
+
+        binding.editMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.currCharacter.setText("" + binding.editMessage.getText().toString().length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
 //when we get the response back from the server, clear the edittext
-        mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
-                binding.editMessage.setText(""));
+        mSendModel.addResponseObserver(getViewLifecycleOwner(), response -> {
+            Log.d("TAG", "onViewCreated: " + response.toString());
+            try {
+                if(response.getBoolean("success") == true) {
+                    binding.editMessage.setText("");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        });
+
+//        mChatModel.addCurrentCharacterObserver(getViewLifecycleOwner(), respond ->
+//                binding.currCharacter.setText())
     }
+
+
 
     /**
      * An observer on the HTTP Response from the web server. This observer should be
