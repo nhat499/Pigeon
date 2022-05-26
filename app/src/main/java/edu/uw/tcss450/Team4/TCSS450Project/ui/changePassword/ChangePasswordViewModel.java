@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 
 public class ChangePasswordViewModel extends AndroidViewModel {
@@ -38,7 +39,7 @@ public class ChangePasswordViewModel extends AndroidViewModel {
     }
 
     public void connect(final String email, final String oldPassword, final String newPassword) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/change";
+        String url = getApplication().getResources().getString(R.string.base_url_service) + "change";
         JSONObject body = new JSONObject();
         try {
             body.put("email", email);
