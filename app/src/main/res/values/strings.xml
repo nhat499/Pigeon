@@ -64,8 +64,8 @@
     <string name="keys_prefs_dark_mode">Shared Prefs Dark</string>
     // For HTTP requests
 
-    <string name="base_url_service">https://team-4-tcss-450-web-service.herokuapp.com/</string>
-    <string name="base_url_auth">https://team-4-tcss-450-web-service.herokuapp.com/</string>
+    <string name="base_url_service">https://team-4-tcss-450b.herokuapp.com/</string>
+    <string name="base_url_auth">https://team-4-tcss-450b.herokuapp.com/</string>
     // IDK
     <string name="large_text">
         "Material is the metaphor.\n\n"

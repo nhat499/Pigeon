@@ -47,15 +47,15 @@ public class AddFromContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentAddFromContactsBinding binding = FragmentAddFromContactsBinding.bind(getView());
+
         mContacts.getFirstContacts(mUserModel.getmJwt());
-        Log.e("JWT?: ", mUserModel.getmJwt());
-        Log.e("Contact List: ", mContacts.getContactListValue().toString());
         mContacts.addContactObserver(getViewLifecycleOwner(), contacts -> {
+//            Log.e("Contact List", mContacts.getContactListValue().get(0).getUserFirstName());
+
             binding.listRoot.setAdapter(
                  new AddFromContactsRecyclerViewAdapter(mContacts.getContactListValue())
             );
         });
-
         mBinding.buttonDone.setOnClickListener(button ->
                 Navigation.findNavController(getView())
                         .navigate(AddFromContactsFragmentDirections

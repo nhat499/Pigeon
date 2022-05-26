@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +11,26 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatRoomCardBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.Contacts;
 
 public class AddFromContactsRecyclerViewAdapter extends RecyclerView.Adapter<AddFromContactsRecyclerViewAdapter.AddFromContactsViewHolder> {
+
+    private final Map<Contacts, Boolean> mExpandedFlags;
 
     private final List<Contacts> mContacts;
 
     public AddFromContactsRecyclerViewAdapter(@NonNull List<Contacts> contacts) {
         this.mContacts = contacts;
+        Log.e("ASDFADSDSFDAS", this.mContacts.toString());
+        mExpandedFlags = mContacts.stream()
+                .collect(Collectors.toMap(Function.identity(), blog -> false));
     }
 
     @NonNull
@@ -32,7 +42,8 @@ public class AddFromContactsRecyclerViewAdapter extends RecyclerView.Adapter<Add
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AddFromContactsRecyclerViewAdapter.AddFromContactsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AddFromContactsViewHolder holder, int position) {
+        Log.e("ASDFADSDgfadgfadgagSFDAS", "gfdasgfdasgfdagadsg");
         holder.setContact(mContacts.get(position));
     }
 
@@ -47,15 +58,15 @@ public class AddFromContactsRecyclerViewAdapter extends RecyclerView.Adapter<Add
      */
     public class AddFromContactsViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public FragmentChatRoomCardBinding binding;
+        public FragmentContactsCardBinding binding;
         private Contacts mContact;
 
         public AddFromContactsViewHolder(View view) {
             super(view);
             mView = view;
-            binding = FragmentChatRoomCardBinding.bind(view);
-            binding.textTitle.setText("ASdf");
-
+            binding = FragmentContactsCardBinding.bind(view);
+            binding.contactName.setText("ASdf");
+            Log.e("ASDFADSDSFDAS", "asdfSAFSAFDAS");
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -67,9 +78,15 @@ public class AddFromContactsRecyclerViewAdapter extends RecyclerView.Adapter<Add
                 }
             });
         }
+
+        private void handleMoreOrLess(final View button) {
+            mExpandedFlags.put(mContact, !mExpandedFlags.get(mContact));
+//            displayPreview();
+        }
+
         void setContact(final Contacts contact) {
             mContact = contact;
-            binding.textTitle.setText("AEIOU");
+            binding.contactName.setText("AEIOU");
         }
     }
 }
