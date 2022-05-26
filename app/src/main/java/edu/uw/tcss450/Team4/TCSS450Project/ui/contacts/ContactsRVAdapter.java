@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
@@ -47,7 +48,6 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
         Contacts modal = contactsModalArrayList.get(position);
         // on below line we are setting data to our text view.
         holder.contactTV.setText(modal.getFullName());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +57,21 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
             }
         });
     }
-
+    // Filter Class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        contactsModalArrayList.clear();
+        if (charText.length() == 0) {
+            contactsModalArrayList.addAll(contactsModalArrayList);
+        } else {
+            for (Contacts wp : contactsModalArrayList) {
+                if (wp.getFullName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    contactsModalArrayList.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return contactsModalArrayList.size();

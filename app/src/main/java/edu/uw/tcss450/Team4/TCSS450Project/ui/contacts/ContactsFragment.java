@@ -8,12 +8,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import edu.uw.tcss450.Team4.TCSS450Project.R;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsProfileBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 
 /**
@@ -25,9 +33,10 @@ import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 public class ContactsFragment extends Fragment {
 
     private FragmentContactsListBinding mBinding;
-
+    private FragmentContactsCardBinding mBinding2;
+    private Bundle mArgs;
     private UserInfoViewModel mUserModel;
-
+    private Button profileDelete;
     private ContactsViewModel mContactsViewModel;
 
     public ContactsFragment() { }
@@ -36,7 +45,10 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentContactsListBinding.inflate(inflater);
+        mBinding2 = FragmentContactsCardBinding.inflate(inflater);
+        mArgs = getArguments();
         return mBinding.getRoot();
+
     }
 
     @Override
@@ -68,6 +80,17 @@ public class ContactsFragment extends Fragment {
                     rv.getAdapter().notifyDataSetChanged();
                     rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
                 });
+
+
+        profileDelete = mBinding2.deleteContact;
+        // on below line we are adding on click listener for our button.
+        profileDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("test respond", "onClick: " +mArgs.getString("email")  );
+                mContactsViewModel.deleteContact(mUserModel.getmJwt(),mArgs.getString("email"));
+            }
+        });
     }
 
 }

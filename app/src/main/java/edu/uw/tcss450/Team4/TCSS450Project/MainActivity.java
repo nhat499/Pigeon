@@ -26,6 +26,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -56,6 +58,8 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.Contacts;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsRVAdapter;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragmentArgs;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
 
@@ -73,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView user_email,user_uid;
 
     private MainActivityArgs args;
+
+    private ArrayList<Contacts> contactsModalArrayList;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -189,29 +195,10 @@ public class MainActivity extends AppCompatActivity {
         boolean isChecked = prefs.getBoolean(getString(R.string.keys_prefs_dark_mode), false);
         MenuItem item = menu.findItem(R.id.action_dark_mode);
         item.setChecked(isChecked);
-
-        MenuItem searchViewItem = menu.findItem(R.id.search);
-        // on below line we are creating a variable for our search view.
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-        // on below line we are setting on query text listener for our search view.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // on query submit we are clearing the focus for our search view.
-                searchView.clearFocus();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // on changing the text in our search view we are calling
-                // a filter method to filter our array list.
-                //filter(newText.toLowerCase());
-                return false;
-            }
-        });
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

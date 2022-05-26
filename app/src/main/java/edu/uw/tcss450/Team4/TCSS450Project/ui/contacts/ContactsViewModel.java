@@ -55,6 +55,7 @@ public class ContactsViewModel extends AndroidViewModel {
      *
      * @return mContacts.getValue() the list of currently signed in user's contacts as list
      */
+
     public List<Contacts> getContactListValue() {
         return getContactList().getValue();
     }

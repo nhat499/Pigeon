@@ -27,18 +27,18 @@
             android:layout_marginEnd="305dp"
             android:layout_marginBottom="50dp"
             android:padding="3dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_account_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/contact_name"
-            android:layout_width="304dp"
-            android:layout_height="53dp"
+            android:layout_width="187dp"
+            android:layout_height="69dp"
             android:layout_marginStart="141dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="141dp"
@@ -49,10 +49,38 @@
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.228"
+            app:layout_constraintHorizontal_bias="0.933"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/message_contact"
+            android:layout_width="35dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="288dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="86dp"
+            android:layout_marginBottom="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_chat_black_24dp" />
+
+        <Button
+            android:id="@+id/delete_contact"
+            android:layout_width="54dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="339dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="29dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

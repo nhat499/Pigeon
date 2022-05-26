@@ -18,7 +18,6 @@
         android:roundIcon="@mipmap/ic_app_icon_light_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TCSS450Project">
-        <activity android:name=".ui.contacts.CreateNewContactActivity"></activity>
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" > </activity>
         <activity
