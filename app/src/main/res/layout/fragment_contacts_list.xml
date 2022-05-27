@@ -16,20 +16,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_root"
-        android:layout_width="398dp"
-        android:layout_height="646dp"
+        android:layout_width="420dp"
+        android:layout_height="552dp"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="170dp"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603"
         tools:listitem="@layout/fragment_contacts_card" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -55,9 +51,18 @@
 
     <SearchView
         android:id="@+id/search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false">
+        android:layout_width="389dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="-10dp"
+        android:background="@drawable/search_view_bg"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search Here ...."
+        app:layout_constraintBottom_toTopOf="@+id/list_root"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.503">
+
 
         <requestFocus />
     </SearchView>

@@ -184,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
         getMenuInflater().inflate(R.menu.toolbar, menu);
 
         // updates the dark mode check box

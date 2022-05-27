@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
@@ -23,12 +24,13 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
 
     // creating variables for context and array list.
 
-    private ArrayList<Contacts> contactsModalArrayList ;
+    //private ArrayList<Contacts> contactsModalArrayList ;
+    private List<Contacts> contactsList = null;
     private FragmentContactsListBinding binding;
 
     // creating a constructor
-    public ContactsRVAdapter(ArrayList<Contacts> contactsModalArrayList) {
-        this.contactsModalArrayList = contactsModalArrayList;
+    public ContactsRVAdapter(List<Contacts> contactsList) {
+        this.contactsList = contactsList;
     }
 
     @NonNull
@@ -45,7 +47,7 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ContactsRVAdapter.ViewHolder holder, int position) {
         // getting data from array list in our modal.
-        Contacts modal = contactsModalArrayList.get(position);
+        Contacts modal = contactsList.get(position);
         // on below line we are setting data to our text view.
         holder.contactTV.setText(modal.getFullName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -56,25 +58,16 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
                                 modal.getFullName(), modal.getContactEmail()));
             }
         });
+
     }
     // Filter Class
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        contactsModalArrayList.clear();
-        if (charText.length() == 0) {
-            contactsModalArrayList.addAll(contactsModalArrayList);
-        } else {
-            for (Contacts wp : contactsModalArrayList) {
-                if (wp.getFullName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    contactsModalArrayList.add(wp);
-                }
-            }
-        }
+    public void setFilteredList(List<Contacts> filteredList) {
+        this.contactsList = filteredList;
         notifyDataSetChanged();
     }
     @Override
     public int getItemCount() {
-        return contactsModalArrayList.size();
+        return contactsList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

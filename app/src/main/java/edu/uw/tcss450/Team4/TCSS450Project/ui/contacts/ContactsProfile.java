@@ -61,4 +61,5 @@ public class ContactsProfile extends Fragment {
         mBinding.profileName.setText(mArgs.getString("name"));
         mBinding.profileEmail.setText(mArgs.getString("email"));
     }
+
 }

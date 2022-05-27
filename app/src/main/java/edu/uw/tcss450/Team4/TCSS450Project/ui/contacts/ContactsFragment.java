@@ -1,5 +1,6 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.contacts;
 
+import android.content.ClipData;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +17,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
@@ -30,14 +35,16 @@ import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
  * @author team4
  * @version May 2022
  */
-public class ContactsFragment extends Fragment {
+public class ContactsFragment extends Fragment{
 
     private FragmentContactsListBinding mBinding;
     private FragmentContactsCardBinding mBinding2;
+    private ContactsRVAdapter contactsAdapter;
     private Bundle mArgs;
     private UserInfoViewModel mUserModel;
     private Button profileDelete;
     private ContactsViewModel mContactsViewModel;
+    private SearchView editsearch;
 
     public ContactsFragment() { }
 
@@ -65,11 +72,28 @@ public class ContactsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final RecyclerView rv = mBinding.listRoot;
-
+        mBinding2.getRoot();
         rv.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        rv.setAdapter(new ContactsRVAdapter((ArrayList<Contacts>) mContactsViewModel.getContactListValue()));
+        contactsAdapter = new ContactsRVAdapter((ArrayList<Contacts>) mContactsViewModel.getContactListValue());
+        rv.setAdapter(contactsAdapter);
+        editsearch = mBinding.search;
+        editsearch.clearFocus();
+        editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return false;
+            }
+        });
+
+
         mBinding.buttonToCreateContact.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         ContactsFragmentDirections.actionNavigationContactsToCreateContact()
@@ -91,6 +115,26 @@ public class ContactsFragment extends Fragment {
                 mContactsViewModel.deleteContact(mUserModel.getmJwt(),mArgs.getString("email"));
             }
         });
+        mContactsViewModel.addContactObserver(getViewLifecycleOwner(),
+                list -> {
+                    rv.getAdapter().notifyDataSetChanged();
+                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
+                });
+    }
+
+    private void filterList(String text) {
+        List<Contacts> filteredList = new ArrayList<>();
+        for (Contacts item : (ArrayList<Contacts>) mContactsViewModel.getContactListValue()){
+            if(item.getFullName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+
+        if (filteredList.isEmpty()){
+            Toast.makeText(getActivity(), "no data found", Toast.LENGTH_SHORT).show();
+        }else{
+            contactsAdapter.setFilteredList(filteredList);
+        }
     }
 
 }

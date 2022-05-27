@@ -4,13 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.2595" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/drawable/search_view_bg.xml" value="0.1" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_add_contacts.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat_room_card.xml" value="0.1" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_chat_room_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_card.xml" value="0.264" />
-        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_list.xml" value="0.19523809523809524" />
+        <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_list.xml" value="0.536" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/layout/fragment_contacts_profile.xml" value="0.2" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/12063/Documents/GitHub/Team-4-TCSS-450B/app/src/main/res/menu/options_menu.xml" value="0.25416666666666665" />
