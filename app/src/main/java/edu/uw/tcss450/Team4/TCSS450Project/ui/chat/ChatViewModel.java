@@ -36,6 +36,7 @@ public class ChatViewModel extends AndroidViewModel {
      * The value represents the List of (known) messages for that that room.
      */
     private Map<Integer, MutableLiveData<List<ChatMessage>>> mMessages;
+    private MutableLiveData<String> currCharacter;
 
     // Current room.
     private MutableLiveData<Integer> room;
@@ -45,6 +46,8 @@ public class ChatViewModel extends AndroidViewModel {
         mMessages = new HashMap<>();
         // No room yet.
         room = new MutableLiveData<>();
+
+        currCharacter = new MutableLiveData<String>();
     }
 
     public void setCurrentRoom(int i) {
@@ -76,6 +79,11 @@ public class ChatViewModel extends AndroidViewModel {
         room.observe(owner, observer);
     }
 
+    public void addCurrentCharacterObserver(@NonNull LifecycleOwner owner,
+                                            @NonNull Observer<? super Integer> observer) {
+        room.observe(owner, observer);
+    }
+
     /**
      * Return a reference to the List<> associated with the chat room. If the View Model does
      * not have a mapping for this chatID, it will be created.
@@ -96,6 +104,10 @@ public class ChatViewModel extends AndroidViewModel {
             mMessages.put(chatId, new MutableLiveData<>(new ArrayList<>()));
         }
         return mMessages.get(chatId);
+    }
+
+    public String getMessageCharacter() {
+        return currCharacter.toString();
     }
 
     /**

@@ -52,6 +52,9 @@
         <argument
             android:name="email"
             app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
 
     <fragment
