@@ -99,7 +99,7 @@ public class ChatRoomViewModel extends AndroidViewModel {
 
     // Get the list of chat room ids and chat room names HERE.
     public void getRooms(final String jwt, final String email) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "chats/getRooms";
 
         Request request = new JsonObjectRequest(

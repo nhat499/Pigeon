@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void removeToken(final String jwt) {
         Log.e("JWT: ", jwt);
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "auth/";
         Request request = new JsonObjectRequest(
                 Request.Method.DELETE,
