@@ -78,6 +78,8 @@ public class ContactsFragment extends Fragment{
         rv.setLayoutManager(layoutManager);
         contactsAdapter = new ContactsRVAdapter((ArrayList<Contacts>) mContactsViewModel.getContactListValue());
         rv.setAdapter(contactsAdapter);
+
+        //Search Contacts with SearchView
         editsearch = mBinding.search;
         editsearch.clearFocus();
         editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

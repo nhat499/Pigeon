@@ -19,6 +19,7 @@
         android:layout_width="420dp"
         android:layout_height="552dp"
         android:layout_marginStart="6dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
@@ -26,6 +27,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/fragment_contacts_card" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,12 +46,12 @@
         app:fabCustomSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975"
-        app:tint="@color/white" />
-
+        app:layout_constraintVertical_bias="1.0"
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck" />
     <SearchView
         android:id="@+id/search"
         android:layout_width="389dp"
@@ -59,9 +62,10 @@
         android:queryHint="Search Here ...."
         app:layout_constraintBottom_toTopOf="@+id/list_root"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.656"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.503">
+        app:layout_constraintVertical_bias="0.228">
 
 
         <requestFocus />
