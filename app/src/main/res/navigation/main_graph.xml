@@ -35,7 +35,7 @@
             app:destination="@id/navigation_chat" />
         <action
             android:id="@+id/action_navigation_contacts_to_contactsProfile"
-            app:destination="@id/contactsProfile" />
+            app:destination="@id/DeleteContact" />
         <action
             android:id="@+id/action_navigation_contacts_to_createContact"
             app:destination="@id/createContact" />
@@ -68,9 +68,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/contactsProfile"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsProfile"
-        android:label="ContactsProfile" >
+        android:id="@+id/DeleteContact"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.DeleteContact"
+        android:label="DeleteContact" >
         <action
             android:id="@+id/action_contactsProfile_to_navigation_contacts2"
             app:destination="@id/navigation_contacts" />

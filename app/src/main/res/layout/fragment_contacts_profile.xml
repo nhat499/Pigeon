@@ -5,112 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="420dp"
-        android:layout_height="233dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="480dp"
-        android:background="@color/primaryDarkColor"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:id="@+id/profile_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="178dp"
-            android:layout_marginEnd="178dp"
-            android:layout_marginBottom="10dp"
-            android:text="Email"
-            android:textColor="@android:color/white"
-            android:textSize="23sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.571"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.729" />
-
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="109dp"
-            android:layout_height="103dp"
-            android:layout_marginStart="158dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="151dp"
-            android:layout_marginBottom="93dp"
-            android:padding="10dp"
-            android:src="@drawable/ic_account_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="44dp"
-            android:text="Contact Name"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <Button
         android:id="@+id/button_profile_delete"
         android:layout_width="417dp"
         android:layout_height="59dp"
-        android:layout_marginTop="685dp"
+        android:layout_marginStart="-10dp"
+        android:layout_marginTop="200dp"
         android:background="@color/white"
         android:backgroundTint="#DA1A1A"
         android:text="Delete"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="#EC1717"
+        android:textSize="20sp"
+        app:iconTint="#ED1414"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.184"
+        app:rippleColor="#F30808" />
 
-    <Button
-        android:id="@+id/button_profile_message"
-        android:layout_width="416dp"
-        android:layout_height="87dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="190dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="350dp"
-        android:background="@android:color/white"
-        android:drawableLeft="@drawable/ic_chat_black_24dp"
-        android:drawablePadding="20dp"
-        android:padding="20dp"
-        android:text="Message"
-        android:textAlignment="textStart"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="403dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="16dp"
+        android:text="Contact Name"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <TextView
+        android:id="@+id/profile_email"
+        android:layout_width="369dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="136dp"
+        android:text="Email"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_name" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="411dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="serif"
+        android:text="Do you want to delete this contact?"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

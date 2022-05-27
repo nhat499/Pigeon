@@ -42,7 +42,7 @@ public class ContactsFragment extends Fragment{
     private ContactsRVAdapter contactsAdapter;
     private Bundle mArgs;
     private UserInfoViewModel mUserModel;
-    private Button profileDelete;
+    private ImageButton profileDelete;
     private ContactsViewModel mContactsViewModel;
     private SearchView editsearch;
 
@@ -79,6 +79,21 @@ public class ContactsFragment extends Fragment{
         contactsAdapter = new ContactsRVAdapter((ArrayList<Contacts>) mContactsViewModel.getContactListValue());
         rv.setAdapter(contactsAdapter);
 
+        mBinding.buttonToCreateContact.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        ContactsFragmentDirections.actionNavigationContactsToCreateContact()
+                ));
+
+        mContactsViewModel.addContactObserver(getViewLifecycleOwner(),
+                list -> {
+                    rv.getAdapter().notifyDataSetChanged();
+                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
+                });
+
+
+
+
+
         //Search Contacts with SearchView
         editsearch = mBinding.search;
         editsearch.clearFocus();
@@ -94,34 +109,6 @@ public class ContactsFragment extends Fragment{
                 return false;
             }
         });
-
-
-        mBinding.buttonToCreateContact.setOnClickListener(button ->
-                Navigation.findNavController(getView()).navigate(
-                        ContactsFragmentDirections.actionNavigationContactsToCreateContact()
-                ));
-
-        mContactsViewModel.addContactObserver(getViewLifecycleOwner(),
-                list -> {
-                    rv.getAdapter().notifyDataSetChanged();
-                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
-                });
-
-
-        profileDelete = mBinding2.deleteContact;
-        // on below line we are adding on click listener for our button.
-        profileDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("test respond", "onClick: " +mArgs.getString("email")  );
-                mContactsViewModel.deleteContact(mUserModel.getmJwt(),mArgs.getString("email"));
-            }
-        });
-        mContactsViewModel.addContactObserver(getViewLifecycleOwner(),
-                list -> {
-                    rv.getAdapter().notifyDataSetChanged();
-                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
-                });
     }
 
     private void filterList(String text) {

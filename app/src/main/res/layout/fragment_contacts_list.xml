@@ -59,7 +59,7 @@
         android:layout_marginStart="-10dp"
         android:background="@drawable/search_view_bg"
         android:iconifiedByDefault="false"
-        android:queryHint="Search Here ...."
+        android:queryHint="Search"
         app:layout_constraintBottom_toTopOf="@+id/list_root"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.656"

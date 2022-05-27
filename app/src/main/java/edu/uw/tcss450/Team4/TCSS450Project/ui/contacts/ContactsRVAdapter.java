@@ -2,9 +2,12 @@ package edu.uw.tcss450.Team4.TCSS450Project.ui.contacts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,8 +52,8 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
         // getting data from array list in our modal.
         Contacts modal = contactsList.get(position);
         // on below line we are setting data to our text view.
-        holder.contactTV.setText(modal.getFullName());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.nameContact.setText(modal.getFullName());
+        holder.deleteContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(
@@ -58,6 +61,7 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
                                 modal.getFullName(), modal.getContactEmail()));
             }
         });
+
 
     }
     // Filter Class
@@ -73,14 +77,15 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         // on below line creating a variable
         // for our image view and text view.
-        private ImageView contactIV;
-        private TextView contactTV;
-
+        private ImageView imageContact;
+        private TextView nameContact;
+        private ImageButton deleteContact;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our image view and text view.
-            contactIV = itemView.findViewById(R.id.image_contact);
-            contactTV = itemView.findViewById(R.id.contact_name);
+            imageContact = itemView.findViewById(R.id.image_contact);
+            nameContact = itemView.findViewById(R.id.contact_name);
+            deleteContact = itemView.findViewById(R.id.delete_contact);
         }
     }
 }

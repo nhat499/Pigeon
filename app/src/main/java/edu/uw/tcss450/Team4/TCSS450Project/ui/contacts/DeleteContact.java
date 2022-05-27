@@ -19,7 +19,7 @@ import java.util.List;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsProfileBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 
-public class ContactsProfile extends Fragment {
+public class DeleteContact extends Fragment {
 
     private ContactsViewModel mContactsViewModel;
     private FragmentContactsProfileBinding mBinding;
@@ -54,7 +54,7 @@ public class ContactsProfile extends Fragment {
                 mContactsViewModel.deleteContact(mUserModel.getmJwt(),mArgs.getString("email"));
 
                 Navigation.findNavController(v).navigate(
-                        ContactsProfileDirections.actionContactsProfileToNavigationContacts2());
+                        DeleteContactDirections.actionContactsProfileToNavigationContacts2());
             }
         });
 
