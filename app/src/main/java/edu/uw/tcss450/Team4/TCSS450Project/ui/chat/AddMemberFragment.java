@@ -66,6 +66,10 @@ public class AddMemberFragment extends Fragment {
         AddMemberFragmentDirections.ActionAddMemberFragmentToNavigationChat directions =
                 AddMemberFragmentDirections.actionAddMemberFragmentToNavigationChat();
         directions.setRoom(args.getRoom());
+        // To navigate to add from contacts.
+        AddMemberFragmentDirections.ActionAddMemberFragmentToAddFromContactsFragment directionsContacts =
+                AddMemberFragmentDirections.actionAddMemberFragmentToAddFromContactsFragment();
+        directionsContacts.setRoom(args.getRoom());
 
         // Go back to chat room.
         mBinding.buttonAddMember.setOnClickListener(button ->
@@ -73,6 +77,12 @@ public class AddMemberFragment extends Fragment {
 
         mBinding.buttonRemoveYourself.setOnClickListener(button ->
                 mAddMemberViewModel.remove(mUserViewModel.getmJwt(), mUserViewModel.getEmail(), args.getRoom()));
+
+        mBinding.buttonAddFromContacts.setOnClickListener(button ->
+                Navigation.findNavController(getView())
+                    .navigate(AddMemberFragmentDirections
+                        .actionAddMemberFragmentToAddFromContactsFragment())
+                );
 
         mAddMemberViewModel.addResponseObserver(
                 getViewLifecycleOwner(),

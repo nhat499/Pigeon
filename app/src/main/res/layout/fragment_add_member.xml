@@ -7,54 +7,76 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/textView_or2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="OR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_from_contacts" />
+
     <EditText
         android:id="@+id/edit_member_name"
         android:layout_width="376dp"
         android:layout_height="54dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="28dp"
         android:hint="Enter Email Address"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_member"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_add_member"
         android:layout_width="378dp"
         android:layout_height="56dp"
-        android:layout_marginTop="140dp"
         android:text="Add Member to Chat Group"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/textView_or"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_member_name"
+        app:layout_constraintVertical_bias="0.634" />
 
     <TextView
         android:id="@+id/textView_or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
         android:text="OR"
-        app:layout_constraintBottom_toTopOf="@+id/button_remove_yourself"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_add_member"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_member_name" />
 
     <Button
         android:id="@+id/button_remove_yourself"
         android:layout_width="378dp"
         android:layout_height="56dp"
-        android:layout_margin="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="673dp"
         android:text="Remove Yourself From This Chat"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_add_member"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_or2"
+        app:layout_constraintVertical_bias="0.053" />
+
+    <Button
+        android:id="@+id/button_add_from_contacts"
+        android:layout_width="378dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:text="Add From Contacts"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_or" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

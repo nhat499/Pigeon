@@ -131,6 +131,7 @@ public class ContactsViewModel extends AndroidViewModel {
             }
         }
         mContacts.setValue(mContacts.getValue());
+//        Log.e("JSON:", mContacts.toString());
     }
 
     public void addContact(final String jwt, final Editable email) {

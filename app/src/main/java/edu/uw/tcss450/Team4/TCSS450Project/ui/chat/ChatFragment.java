@@ -50,7 +50,6 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
         HARD_CODED_CHAT_ID = args.getRoom();
-        Log.d("ASd", HARD_CODED_CHAT_ID + "");
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
@@ -97,6 +96,7 @@ public class ChatFragment extends Fragment {
                 ChatFragmentDirections.actionNavigationChatToAddMemberFragment();
 
         directions.setRoom(args.getRoom());
+
 
         // To prevent automatic navigation back to the list because of the HTTP response previously.
         binding.buttonAdd.setOnClickListener(button ->
