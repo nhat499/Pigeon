@@ -67,7 +67,7 @@ public class RegistrationViewModel extends AndroidViewModel {
                         final String last,
                         final String email,
                         final String password) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) + "auth";
+        String url = getApplication().getResources().getString(R.string.base_url) + "auth";
         JSONObject body = new JSONObject();
         try {
             body.put("first", first);

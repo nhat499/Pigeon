@@ -46,7 +46,7 @@ public class RecentMessageListViewModel extends AndroidViewModel {
     public void connectGet(String jwt) {
         Log.d("TAG", "connectGet: " + jwt);
         String url =
-                getApplication().getResources().getString(R.string.base_url_service) + "messages/recent/recent/recent";
+                getApplication().getResources().getString(R.string.base_url) + "messages/recent/recent/recent";
         Request request = new JsonArrayRequest(
                 Request.Method.GET,
                 url,

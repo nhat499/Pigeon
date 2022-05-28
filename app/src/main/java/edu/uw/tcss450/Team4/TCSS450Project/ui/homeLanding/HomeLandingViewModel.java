@@ -53,7 +53,7 @@ public class HomeLandingViewModel extends AndroidViewModel {
     }
 
     public void connect(final String email, String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) + "contact/" + email;
+        String url = getApplication().getResources().getString(R.string.base_url) + "contact/" + email;
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -79,7 +79,7 @@ public class HomeLandingViewModel extends AndroidViewModel {
     }
 
     public void getRecentMessages(String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) + "messages";
+        String url = getApplication().getResources().getString(R.string.base_url) + "messages";
         Request request = new JsonArrayRequest(
                 Request.Method.GET,
                 url,

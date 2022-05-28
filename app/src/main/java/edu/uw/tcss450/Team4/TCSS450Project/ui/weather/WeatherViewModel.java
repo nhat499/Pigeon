@@ -122,7 +122,7 @@ public class WeatherViewModel extends AndroidViewModel {
     public void getConnectWeather() {
         try {
             Log.i("testing:", "Here");
-            String url = getApplication().getResources().getString(R.string.base_url_service) + "weather";
+            String url = getApplication().getResources().getString(R.string.base_url) + "weather";
 
             Request request = new JsonObjectRequest(
                     Request.Method.GET,
@@ -166,7 +166,7 @@ public class WeatherViewModel extends AndroidViewModel {
         try {
             Log.i("Made it:", "HERE TWO");
 
-            String urlFiveDay = getApplication().getResources().getString(R.string.base_url_service) + "weather";
+            String urlFiveDay = getApplication().getResources().getString(R.string.base_url) + "weather";
 
             JSONObject body = new JSONObject();
             try {

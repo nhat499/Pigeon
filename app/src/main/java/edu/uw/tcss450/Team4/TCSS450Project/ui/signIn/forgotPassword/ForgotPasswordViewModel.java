@@ -42,7 +42,7 @@ public class ForgotPasswordViewModel extends AndroidViewModel {
     }
 
     public void connect(final String email, final String password) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) + "forgot";
+        String url = getApplication().getResources().getString(R.string.base_url) + "forgot";
         JSONObject body = new JSONObject();
         try {
             body.put("email", email);

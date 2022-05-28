@@ -41,7 +41,7 @@ public class AddMemberViewModel extends AndroidViewModel {
     }
 
     public void addMember(final String jwt, final String email, final int id) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "chats/" + id + "/" + email + "/";
 
         Request request = new JsonObjectRequest(
@@ -70,7 +70,7 @@ public class AddMemberViewModel extends AndroidViewModel {
     }
 
     public void remove(final String jwt, final String email, final int id) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "chats/" + id + "/" + email + "/";
 
         Request request = new JsonObjectRequest(
