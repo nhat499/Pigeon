@@ -66,6 +66,10 @@ public class AddMemberFragment extends Fragment {
         AddMemberFragmentDirections.ActionAddMemberFragmentToNavigationChat directions =
                 AddMemberFragmentDirections.actionAddMemberFragmentToNavigationChat();
         directions.setRoom(args.getRoom());
+        // To navigate to add from contacts.
+        AddMemberFragmentDirections.ActionAddMemberFragmentToAddFromContactsFragment directionsContacts =
+                AddMemberFragmentDirections.actionAddMemberFragmentToAddFromContactsFragment();
+        directionsContacts.setRoom(args.getRoom());
 
         // Go back to chat room.
         mBinding.buttonAddMember.setOnClickListener(button ->

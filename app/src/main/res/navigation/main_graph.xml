@@ -13,7 +13,7 @@
         <argument
             android:name="room"
             app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_navigation_chat_to_addMemberFragment"
             app:destination="@id/addMemberFragment" />
@@ -107,12 +107,15 @@
         <argument
             android:name="room"
             app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_addMemberFragment_to_navigation_chat_room_list"
             app:destination="@id/navigation_chat_room_list" />
         <action
             android:id="@+id/action_addMemberFragment_to_addFromContactsFragment"
+            app:destination="@id/addFromContactsFragment" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_addFromContactsFragment2"
             app:destination="@id/addFromContactsFragment" />
     </fragment>
     <activity
@@ -132,5 +135,9 @@
         <action
             android:id="@+id/action_addFromContactsFragment_to_addMemberFragment"
             app:destination="@id/addMemberFragment" />
+        <argument
+            android:name="room"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>
