@@ -5,13 +5,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentRecentMessageBinding;
@@ -23,9 +29,13 @@ public class MessageRecylerViewAdapter extends
     //Store all of the Message to present
     private final List<HashMap<String,String>> mList;
 
+    public DateUtils dateutils = new DateUtils();
+
     public MessageRecylerViewAdapter(List<HashMap<String, String>> items) {
         this.mList = items;
     }
+
+
 
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Edit onCreateViewHolder() to inflate the layout fragment_blog_card:
@@ -59,13 +69,50 @@ public class MessageRecylerViewAdapter extends
         }
 
         void setMessage(final HashMap<String,String> m) {
+            Log.d("test", "setMessage: " + m.get("time"));
             binding.RecentChatName.setText((m.get("chatName")));
             String message = m.get("name") +": " + m.get("message");
             if (message.length() > 95) {
                 message = message.substring(0,92) + "...";
             }
             binding.RecentText.setText(message);
-            binding.time.setText("date: " + m.get("time"));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            sdf.setTimeZone(TimeZone.getTimeZone("PST"));
+            try {
+                long time = sdf.parse( m.get("time")).getTime();
+                long now = System.currentTimeMillis();
+                CharSequence ago =
+                        DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS);
+                binding.time.setText(ago);
+                Log.d("test", "setMessage::::::::: " + ago);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+
+//            try {
+//                final String NEW_FORMAT = "mm/dd/yyyy";
+//                final String OLD_FORMAT = "yyyy-mm-dd";
+//                String oldDateString = m.get("time").split("T")[0];
+//                String newDateString;
+//
+//                SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+//                Date d = sdf.parse(oldDateString);
+//                sdf.applyPattern(NEW_FORMAT);
+//                newDateString = sdf.format(d);
+//                binding.time.setText(newDateString);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+
+
+            //binding.time.setText(m.get("time"));
+
+            //calendar.setTime(dateData.get2DigitYearStart());
+            //int day = calendar.get(Calendar.DAY_OF_WEEK);
+
 
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,4 +125,5 @@ public class MessageRecylerViewAdapter extends
             });
         }
     }
+
 }
