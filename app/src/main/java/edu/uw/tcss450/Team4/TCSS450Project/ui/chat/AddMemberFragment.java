@@ -106,10 +106,10 @@ public class AddMemberFragment extends Fragment {
                     .navigate(AddMemberFragmentDirections
                         .actionAddMemberFragmentToManageChatFragment())
                 );
-
-        mAddMemberViewModel.addResponseObserver(
-                getViewLifecycleOwner(),
-                this::observeResponse);
+        // commented out bc after creating a new chat, clicking on settings brings you to chat room list
+//        mAddMemberViewModel.addResponseObserver(
+//                getViewLifecycleOwner(),
+//                this::observeResponse);
     }
 
 
