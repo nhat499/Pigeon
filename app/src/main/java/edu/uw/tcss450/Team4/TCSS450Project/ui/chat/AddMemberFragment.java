@@ -84,6 +84,12 @@ public class AddMemberFragment extends Fragment {
                         .actionAddMemberFragmentToAddFromContactsFragment())
                 );
 
+        mBinding.buttonManageChat.setOnClickListener(button ->
+                Navigation.findNavController(getView())
+                    .navigate(AddMemberFragmentDirections
+                        .actionAddMemberFragmentToManageChatFragment())
+                );
+
         mAddMemberViewModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);

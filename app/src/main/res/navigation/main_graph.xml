@@ -120,6 +120,9 @@
         <action
             android:id="@+id/action_addMemberFragment_to_addFromContactsFragment2"
             app:destination="@id/addFromContactsFragment" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_manageChatFragment"
+            app:destination="@id/manageChatFragment" />
     </fragment>
     <activity
         android:id="@+id/authenticationActivity"
@@ -143,4 +146,9 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+    <fragment
+        android:id="@+id/manageChatFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ManageChatFragment"
+        android:label="fragment_manage_chat"
+        tools:layout="@layout/fragment_manage_chat" />
 </navigation>

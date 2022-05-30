@@ -79,4 +79,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_or" />
 
+    <Button
+        android:id="@+id/button_manage_chat"
+        android:layout_width="378dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:text="Manage Chat"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="@+id/button_remove_yourself"
+        app:layout_constraintTop_toBottomOf="@+id/button_remove_yourself" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
