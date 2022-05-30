@@ -96,7 +96,7 @@ public class CreateNewChatRoomFragment extends Fragment {
                                     .actionCreateNewChatRoomFragmentToNavigationChatRoomList());
                     mNewChatRoomModel.clearResponse();
                     mChatRoomModel.getRooms(mUserViewModel.getmJwt(), mUserViewModel.getEmail());
-                    mNewChatRoomModel.setChatHost(mUserViewModel.getmJwt(), chatID);
+                    mNewChatRoomModel.setChatHost(mUserViewModel.getmJwt(), chatID, mUserViewModel.getEmail());
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }

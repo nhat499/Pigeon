@@ -77,7 +77,7 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
                 @Override
                 public void onClick(View view) {
                     ChatRoomListFragmentDirections.ActionNavigationChatRoomListToNavigationChat directions =
-                            ChatRoomListFragmentDirections.actionNavigationChatRoomListToNavigationChat();
+                            ChatRoomListFragmentDirections.actionNavigationChatRoomListToNavigationChat(mChatRoom.getTitle());
                     directions.setRoom(mChatRoom.getRoomNumber());
                     Navigation.findNavController(view)
                             .navigate(directions);

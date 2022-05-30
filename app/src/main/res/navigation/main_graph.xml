@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_navigation_chat_to_addMemberFragment"
             app:destination="@id/addMemberFragment" />
+        <argument
+            android:name="roomName"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -123,6 +126,9 @@
         <action
             android:id="@+id/action_addMemberFragment_to_manageChatFragment"
             app:destination="@id/manageChatFragment" />
+        <argument
+            android:name="roomName"
+            app:argType="string" />
     </fragment>
     <activity
         android:id="@+id/authenticationActivity"
@@ -145,6 +151,9 @@
             android:name="room"
             app:argType="integer"
             android:defaultValue="-1" />
+        <argument
+            android:name="roomName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/manageChatFragment"

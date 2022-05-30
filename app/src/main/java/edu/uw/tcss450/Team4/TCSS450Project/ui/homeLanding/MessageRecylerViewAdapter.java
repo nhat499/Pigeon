@@ -71,7 +71,7 @@ public class MessageRecylerViewAdapter extends
                 @Override
                 public void onClick(View view) {
                     HomeLandingFragmentDirections.ActionNavigationHomeToNavigationChat direction =
-                            HomeLandingFragmentDirections.actionNavigationHomeToNavigationChat();
+                            HomeLandingFragmentDirections.actionNavigationHomeToNavigationChat(m.get("chatName"));
                     direction.setRoom((Integer.valueOf(m.get("chatId"))));
                     Navigation.findNavController(view).navigate(direction);
                 }

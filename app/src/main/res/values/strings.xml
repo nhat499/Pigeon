@@ -160,5 +160,7 @@
     <string name="recent_message_test">
         test test test test test test test
     </string>
+    <string name="action_remove_from_chat">Remove from chat</string>
+    <string name="action_set_host">Set Host</string>
 
 </resources>
