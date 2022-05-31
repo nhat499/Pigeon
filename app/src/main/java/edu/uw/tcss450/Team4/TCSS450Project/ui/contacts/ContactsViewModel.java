@@ -235,10 +235,13 @@ public class ContactsViewModel extends AndroidViewModel {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
+        
     }
 
     private void handleDelete(final JSONObject response) {
+
         mContacts.getValue().remove(response);
+        mContacts.setValue(mContacts.getValue());
     }
 
     /**
