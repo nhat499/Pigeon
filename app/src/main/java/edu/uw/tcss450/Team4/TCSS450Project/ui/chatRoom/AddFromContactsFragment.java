@@ -122,16 +122,21 @@ public class AddFromContactsFragment extends Fragment {
                 }
             } else {
                 // This will work if at least one selected contact is not in the room.
-//                Navigation.findNavController(getView())
-//                        .navigate(AddFromContactsFragmentDirections
-//                                .actionAddFromContactsFragmentToAddMemberFragment(mArgs.getRoom(), mArgs.getRoomName()));
+                Log.d("TAG", String.valueOf(mArgs.getRoom()));
+                Log.d("TAG", String.valueOf(mArgs.getRoomName()));
+                try {
+                    Navigation.findNavController(getView())
+                            .navigate(AddFromContactsFragmentDirections
+                                    .actionAddFromContactsFragmentToAddMemberFragment(mArgs.getRoom(), mArgs.getRoomName()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         } else {
             Log.d("JSON Response", "No Response");
         }
     }
-
-
 
     // This needs to be inner class because we cannot access view model from separate recycler view adapter class.
     public class AddFromContactsRecyclerViewAdapter extends RecyclerView.Adapter<AddFromContactsRecyclerViewAdapter.AddFromContactsViewHolder> {

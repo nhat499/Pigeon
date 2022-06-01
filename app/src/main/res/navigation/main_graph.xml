@@ -107,9 +107,6 @@
         android:id="@+id/addMemberFragment"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chat.AddMemberFragment"
         android:label="AddMemberFragment" >
-        <action
-            android:id="@+id/action_addMemberFragment_to_navigation_chat"
-            app:destination="@id/navigation_chat" />
         <argument
             android:name="room"
             app:argType="integer"/>
@@ -128,6 +125,9 @@
         <argument
             android:name="roomName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <activity
         android:id="@+id/authenticationActivity"

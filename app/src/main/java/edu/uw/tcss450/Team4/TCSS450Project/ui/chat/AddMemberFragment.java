@@ -61,7 +61,6 @@ public class AddMemberFragment extends Fragment {
     // Initiate buttons and their bindings.
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // Sets title of action bar.
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Chat Settings");
 
@@ -107,10 +106,18 @@ public class AddMemberFragment extends Fragment {
                     .navigate(AddMemberFragmentDirections
                         .actionAddMemberFragmentToManageChatFragment())
                 );
-        // commented out bc after creating a new chat, clicking on settings brings you to chat room list
-//        mAddMemberViewModel.addResponseObserver(
-//                getViewLifecycleOwner(),
-//                this::observeResponse);
+
+        mBinding.buttonDeleteChat.setOnClickListener(button ->
+                mAddMemberViewModel.deleteChat(mUserViewModel.getmJwt(), args.getRoom())
+                );
+        mAddMemberViewModel.addDeleteRoomResponseObserver(
+                getViewLifecycleOwner(),
+                this::observeDeleteRoomResponse
+        );
+        mAddMemberViewModel.clearResponse();
+        mAddMemberViewModel.addResponseObserver(
+                getViewLifecycleOwner(),
+                this::observeResponse);
     }
 
 
@@ -130,11 +137,37 @@ public class AddMemberFragment extends Fragment {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
+                Log.d("HELLO", "w");
                 Navigation.findNavController(getView())
                         .navigate(AddMemberFragmentDirections
                                 .actionAddMemberFragmentToNavigationChatRoomList());
-                mAddMemberViewModel.clearResponse();
                 mChatRoomModel.getRooms(mUserViewModel.getmJwt(), mUserViewModel.getEmail());
+                mAddMemberViewModel.clearResponse();
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+    }
+
+    /**
+     * An observer on the HTTP Response from the web server. This observer should be
+     * attached to SignInViewModel.
+     *
+     * @param response the Response from the server
+     */
+    private void observeDeleteRoomResponse(final JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code") || response.has("error")) {
+                try {
+                    mBinding.editMemberName.setError(response.getJSONObject("data").getString("message"));
+                } catch (JSONException e) {
+                    Log.e("JSON Parse Error", e.getMessage());
+                }
+            } else {
+                Navigation.findNavController(getView())
+                        .navigate(AddMemberFragmentDirections
+                                .actionAddMemberFragmentToNavigationChatRoomList());
+                mAddMemberViewModel.clearDeleteRoomResponse();
             }
         } else {
             Log.d("JSON Response", "No Response");
