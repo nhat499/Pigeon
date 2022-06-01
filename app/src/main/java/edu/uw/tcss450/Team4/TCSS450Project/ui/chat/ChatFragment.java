@@ -99,7 +99,7 @@ public class ChatFragment extends Fragment {
         ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
 
         ChatFragmentDirections.ActionNavigationChatToAddMemberFragment directions =
-                ChatFragmentDirections.actionNavigationChatToAddMemberFragment(args.getRoomName());
+                ChatFragmentDirections.actionNavigationChatToAddMemberFragment(args.getRoom(), args.getRoomName());
 
         directions.setRoom(args.getRoom());
 

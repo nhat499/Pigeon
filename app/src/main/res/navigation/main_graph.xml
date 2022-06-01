@@ -112,8 +112,7 @@
             app:destination="@id/navigation_chat" />
         <argument
             android:name="room"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            app:argType="integer"/>
         <action
             android:id="@+id/action_addMemberFragment_to_navigation_chat_room_list"
             app:destination="@id/navigation_chat_room_list" />
