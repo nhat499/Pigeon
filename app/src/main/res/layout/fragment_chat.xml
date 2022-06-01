@@ -51,10 +51,11 @@
         app:layout_constraintEnd_toEndOf="parent" />
     <ImageButton
         android:id="@+id/button_add"
+        style="@style/Widget.App.Button.OutlinedButton.IconOnly"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_add_black_24dp"
+        android:src="@drawable/ic_baseline_settings_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"

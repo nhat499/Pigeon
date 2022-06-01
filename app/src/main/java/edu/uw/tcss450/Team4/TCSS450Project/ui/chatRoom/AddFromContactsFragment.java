@@ -45,12 +45,14 @@ public class AddFromContactsFragment extends Fragment {
     private AddMemberViewModel mAddMemberModel;
     private ChatViewModel mChatViewModel;
     private List<Contacts> mAddedContacts;
+    private AddFromContactsFragmentArgs mArgs;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = FragmentAddFromContactsBinding.inflate(inflater);
+        mArgs = AddFromContactsFragmentArgs.fromBundle(getArguments());
         return mBinding.getRoot();
     }
 
@@ -122,7 +124,7 @@ public class AddFromContactsFragment extends Fragment {
                 // This will work if at least one selected contact is not in the room.
                 Navigation.findNavController(getView())
                         .navigate(AddFromContactsFragmentDirections
-                                .actionAddFromContactsFragmentToAddMemberFragment());
+                                .actionAddFromContactsFragmentToAddMemberFragment(mArgs.getRoomName()));
             }
         } else {
             Log.d("JSON Response", "No Response");
@@ -137,8 +139,6 @@ public class AddFromContactsFragment extends Fragment {
         private final Map<Contacts, Boolean> mExpandedFlags;
 
         private final List<Contacts> mContacts;
-
-
 
         public AddFromContactsRecyclerViewAdapter(@NonNull List<Contacts> contacts) {
             this.mContacts = contacts;
