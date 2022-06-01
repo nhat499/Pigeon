@@ -120,7 +120,8 @@ public class ContactsFragment extends Fragment{
         }
 
         if (filteredList.isEmpty()){
-            Toast.makeText(getActivity(), "no data found", Toast.LENGTH_SHORT).show();
+           // mBinding.search.setError()
+            //Toast.makeText(getActivity(), "no data found", Toast.LENGTH_SHORT).show();
         }else{
             contactsAdapter.setFilteredList(filteredList);
         }

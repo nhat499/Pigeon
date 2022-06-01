@@ -26,11 +26,13 @@ public class CreateContact extends Fragment {
     private FragmentAddContactsBinding mBinding;
 
     private Button addContact;
+    private Bundle mArgs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentAddContactsBinding.inflate(inflater);
+        mArgs = getArguments();
         return mBinding.getRoot();
     }
 
@@ -55,13 +57,20 @@ public class CreateContact extends Fragment {
 
                 // on below line we are making a text validation.
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getActivity(), "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
+                    mBinding.edit2ContactEmail.setError("User Doesn't Exist");
                 }
+
                 else {
                     mContactsViewModel.addContact(mUserModel.getmJwt(),mBinding.edit2ContactEmail.getText());
-                    Log.e("test respond", "onClick: " + mBinding.edit2ContactEmail.getText() );
-                    Navigation.findNavController(v).navigate(
-                            CreateContactDirections.actionCreateContactToNavigationContacts());
+                    Log.e("test respond", "onClick: " + mArgs.getString(",memberid"));
+                    if((mArgs.getString("memberid").equals("null"))){
+                        mBinding.edit2ContactEmail.setError("User Not Verified");
+                    }
+                    else {
+                        Navigation.findNavController(v).navigate(
+                                CreateContactDirections.actionCreateContactToNavigationContacts());
+                    }
                 }
 
             }

@@ -30,7 +30,7 @@ public class ContactsViewModel extends AndroidViewModel {
 
     /* List of the currently signed in user's contacts */
     private MutableLiveData<List<Contacts>> mContacts;
-
+    private String currentDeletedContact;
     public ContactsViewModel(@NonNull Application application) {
         super(application);
         mContacts = new MutableLiveData<>(new ArrayList<>());
@@ -211,6 +211,7 @@ public class ContactsViewModel extends AndroidViewModel {
         JSONObject body = new JSONObject();
         try {
             body.put("email",email);
+            currentDeletedContact = email;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -239,9 +240,17 @@ public class ContactsViewModel extends AndroidViewModel {
     }
 
     private void handleDelete(final JSONObject response) {
+        List<Contacts> temp = mContacts.getValue();
+        for (int i = 0; i < temp.size(); i++) {
+            Contacts tempContact = temp.get(i);
+            if (tempContact.getContactEmail().equals(currentDeletedContact)) {
+                Log.e("DELETED from temp liost", "asdsa");
+                temp.remove(i);
+            }
+        }
+        mContacts.setValue(temp);
 
-        mContacts.getValue().remove(response);
-        mContacts.setValue(mContacts.getValue());
+
     }
 
     /**
