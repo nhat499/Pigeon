@@ -61,7 +61,6 @@ public class ChatFragment extends Fragment {
         mNewChatRoomModel = provider.get(CreateNewChatRoomViewModel.class);
         mManageChatViewModel = new ViewModelProvider(getActivity()).get(ManageChatViewModel.class);
         mUserInfoViewModel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
-        mManageChatViewModel.checkHost(mUserInfoViewModel.getmJwt(), ChatFragmentArgs.fromBundle(getArguments()).getRoom());
     }
 
     @Override
@@ -74,6 +73,8 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mManageChatViewModel.checkHost(mUserInfoViewModel.getmJwt(), ChatFragmentArgs.fromBundle(getArguments()).getRoom());
 
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
         //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
@@ -177,7 +178,7 @@ public class ChatFragment extends Fragment {
         if (response.length() > 0) {
             if (response.has("code")) {
                 Log.d("TEST", "not host");
-                // you arent host
+                mManageChatViewModel.removeHostStatus();
             } else if (response.has("error")) {
                 Log.d("TEST", "error");
                 // error
