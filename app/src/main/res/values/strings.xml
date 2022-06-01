@@ -64,8 +64,7 @@
     <string name="keys_prefs_dark_mode">Shared Prefs Dark</string>
     // For HTTP requests
 
-    <string name="base_url_service">https://team-4-tcss-450-web-service.herokuapp.com/</string>
-    <string name="base_url_auth">https://team-4-tcss-450-web-service.herokuapp.com/</string>
+    <string name="base_url">https://team-4-tcss-450-web-service.herokuapp.com/</string>
     // IDK
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -156,5 +155,12 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+
+    <string name="recent_message_test">
+        test test test test test test test
+    </string>
+    <string name="action_remove_from_chat">Remove from chat</string>
+    <string name="action_set_host">Set Host</string>
 
 </resources>

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 
 public class ForgotPasswordViewModel extends AndroidViewModel {
@@ -41,7 +42,7 @@ public class ForgotPasswordViewModel extends AndroidViewModel {
     }
 
     public void connect(final String email, final String password) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/forgot";
+        String url = getApplication().getResources().getString(R.string.base_url) + "forgot";
         JSONObject body = new JSONObject();
         try {
             body.put("email", email);

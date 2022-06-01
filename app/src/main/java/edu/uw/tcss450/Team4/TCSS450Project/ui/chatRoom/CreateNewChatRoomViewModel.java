@@ -29,6 +29,7 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> mResponse;
     private MutableLiveData<JSONObject> mChatIDReturn;
+    private MutableLiveData<JSONObject> mSetHostResponse;
     private int success = 0;
 
     public CreateNewChatRoomViewModel(@NonNull Application application) {
@@ -37,6 +38,8 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
         mResponse.setValue(new JSONObject());
         mChatIDReturn = new MutableLiveData<>();
         mChatIDReturn.setValue(new JSONObject());
+        mSetHostResponse = new MutableLiveData<>();
+        mSetHostResponse.setValue(new JSONObject());
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
@@ -49,7 +52,7 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
     }
 
     public void createChatRoom(final String jwt, final String name) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "chats/";
 
         JSONObject body = new JSONObject();
@@ -101,6 +104,69 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
             String data = new String(error.networkResponse.data, Charset.defaultCharset());
             try {
                 mResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
+    }
+
+    public void setChatHost(final String jwt, final int chatid, final String email) {
+        String url = getApplication().getResources().getString(R.string.base_url) +
+                "chats/setHost/";
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Request request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                body,
+                this::handleSuccessSetHost,
+                this::handleErrorSetHost) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                headers.put("chatid", String.valueOf(chatid));
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+
+    }
+
+    private void handleSuccessSetHost(final JSONObject response) {
+        mSetHostResponse.setValue(response);
+    }
+
+    private void handleErrorSetHost(final VolleyError error) {
+        if (Objects.isNull(error.networkResponse)) {
+            try {
+                mSetHostResponse.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        } else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            try {
+                mSetHostResponse.setValue(new JSONObject("{" +
                         "code:" + error.networkResponse.statusCode +
                         ", data:" + data +
                         "}"));

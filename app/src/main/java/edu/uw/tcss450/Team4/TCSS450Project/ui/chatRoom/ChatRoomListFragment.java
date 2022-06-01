@@ -56,6 +56,9 @@ public class ChatRoomListFragment extends Fragment {
         });
         // Upon going back to the fragment, this fixes the bug of user seeing notifications for their own messages.
         mChatRoomModel.clearNotificationForRoom(mChatModel.getCurrentRoom());
+        mChatModel.setCurrentRoom(-1);
+        mChatRoomModel.clearNotificationForRoom(mChatModel.getCurrentRoom());
+
         mChatRoomModel.addNotificationObserver(getViewLifecycleOwner(), ChatRoomList -> {
 
                     binding.listRoot.setAdapter(
@@ -67,5 +70,4 @@ public class ChatRoomListFragment extends Fragment {
                         ChatRoomListFragmentDirections.actionNavigationChatRoomListToCreateNewChatRoomFragment()
                 ));
     }
-
 }

@@ -1,6 +1,8 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ManageChatViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragmentDirections;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentArgs;
 
@@ -37,6 +40,8 @@ public class ChatFragment extends Fragment {
     private UserInfoViewModel mUserModel;
     private ChatSendViewModel mSendModel;
     private CreateNewChatRoomViewModel mNewChatRoomModel;
+    private ManageChatViewModel mManageChatViewModel;
+    private UserInfoViewModel mUserInfoViewModel;
 
 
     public ChatFragment() {
@@ -48,13 +53,14 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
         HARD_CODED_CHAT_ID = args.getRoom();
-        Log.d("ASd", HARD_CODED_CHAT_ID + "");
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
         mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
         mNewChatRoomModel = provider.get(CreateNewChatRoomViewModel.class);
+        mManageChatViewModel = new ViewModelProvider(getActivity()).get(ManageChatViewModel.class);
+        mUserInfoViewModel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
     }
 
     @Override
@@ -67,6 +73,8 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mManageChatViewModel.checkHost(mUserInfoViewModel.getmJwt(), ChatFragmentArgs.fromBundle(getArguments()).getRoom());
 
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
         //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
@@ -92,9 +100,15 @@ public class ChatFragment extends Fragment {
         ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
 
         ChatFragmentDirections.ActionNavigationChatToAddMemberFragment directions =
-                ChatFragmentDirections.actionNavigationChatToAddMemberFragment();
+                ChatFragmentDirections.actionNavigationChatToAddMemberFragment(args.getRoom(), args.getRoomName());
 
-        directions.setRoom(args.getRoom());
+        //directions.setRoom(args.getRoom());
+
+        mManageChatViewModel.addCheckHostResponseObserver(
+                getViewLifecycleOwner(),
+                this::observeCheckHostResponse
+        );
+
 
         // To prevent automatic navigation back to the list because of the HTTP response previously.
         binding.buttonAdd.setOnClickListener(button ->
@@ -123,10 +137,61 @@ public class ChatFragment extends Fragment {
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });
+
+        binding.editMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.currCharacter.setText("" + binding.editMessage.getText().toString().length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
 //when we get the response back from the server, clear the edittext
-        mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
-                binding.editMessage.setText(""));
+        mSendModel.addResponseObserver(getViewLifecycleOwner(), response -> {
+            Log.d("TAG", "onViewCreated: " + response.toString());
+            try {
+                if(response.getBoolean("success") == true) {
+                    binding.editMessage.setText("");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        });
+
+//        mChatModel.addCurrentCharacterObserver(getViewLifecycleOwner(), respond ->
+//                binding.currCharacter.setText())
     }
+
+    private void observeCheckHostResponse(final JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code")) {
+                Log.d("TEST", "not host");
+                mManageChatViewModel.removeHostStatus();
+            } else if (response.has("error")) {
+                Log.d("TEST", "error");
+                // error
+            } else {
+                Log.d("TEST", "you are host");
+                mManageChatViewModel.giveHostStatus();
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+    }
+
+
 
     /**
      * An observer on the HTTP Response from the web server. This observer should be

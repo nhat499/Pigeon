@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 
 public class ContactsViewModel extends AndroidViewModel {
@@ -67,7 +68,7 @@ public class ContactsViewModel extends AndroidViewModel {
      * @param jwt the signed in users jwt
      */
     public void getFirstContacts(final String jwt) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/"
+        String url = getApplication().getResources().getString(R.string.base_url)
                 + "contact";
 
         Request request = new JsonArrayRequest(
@@ -130,10 +131,11 @@ public class ContactsViewModel extends AndroidViewModel {
             }
         }
         mContacts.setValue(mContacts.getValue());
+//        Log.e("JSON:", mContacts.toString());
     }
 
     public void addContact(final String jwt, final Editable email) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/"
+        String url = getApplication().getResources().getString(R.string.base_url)
                 + "contact";
 
         JSONObject body = new JSONObject();
@@ -205,7 +207,7 @@ public class ContactsViewModel extends AndroidViewModel {
     }
 
     public void deleteContact(final String jwt, final String email) {
-        String url = "https://team-4-tcss-450-web-service.herokuapp.com/"
+        String url = getApplication().getResources().getString(R.string.base_url)
                 + "contact/delete";
 
         JSONObject body = new JSONObject();

@@ -33,6 +33,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 
+import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentWeatherBinding;
 
 /**
@@ -121,7 +122,7 @@ public class WeatherViewModel extends AndroidViewModel {
     public void getConnectWeather() {
         try {
             Log.i("testing:", "Here");
-            String url = "https://team-4-tcss-450-web-service.herokuapp.com/weather";
+            String url = getApplication().getResources().getString(R.string.base_url) + "weather";
 
             Request request = new JsonObjectRequest(
                     Request.Method.GET,
@@ -165,7 +166,7 @@ public class WeatherViewModel extends AndroidViewModel {
         try {
             Log.i("Made it:", "HERE TWO");
 
-            String urlFiveDay = "https://team-4-tcss-450-web-service.herokuapp.com/weather";
+            String urlFiveDay = getApplication().getResources().getString(R.string.base_url) + "weather";
 
             JSONObject body = new JSONObject();
             try {

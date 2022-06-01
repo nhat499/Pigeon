@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.MenuItemCompat;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -19,6 +20,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,8 +28,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -42,15 +47,23 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 **/
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.ActivityMainBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
 import edu.uw.tcss450.Team4.TCSS450Project.model.NewMessageCountViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.services.PushReceiver;
@@ -58,10 +71,9 @@ import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
-import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.Contacts;
-import edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsRVAdapter;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragmentArgs;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.RecentMessageListViewModel;
 
 /**
  * Class that defines the lifecycle for the Main Activity
@@ -78,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityArgs args;
 
-    private ArrayList<Contacts> contactsModalArrayList;
-
     private AppBarConfiguration mAppBarConfiguration;
 
     private MainPushMessageReceiver mPushMessageReceiver;
@@ -94,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
 
     private HomeLandingViewModel mHomeLanding;
 
+    private MutableLiveData<JSONObject> mRemoveTokenResponse;
+
+    private RecentMessageListViewModel mMessages;
 
     @Override
     protected void onStart(){
@@ -115,6 +128,10 @@ public class MainActivity extends AppCompatActivity {
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getJwt(),args.getEmail())
         ).get(UserInfoViewModel.class);
+
+        // For removing the jwt on sign out.
+        mRemoveTokenResponse = new MutableLiveData<>();
+        mRemoveTokenResponse.setValue(new JSONObject());
 
         mChatRoomModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         mChatModel = new ViewModelProvider(this).get(ChatViewModel.class);
@@ -159,9 +176,13 @@ public class MainActivity extends AppCompatActivity {
                 mNewMessageModel.setEqual(length);
             }
         });
+        mMessages = new ViewModelProvider(this).get(RecentMessageListViewModel.class);
+
 
         mNewMessageModel.addMessageCountObserver(this, count -> {
             BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_chat_room_list);
+            mMessages.connectGet(args.getEmail());
+
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 //new messages! update and show the notification badge.
@@ -184,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
         getMenuInflater().inflate(R.menu.toolbar, menu);
 
         // updates the dark mode check box
@@ -194,10 +216,29 @@ public class MainActivity extends AppCompatActivity {
         boolean isChecked = prefs.getBoolean(getString(R.string.keys_prefs_dark_mode), false);
         MenuItem item = menu.findItem(R.id.action_dark_mode);
         item.setChecked(isChecked);
+
+        MenuItem searchViewItem = menu.findItem(R.id.search);
+        // on below line we are creating a variable for our search view.
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+        // on below line we are setting on query text listener for our search view.
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // on query submit we are clearing the focus for our search view.
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // on changing the text in our search view we are calling
+                // a filter method to filter our array list.
+                //filter(newText.toLowerCase());
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -229,6 +270,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
+        // Remove the pushy token on sign out.
+        removeToken(args.getEmail());
         SharedPreferences prefs =
                 getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
@@ -331,4 +374,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void removeToken(final String jwt) {
+        Log.e("JWT: ", jwt);
+        String url = getApplication().getResources().getString(R.string.base_url) +
+                "auth/";
+        Request request = new JsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null, //no body for this get request
+                mRemoveTokenResponse::setValue,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+    }
+
+    private void handleError(final VolleyError error) {
+        if (Objects.isNull(error.networkResponse)) {
+            try {
+                mRemoveTokenResponse.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        } else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            try {
+                mRemoveTokenResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
+    }
 }
