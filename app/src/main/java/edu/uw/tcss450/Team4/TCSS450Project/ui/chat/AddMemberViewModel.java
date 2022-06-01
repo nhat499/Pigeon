@@ -179,6 +179,11 @@ public class AddMemberViewModel extends AndroidViewModel {
     }
 
     public void clearResponse() {
+        mResponse = new MutableLiveData<>();
+        mResponse.setValue(new JSONObject());
+    }
+
+    public void clearDeleteRoomResponse() {
         mDeleteRoomResponse = new MutableLiveData<>();
         mDeleteRoomResponse.setValue(new JSONObject());
     }

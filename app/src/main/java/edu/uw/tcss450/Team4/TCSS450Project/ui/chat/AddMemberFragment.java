@@ -113,41 +113,14 @@ public class AddMemberFragment extends Fragment {
                 );
         mAddMemberViewModel.addDeleteRoomResponseObserver(
                 getViewLifecycleOwner(),
-                this::observeResponse
+                this::observeDeleteRoomResponse
         );
         // commented out bc after creating a new chat, clicking on settings brings you to chat room list
-//        mAddMemberViewModel.addResponseObserver(
-//                getViewLifecycleOwner(),
-//                this::observeResponse);
+        mAddMemberViewModel.addResponseObserver(
+                getViewLifecycleOwner(),
+                this::observeResponse);
     }
 
-
-//    /**
-//     * An observer on the HTTP Response from the web server. This observer should be
-//     * attached to SignInViewModel.
-//     *
-//     * @param response the Response from the server
-//     */
-//    private void observeResponse(final JSONObject response) {
-//        if (response.length() > 0) {
-//            if (response.has("code") || response.has("error")) {
-//                try {
-//                    mBinding.editMemberName.setError(response.getJSONObject("data").getString("message"));
-//
-//                } catch (JSONException e) {
-//                    Log.e("JSON Parse Error", e.getMessage());
-//                }
-//            } else {
-//                Navigation.findNavController(getView())
-//                        .navigate(AddMemberFragmentDirections
-//                                .actionAddMemberFragmentToNavigationChatRoomList());
-//                mAddMemberViewModel.clearResponse();
-//                mChatRoomModel.getRooms(mUserViewModel.getmJwt(), mUserViewModel.getEmail());
-//            }
-//        } else {
-//            Log.d("JSON Response", "No Response");
-//        }
-//    }
 
     /**
      * An observer on the HTTP Response from the web server. This observer should be
@@ -156,6 +129,33 @@ public class AddMemberFragment extends Fragment {
      * @param response the Response from the server
      */
     private void observeResponse(final JSONObject response) {
+        if (response.length() > 0) {
+            if (response.has("code") || response.has("error")) {
+                try {
+                    mBinding.editMemberName.setError(response.getJSONObject("data").getString("message"));
+
+                } catch (JSONException e) {
+                    Log.e("JSON Parse Error", e.getMessage());
+                }
+            } else {
+                Navigation.findNavController(getView())
+                        .navigate(AddMemberFragmentDirections
+                                .actionAddMemberFragmentToNavigationChatRoomList());
+                mAddMemberViewModel.clearResponse();
+                mChatRoomModel.getRooms(mUserViewModel.getmJwt(), mUserViewModel.getEmail());
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+    }
+
+    /**
+     * An observer on the HTTP Response from the web server. This observer should be
+     * attached to SignInViewModel.
+     *
+     * @param response the Response from the server
+     */
+    private void observeDeleteRoomResponse(final JSONObject response) {
         if (response.length() > 0) {
             if (response.has("code") || response.has("error")) {
                 try {
