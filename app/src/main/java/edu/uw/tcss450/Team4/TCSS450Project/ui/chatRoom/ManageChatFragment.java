@@ -38,6 +38,7 @@ public class ManageChatFragment extends Fragment {
     private UserInfoViewModel mUserViewModel;
     private List<Contacts> mChatMembers;
     private AddMemberViewModel mAddViewModel;
+    private Contacts mSelf;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,8 +110,14 @@ public class ManageChatFragment extends Fragment {
 
             void setContact(final Contacts contact) {
                 if (contact.getContactEmail().equals(mUserViewModel.getEmail())) {
-                    mBinding.buttonSetHost.setEnabled(false);
+                    mSelf = contact;
+                }
+                if (mSelf != null && mSelf == contact) {
                     mBinding.buttonRemove.setEnabled(false);
+                    mBinding.buttonSetHost.setEnabled(false);
+                } else {
+                    mBinding.buttonRemove.setEnabled(true);
+                    mBinding.buttonSetHost.setEnabled(true);
                 }
                 mBinding.textName.setText(contact.getFullName());
                 mBinding.buttonRemove.setOnClickListener(button -> {

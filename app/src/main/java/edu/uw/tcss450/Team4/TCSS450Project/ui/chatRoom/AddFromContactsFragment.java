@@ -122,9 +122,9 @@ public class AddFromContactsFragment extends Fragment {
                 }
             } else {
                 // This will work if at least one selected contact is not in the room.
-                Navigation.findNavController(getView())
-                        .navigate(AddFromContactsFragmentDirections
-                                .actionAddFromContactsFragmentToAddMemberFragment(mArgs.getRoomName()));
+//                Navigation.findNavController(getView())
+//                        .navigate(AddFromContactsFragmentDirections
+//                                .actionAddFromContactsFragmentToAddMemberFragment(mArgs.getRoom(), mArgs.getRoomName()));
             }
         } else {
             Log.d("JSON Response", "No Response");

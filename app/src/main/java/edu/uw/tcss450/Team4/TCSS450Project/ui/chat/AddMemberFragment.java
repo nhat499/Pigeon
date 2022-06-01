@@ -79,8 +79,9 @@ public class AddMemberFragment extends Fragment {
             mBinding.buttonAddMember.setEnabled(false);
             mBinding.buttonAddFromContacts.setEnabled(false);
             mBinding.editMemberName.setEnabled(false);
-            mBinding.textMessage.setText("Only the host may add/remove members from the chat.");
+            mBinding.textMessage.setText("You must be the host of the chat to add/remove members or delete the chat.");
             mBinding.buttonManageChat.setEnabled(false);
+            mBinding.buttonDeleteChat.setEnabled(false);
         } else {
             mBinding.textMessage.setText("");
         }
