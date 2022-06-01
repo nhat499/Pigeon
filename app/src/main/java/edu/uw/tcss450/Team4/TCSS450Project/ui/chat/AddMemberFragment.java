@@ -167,7 +167,7 @@ public class AddMemberFragment extends Fragment {
                 Navigation.findNavController(getView())
                         .navigate(AddMemberFragmentDirections
                                 .actionAddMemberFragmentToNavigationChatRoomList());
-                mAddMemberViewModel.clearResponse();
+                mAddMemberViewModel.clearDeleteRoomResponse();
             }
         } else {
             Log.d("JSON Response", "No Response");
