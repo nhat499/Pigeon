@@ -61,7 +61,6 @@ public class AddMemberFragment extends Fragment {
     // Initiate buttons and their bindings.
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // Sets title of action bar.
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Chat Settings");
 
@@ -115,7 +114,7 @@ public class AddMemberFragment extends Fragment {
                 getViewLifecycleOwner(),
                 this::observeDeleteRoomResponse
         );
-        // commented out bc after creating a new chat, clicking on settings brings you to chat room list
+        mAddMemberViewModel.clearResponse();
         mAddMemberViewModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
@@ -138,11 +137,12 @@ public class AddMemberFragment extends Fragment {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
+                Log.d("HELLO", "w");
                 Navigation.findNavController(getView())
                         .navigate(AddMemberFragmentDirections
                                 .actionAddMemberFragmentToNavigationChatRoomList());
-                mAddMemberViewModel.clearResponse();
                 mChatRoomModel.getRooms(mUserViewModel.getmJwt(), mUserViewModel.getEmail());
+                mAddMemberViewModel.clearResponse();
             }
         } else {
             Log.d("JSON Response", "No Response");

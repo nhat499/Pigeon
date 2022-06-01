@@ -102,7 +102,7 @@ public class ChatFragment extends Fragment {
         ChatFragmentDirections.ActionNavigationChatToAddMemberFragment directions =
                 ChatFragmentDirections.actionNavigationChatToAddMemberFragment(args.getRoom(), args.getRoomName());
 
-        directions.setRoom(args.getRoom());
+        //directions.setRoom(args.getRoom());
 
         mManageChatViewModel.addCheckHostResponseObserver(
                 getViewLifecycleOwner(),

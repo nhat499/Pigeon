@@ -49,6 +49,7 @@ public class AddMemberViewModel extends AndroidViewModel {
     }
 
     public void addMember(final String jwt, final String email, final int id) {
+        Log.d("HELLO", "fddsa");
         String url = getApplication().getResources().getString(R.string.base_url) +
                 "chats/" + id + "/" + email + "/";
 
