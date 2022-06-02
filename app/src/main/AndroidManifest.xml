@@ -20,10 +20,19 @@
         android:roundIcon="@mipmap/ic_app_icon_light_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TCSS450Project">
-        <activity android:name=".MainActivity"
 
-        android:windowSoftInputMode="adjustResize"
-            > </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDUeP3esU16M1e99rhbh5p9qQm6SmfAchc" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"> </activity>
         <!--            android:windowSoftInputMode="adjustPan" -->
         <activity
             android:name=".AuthenticationActivity"
