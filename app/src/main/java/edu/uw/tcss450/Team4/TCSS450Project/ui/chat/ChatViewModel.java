@@ -225,7 +225,9 @@ public class ChatViewModel extends AndroidViewModel {
                         message.getInt("messageid"),
                         message.getString("message"),
                         message.getString("email"),
-                        message.getString("timestamp")
+                        message.getString("timestamp"),
+                        message.getString("firstname"),
+                        message.getString("lastname")
                 );
                 if (!list.contains(cMessage)) {
                     // don't add a duplicate

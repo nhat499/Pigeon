@@ -18,12 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.List;
+
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.CreateNewChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ManageChatViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragmentDirections;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentArgs;
 
@@ -42,6 +46,7 @@ public class ChatFragment extends Fragment {
     private CreateNewChatRoomViewModel mNewChatRoomModel;
     private ManageChatViewModel mManageChatViewModel;
     private UserInfoViewModel mUserInfoViewModel;
+    private HomeLandingViewModel mHomeModel;
 
 
     public ChatFragment() {
@@ -61,6 +66,7 @@ public class ChatFragment extends Fragment {
         mNewChatRoomModel = provider.get(CreateNewChatRoomViewModel.class);
         mManageChatViewModel = new ViewModelProvider(getActivity()).get(ManageChatViewModel.class);
         mUserInfoViewModel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
+        mHomeModel = new ViewModelProvider(getActivity()).get(HomeLandingViewModel.class);
     }
 
     @Override
@@ -83,7 +89,12 @@ public class ChatFragment extends Fragment {
         final RecyclerView rv = binding.recyclerMessages;
         //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
         //holds.
+
+//        convertToName(mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID));
+
+
         rv.setAdapter(new ChatRecyclerViewAdapter(
+                mHomeModel, mUserModel,
                         mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
                         mUserModel.getEmail()));
 
@@ -173,6 +184,21 @@ public class ChatFragment extends Fragment {
 //        mChatModel.addCurrentCharacterObserver(getViewLifecycleOwner(), respond ->
 //                binding.currCharacter.setText())
     }
+
+//    private void convertToName(List<ChatMessage> messages) {
+//        // Change each email in the message to their name.
+//        for (int i = 0; i < messages.size(); i++) {
+//            // Connect to get email.
+//            Log.e("Original Name:", messages.get(i).getSender());
+//            mHomeModel.connect(messages.get(i).getSender() + "", mUserModel.getmJwt());
+//            // Get converted name from email.
+//            HashMap<String, String> temp = mHomeModel.getMResponse();
+//            Log.e("Name: ", temp.get("name"));
+//            // Set email to name in chat message list.
+//            messages.get(i).setSender(temp.get("name"));
+//
+//        }
+//    }
 
     private void observeCheckHostResponse(final JSONObject response) {
         if (response.length() > 0) {
