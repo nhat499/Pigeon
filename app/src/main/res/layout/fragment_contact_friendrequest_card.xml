@@ -22,8 +22,8 @@
 
         <TextView
             android:id="@+id/contact_name"
-            android:layout_width="268dp"
-            android:layout_height="52dp"
+            android:layout_width="266dp"
+            android:layout_height="59dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-black"

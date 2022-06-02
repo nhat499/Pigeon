@@ -97,6 +97,7 @@ public class ContactsFragment extends Fragment{
 
 
 
+
         //Search Contacts with SearchView
         editsearch = mBinding.search;
         editsearch.clearFocus();

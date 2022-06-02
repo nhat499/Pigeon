@@ -24,6 +24,7 @@ public class DeleteContact extends Fragment {
     private Bundle mArgs;
     private UserInfoViewModel mUserModel;
     private Button profileDelete;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,6 +60,9 @@ public class DeleteContact extends Fragment {
 
         mBinding.profileName.setText(mArgs.getString("name"));
         mBinding.profileEmail.setText(mArgs.getString("email"));
+
+
+
     }
 
 }

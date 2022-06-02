@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddContactsBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 
@@ -56,20 +58,16 @@ public class CreateContact extends Fragment {
                 Editable email = mBinding.edit2ContactEmail.getText();
                 // on below line we are making a text validation.
                 if (TextUtils.isEmpty(email)) {
-                    //Toast.makeText(getActivity(), "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
-                    mBinding.edit2ContactEmail.setError("User Doesn't Exist");
+                    mBinding.edit2ContactEmail.setError("Enter a Email");
                 }
 
-                else {
+               else {
                     mContactsViewModel.addContact(mUserModel.getmJwt(),mBinding.edit2ContactEmail.getText());
-                    Log.e("check", "onClick: "+mContactsViewModel.getContactListValue());
-                    if(mContactsViewModel.getContactListValue().contains(mBinding.edit2ContactEmail.getText())){
-                        mBinding.edit2ContactEmail.setError("User Not Verified");
-                    }
-                     else {
+                      Log.e("check", "onClick: "+mArgs.getString("email"));
+
                         Navigation.findNavController(v).navigate(
                                 CreateContactDirections.actionCreateContactToNavigationContacts());
-                    }
+                  //  }
                 }
 
             }

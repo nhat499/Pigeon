@@ -46,25 +46,8 @@
             android:textAlignment="center"
             android:textColor="@color/primaryDarkColor"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/message_contact"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/image_contact"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/message_contact"
-            android:layout_width="36dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="288dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="86dp"
-            android:layout_marginBottom="22dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.777"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_chat_black_24dp" />
 
         <ImageButton
             android:id="@+id/reject_contact"
