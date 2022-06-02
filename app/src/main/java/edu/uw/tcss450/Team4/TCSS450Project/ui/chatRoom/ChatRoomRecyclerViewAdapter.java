@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,7 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
                 @Override
                 public void onClick(View view) {
                     ChatRoomListFragmentDirections.ActionNavigationChatRoomListToNavigationChat directions =
-                            ChatRoomListFragmentDirections.actionNavigationChatRoomListToNavigationChat();
+                            ChatRoomListFragmentDirections.actionNavigationChatRoomListToNavigationChat(mChatRoom.getTitle());
                     directions.setRoom(mChatRoom.getRoomNumber());
                     Navigation.findNavController(view)
                             .navigate(directions);

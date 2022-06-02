@@ -113,14 +113,21 @@ public class CreateNewChatRoomViewModel extends AndroidViewModel {
         }
     }
 
-    public void setChatHost(final String jwt, final int chatid) {
+    public void setChatHost(final String jwt, final int chatid, final String email) {
         String url = getApplication().getResources().getString(R.string.base_url) +
-                "chats/setHost";
+                "chats/setHost/";
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Request request = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
-                null,
+                body,
                 this::handleSuccessSetHost,
                 this::handleErrorSetHost) {
 
