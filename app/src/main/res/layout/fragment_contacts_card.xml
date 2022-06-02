@@ -67,7 +67,7 @@
             app:srcCompat="@drawable/ic_chat_black_24dp" />
 
         <ImageButton
-            android:id="@+id/delete_contact"
+            android:id="@+id/reject_contact"
             android:layout_width="48dp"
             android:layout_height="57dp"
             android:layout_marginStart="341dp"

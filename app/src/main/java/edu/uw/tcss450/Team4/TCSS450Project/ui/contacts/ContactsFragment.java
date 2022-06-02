@@ -40,7 +40,6 @@ import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 public class ContactsFragment extends Fragment{
 
     private FragmentContactsListBinding mBinding;
-    private FragmentContactsCardBinding mBinding2;
     private ContactsRVAdapter contactsAdapter;
     private Bundle mArgs;
     private UserInfoViewModel mUserModel;
@@ -54,7 +53,6 @@ public class ContactsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentContactsListBinding.inflate(inflater);
-        mBinding2 = FragmentContactsCardBinding.inflate(inflater);
         mArgs = getArguments();
         return mBinding.getRoot();
 
@@ -74,7 +72,6 @@ public class ContactsFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         final RecyclerView rv = mBinding.listRoot;
-        mBinding2.getRoot();
         rv.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
@@ -88,16 +85,14 @@ public class ContactsFragment extends Fragment{
 
         mContactsViewModel.addContactObserver(getViewLifecycleOwner(),
                 list -> {
-//                    mContactsViewModel.searchContacts(mUserModel.getmJwt(), mUserModel.getEmail());
-                    contactsAdapter = new ContactsRVAdapter((ArrayList<Contacts>) mContactsViewModel.getContactListValue());
                     rv.getAdapter().notifyDataSetChanged();
                     rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
                 });
 
-//        mBinding.friendRequest.setOnClickListener(button ->
-//                Navigation.findNavController(getView()).navigate(
-//                        ContactsFragmentDirections.actionNavigationContactsToContactFriendRequest()
-//                ));
+        mBinding.friendRequest.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        ContactsFragmentDirections.actionNavigationContactsToContactFriendRequest()
+                ));
 
 
 

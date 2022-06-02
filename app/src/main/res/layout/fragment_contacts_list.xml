@@ -16,16 +16,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_root"
-        android:layout_width="264dp"
-        android:layout_height="207dp"
+        android:layout_width="406dp"
+        android:layout_height="568dp"
         android:layout_marginStart="6dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="7dp"
         android:orientation="vertical"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/fragment_contacts_card" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,18 +52,31 @@
 
     <SearchView
         android:id="@+id/search"
-        android:layout_width="389dp"
-        android:layout_height="36dp"
+        android:layout_width="298dp"
+        android:layout_height="48dp"
         android:layout_marginStart="-10dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/search_view_bg"
         android:iconifiedByDefault="false"
         android:queryHint="Search"
-        app:layout_constraintBottom_toTopOf="@+id/list_root"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <requestFocus />
     </SearchView>
+
+    <ImageView
+        android:id="@+id/friendRequest"
+        android:layout_width="68dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.578"
+        app:layout_constraintStart_toEndOf="@+id/search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_friend_request_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
