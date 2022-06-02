@@ -15,11 +15,9 @@
     </style>
 
 <style name="splashScreenThemeLight" parent="Theme.MaterialComponents.Light.NoActionBar">
-     <!-- <item name = "android:windowBackground"> @drawable/ic_app_splash_light</item>  !-->
+    <item name = "android:windowBackground"> @drawable/ic_app_splash_light</item>
+     <!--   !-->
    <item name = "android:statusBarColor">@color/white</item>
-
 </style>
-    <style name="splashScreenThemeDark" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name = "android:statusBarColor">@color/black</item>
-    </style>
+
 </resources>

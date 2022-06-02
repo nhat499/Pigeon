@@ -43,7 +43,7 @@
     <string name="title_search">Search</string>
 
     //For weather
-    <string name="hint_city_name">Enter City Name</string>
+    <string name="hint_city_name">Enter City Name or Zipcode</string>
     <string name="title_city_name">City Name</string>
     <string name="text_curr_condition">Cloudy</string>
     <string name="text_curr_temperature">Temperature</string>
@@ -155,6 +155,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 
     <string name="recent_message_test">

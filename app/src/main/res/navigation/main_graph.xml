@@ -26,7 +26,12 @@
         android:id="@+id/navigation_weather"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.weather.WeatherFragment"
         android:label="Weather"
-        tools:layout="@layout/fragment_weather" />
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_navigation_weather_to_locationFragment"
+            app:destination="@+id/fragment_location"
+            app:popUpTo="@id/navigation_weather" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_contacts"
