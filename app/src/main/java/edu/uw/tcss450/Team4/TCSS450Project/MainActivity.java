@@ -50,15 +50,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 //COMMENTED IMPORTS
 /**
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-**/
+ import com.google.android.material.floatingactionbutton.FloatingActionButton;
+ import com.karumi.dexter.Dexter;
+ import com.karumi.dexter.MultiplePermissionsReport;
+ import com.karumi.dexter.PermissionToken;
+ import com.karumi.dexter.listener.DexterError;
+ import com.karumi.dexter.listener.PermissionRequest;
+ import com.karumi.dexter.listener.PermissionRequestErrorListener;
+ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+ **/
 import org.json.JSONException;
 import org.json.JSONObject;
 
