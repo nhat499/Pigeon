@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.weather;
 
 import android.app.Application;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.GoogleMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +37,7 @@ import java.util.Objects;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentWeatherBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.model.LocationViewModel;
 
 /**
  * View model for the Weather Fragment
@@ -53,6 +56,7 @@ public class WeatherViewModel extends AndroidViewModel {
     // from root object of the weather data:
     private String lat ="47.2529";
     private String lon ="-122.4443";
+
     //private List<WeatherViewModel> weather;
 
     /**
@@ -66,7 +70,21 @@ public class WeatherViewModel extends AndroidViewModel {
         mResponseHD = new MutableLiveData<>();
         mResponseHD.setValue(new JSONObject());
     }
-
+/**
+ * Getters and setters for latitude and longitude values.
+ */
+    public String getLat (){
+    return this.lat;
+    }
+    public String getLon() {
+        return this.lon;
+    }
+    public void setLat(String Latitude){
+        this.lat = Latitude;
+    }
+    public void setLon(String Longitude){
+        this.lon = Longitude;
+    }
 
     /**
      * This method provides client code that adds observers to the LiveData

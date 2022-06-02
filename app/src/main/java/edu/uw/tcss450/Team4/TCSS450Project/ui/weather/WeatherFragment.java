@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.weather;
 
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,18 +21,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentWeatherBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.model.LocationViewModel;
 
 /**
  * Class to define the fragment lifecycle for the Weather Fragment
@@ -44,9 +53,15 @@ public class WeatherFragment extends Fragment {
     private WeatherViewModel mSendWeatherModel;
     private WeatherViewModel mSendWeatherModelHD;
     private FragmentWeatherBinding binding;
+    //The ViewModel that will store the current location
+    private LocationViewModel mLocationModel;
+    // map info
+    private GoogleMap mMap;
+    Geocoder geocoder;
+
     static WeatherFragment instance;
-    private String lat ="47.2529";
-    private String lon ="-122.4443";
+  //  private String lat ="47.2529";
+  //  private String lon ="-122.4443";
 
     //empty constructor
     public WeatherFragment() {
@@ -79,6 +94,25 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        LocationViewModel model = new ViewModelProvider(getActivity())
+                .get(LocationViewModel.class);
+        model.addLocationObserver(getViewLifecycleOwner(), location -> {
+            if(location != null) {
+               // final LatLng c = new LatLng(location.getLatitude(), location.getLongitude());
+                mSendWeatherModel.setLat(String.valueOf(location.getLatitude()));
+                mSendWeatherModel.setLon(String.valueOf(location.getLongitude()));
+                geocoder = new Geocoder(getContext());
+                try {
+                    List<Address> l =  geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
+                    //Log.d("LOCATION", "onViewCreated: " + l.get(0).getLocality());
+                    binding.textCityName.setText(l.get(0).getLocality());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         mSendWeatherModel.getConnectWeather();
         mSendWeatherModelHD.getConnectWeatherHD();
         mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(),
@@ -114,8 +148,18 @@ public class WeatherFragment extends Fragment {
         String jsonWeatherDescription = new JSONObject(str).getString("description");
         binding.textWeatherDescription.setText(jsonWeatherDescription);
 
+
         String jsonWeatherIcon = new JSONObject(str).getString("icon");
-       // binding.iconWeather.setImageIcon();
+        String iconUrl = "http://openweathermap.org/img/w/" + jsonWeatherIcon + ".png";
+       // Log.i("ICON IMAGE", iconUrl.toString());
+       // Picasso.get().load(iconUrl)
+
+       //binding.iconWeather.setImageIcon(iconUrl);
+        //binding.iconWeather.setImageIcon(Picasso.get().load(iconUrl));
+        //Picasso.get().load(iconUrl).into(binding.iconWeather);
+       // binding.iconWeather.setImageIcon((ImageView)Picasso.get().load(iconUrl));
+        //ImageView icon = (ImageView) binding.iconWeather.setImageURI();
+        //binding.iconWeather.setImageIcon();
 
         //CONDITIONS
         DateFormat timeFormat = new SimpleDateFormat("h:mm a");
