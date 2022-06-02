@@ -20,48 +20,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <ImageView
-            android:id="@+id/image_contact"
-            android:layout_width="57dp"
-            android:layout_height="61dp"
-            android:layout_marginEnd="305dp"
-            android:layout_marginBottom="50dp"
-            android:background="#005E6165"
-            android:padding="3dp"
-            android:src="@drawable/ic_account_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
         <TextView
             android:id="@+id/contact_name"
-            android:layout_width="213dp"
-            android:layout_height="58dp"
+            android:layout_width="266dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-black"
-            android:text="TextView"
-            android:textAlignment="center"
-            android:textColor="@color/primaryDarkColor"
+            android:text="Name"
+            android:textAlignment="viewStart"
+            android:textColor="@color/secondaryDarkColor"
             android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@+id/image_contact"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/reject_contact"
-            android:layout_width="48dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="341dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="5dp"
-            android:background="#00EFEDED"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="4dp"
+            android:background="#A9EA0909"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toEndOf="@+id/accept_contact"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421"
             app:srcCompat="@android:drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/accept_contact"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="#8BC34A"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/contact_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421"
+            app:srcCompat="@drawable/ic_checkmark_black_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
 
 
-public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.ViewHolder> {
+public class ContactsFriendRequestRVAdapter extends RecyclerView.Adapter<ContactsFriendRequestRVAdapter.ViewHolder> {
 
     // creating variables for context and array list.
 
@@ -26,35 +25,35 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     private FragmentContactsListBinding binding;
 
     // creating a constructor
-    public ContactsRVAdapter(List<Contacts> contactsList) {
+    public ContactsFriendRequestRVAdapter(List<Contacts> contactsList) {
         this.contactsList = contactsList;
     }
 
     @NonNull
     @Override
-    public ContactsRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactsFriendRequestRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // passing our layout file for displaying our card item
-        return new ContactsRVAdapter.ViewHolder(LayoutInflater
+        return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.fragment_contacts_card, parent, false));
+                .inflate(R.layout.fragment_contact_friendrequest_card, parent, false));
 
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull ContactsRVAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactsFriendRequestRVAdapter.ViewHolder holder, int position) {
         // getting data from array list in our modal.
         Contacts modal = contactsList.get(position);
-        // on below line we are setting data to our text view.
+//        // on below line we are setting data to our text view.
         holder.nameContact.setText(modal.getFullName());
-        holder.deleteContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(
-                        ContactsFragmentDirections.actionNavigationContactsToContactsProfile(
-                                modal.getFullName(), modal.getContactEmail()));
-            }
-        });
+//        holder.deleteContact.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(
+//                        ContactsFragmentDirections.actionNavigationContactsToContactsProfile(
+//                                modal.getFullName(), modal.getContactEmail()));
+//            }
+//        });
 
 
     }
@@ -71,15 +70,16 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         // on below line creating a variable
         // for our image view and text view.
-        private ImageView imageContact;
         private TextView nameContact;
-        private ImageButton deleteContact;
+        private ImageView rejectContact;
+        private ImageView acceptContact;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our image view and text view.
-            imageContact = itemView.findViewById(R.id.image_contact);
+            acceptContact = itemView.findViewById(R.id.accept_contact);
             nameContact = itemView.findViewById(R.id.contact_name);
-            deleteContact = itemView.findViewById(R.id.reject_contact);
+            rejectContact = itemView.findViewById(R.id.reject_contact);
         }
     }
+
 }
