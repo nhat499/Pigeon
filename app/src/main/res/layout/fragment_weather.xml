@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background3"
     tools:context=".ui.weather.WeatherFragment">
+    <!-- android:background = @drawable/gradient_list -->
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,8 +47,8 @@
             android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="68dp"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/secondaryLightColor"
+            android:background="@drawable/round_corners"
+            android:backgroundTint="#9963a4ff"
             android:ems="10"
             android:hint="@string/hint_city_name"
             android:inputType="textPersonName"
@@ -61,7 +62,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:background="@drawable/round_corners"
             android:text="@string/title_search"
+            android:clickable="true"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,9 +73,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="376dp"
+            android:layout_width="368dp"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/round_corners"
+            android:backgroundTint="#9963a4ff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.428"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,16 +88,13 @@
                 android:id="@+id/text_weather_description"
                 android:layout_width="92dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:text="@string/text_curr_condition"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.088"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon_weather"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/icon_weather"
@@ -101,11 +105,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.448" />
+                app:layout_constraintVertical_bias="0.285" />
 
             <TextView
                 android:id="@+id/text_temperature"
-                android:layout_width="119dp"
+                android:layout_width="150dp"
                 android:layout_height="56dp"
                 android:layout_marginEnd="76dp"
                 android:gravity="center"
@@ -116,8 +120,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/icon_weather"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.626" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -125,7 +128,7 @@
             android:id="@+id/constraintLayout3"
             android:layout_width="375dp"
             android:layout_height="163dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
@@ -150,6 +153,8 @@
                 android:layout_width="360dp"
                 android:layout_height="113dp"
                 android:layout_marginTop="40dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -989,7 +994,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="391dp"
             android:layout_height="388dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
@@ -1008,10 +1013,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="375dp"
+                android:layout_width="360dp"
                 android:layout_height="336dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_weekly_forecast">
 
@@ -1265,9 +1272,11 @@
             <TextView
                 android:id="@+id/text_humidity"
                 android:layout_width="93dp"
-                android:layout_height="54dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="108dp"
+                android:layout_marginTop="90dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
                 android:gravity="center"
                 android:text="@string/title_humidity"
                 android:textColor="@color/white"
@@ -1277,9 +1286,11 @@
             <TextView
                 android:id="@+id/text_wind_speed"
                 android:layout_width="93dp"
-                android:layout_height="54dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="152dp"
-                android:layout_marginTop="108dp"
+                android:layout_marginTop="90dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
                 android:gravity="center"
                 android:text="@string/title_windspeed"
                 android:textColor="@color/white"
@@ -1289,9 +1300,11 @@
             <TextView
                 android:id="@+id/text_sunrise"
                 android:layout_width="93dp"
-                android:layout_height="54dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="68dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
                 android:gravity="center"
                 android:text="@string/title_sunrise"
                 android:textColor="@color/white"
@@ -1301,9 +1314,11 @@
             <TextView
                 android:id="@+id/text_sunset"
                 android:layout_width="93dp"
-                android:layout_height="54dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="152dp"
                 android:layout_marginTop="68dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
                 android:gravity="center"
                 android:text="@string/title_sunset"
                 android:textColor="@color/white"

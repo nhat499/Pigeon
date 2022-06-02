@@ -47,12 +47,12 @@ public class WeatherViewModel extends AndroidViewModel {
     private MutableLiveData<JSONObject> mResponse;
     private MutableLiveData<JSONObject> mResponseHD; // data for hours and days
     DecimalFormat df = new DecimalFormat("#.##");
-    private FragmentWeatherBinding binding;
+  //  private FragmentWeatherBinding binding;
 
 
     // from root object of the weather data:
-    private double lat;
-    private double lon;
+    private String lat ="47.2529";
+    private String lon ="-122.4443";
     //private List<WeatherViewModel> weather;
 
     /**
@@ -122,7 +122,7 @@ public class WeatherViewModel extends AndroidViewModel {
     public void getConnectWeather() {
         try {
             Log.i("testing:", "Here");
-            String url = getApplication().getResources().getString(R.string.base_url) + "weather";
+            String url = getApplication().getResources().getString(R.string.base_url) + "weather/location/"+lat+"/"+lon;
 
             Request request = new JsonObjectRequest(
                     Request.Method.GET,
@@ -166,18 +166,18 @@ public class WeatherViewModel extends AndroidViewModel {
         try {
             Log.i("Made it:", "HERE TWO");
 
-            String urlFiveDay = getApplication().getResources().getString(R.string.base_url) + "weather";
+            String url = getApplication().getResources().getString(R.string.base_url) + "weather/location/"+lat+"/"+lon;
 
             JSONObject body = new JSONObject();
             try {
-                body.put("name", "5days");
+                body.put("name", "7days");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             Request request = new JsonObjectRequest(
                     Request.Method.GET,
-                    urlFiveDay,
+                    url,
                     body,
                     this::handleResultHD,
                     this::handleErrorHD);
@@ -192,8 +192,6 @@ public class WeatherViewModel extends AndroidViewModel {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
 

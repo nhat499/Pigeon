@@ -10,10 +10,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 public class LocationViewModel extends ViewModel {
-
     private MutableLiveData<Location> mLocation;
 
     public LocationViewModel() {
+
         mLocation = new MediatorLiveData<>();
     }
 

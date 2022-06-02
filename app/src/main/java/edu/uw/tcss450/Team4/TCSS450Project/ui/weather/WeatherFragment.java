@@ -5,14 +5,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+
+import android.location.Address;
+import android.location.Geocoder;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +45,8 @@ public class WeatherFragment extends Fragment {
     private WeatherViewModel mSendWeatherModelHD;
     private FragmentWeatherBinding binding;
     static WeatherFragment instance;
-    //private String cityName;
+    private String lat ="47.2529";
+    private String lon ="-122.4443";
 
     //empty constructor
     public WeatherFragment() {
@@ -79,6 +84,10 @@ public class WeatherFragment extends Fragment {
         mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeWeather);
         mSendWeatherModelHD.addResponseObserver(getViewLifecycleOwner(),this::observeWeatherHD);
+
+        // button click listener
+      binding.buttonSearchCity.setOnClickListener(button -> Navigation.findNavController(getView()).
+                navigate(WeatherFragmentDirections.actionNavigationWeatherToLocationFragment()));
 
     }
 
@@ -162,7 +171,7 @@ public class WeatherFragment extends Fragment {
 
         for (int i = 0; i < 24; i++) {
             JSONObject hour = jsonMessageHourly.getJSONObject(i);
-            tempText.get(i).setText(hour.getString("temp") + "°F");
+            tempText.get(i).setText(hour.getString("temp") + "\n°F");
         }
         Log.i("HOURLY TEMPS", tempText.toString());
 
@@ -183,7 +192,7 @@ public class WeatherFragment extends Fragment {
         for (int i = 0; i < 7; i++) {
             JSONObject day = jsonMessageDaily.getJSONObject(i);
             JSONObject temp = day.getJSONObject("temp");
-            dailyTempText.get(i).setText(temp.getString("day") + "°F");
+            dailyTempText.get(i).setText(temp.getString("day") + " °F");
         }
         ArrayList<TextView> nameOfDays = new ArrayList<TextView>() {
             {
