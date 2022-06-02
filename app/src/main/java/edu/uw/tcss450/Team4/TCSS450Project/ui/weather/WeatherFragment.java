@@ -87,7 +87,7 @@ public class WeatherFragment extends Fragment {
 
         // button click listener
       binding.buttonSearchCity.setOnClickListener(button -> Navigation.findNavController(getView()).
-                navigate(WeatherFragmentDirections.actionNavigationWeatherToLocationFragment()));
+                navigate(WeatherFragmentDirections.actionNavigationWeatherToNavigationLocation()));
 
     }
 
