@@ -88,6 +88,8 @@ public class ContactsFragment extends Fragment{
 
         mContactsViewModel.addContactObserver(getViewLifecycleOwner(),
                 list -> {
+//                    mContactsViewModel.searchContacts(mUserModel.getmJwt(), mUserModel.getEmail());
+                    contactsAdapter = new ContactsRVAdapter((ArrayList<Contacts>) mContactsViewModel.getContactListValue());
                     rv.getAdapter().notifyDataSetChanged();
                     rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
                 });
