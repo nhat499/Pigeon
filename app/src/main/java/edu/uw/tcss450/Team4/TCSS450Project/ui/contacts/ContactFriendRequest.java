@@ -19,9 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddContactsBinding;
-import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactFriendrequestCardBinding;
-import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactSendrequestBinding;
+
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactFriendrequestBinding;
+
+
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 
 public class ContactFriendRequest extends Fragment{
@@ -29,13 +30,13 @@ public class ContactFriendRequest extends Fragment{
         private ContactsViewModel mContactsViewModel;
         private ContactsFriendRequestRVAdapter contactsAdapter;
         private UserInfoViewModel mUserModel;
-        private FragmentContactSendrequestBinding mBinding;
+        private FragmentContactFriendrequestBinding mBinding;
         private Bundle mArgs;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            mBinding = FragmentContactSendrequestBinding.inflate(inflater);
+            mBinding = FragmentContactFriendrequestBinding.inflate(inflater);
             mArgs = getArguments();
             return mBinding.getRoot();
         }
