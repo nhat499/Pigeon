@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactFriendrequestCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsCardBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsListBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsProfileBinding;
@@ -90,6 +92,10 @@ public class ContactsFragment extends Fragment{
                     rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
                 });
 
+//        mBinding.friendRequest.setOnClickListener(button ->
+//                Navigation.findNavController(getView()).navigate(
+//                        ContactsFragmentDirections.actionNavigationContactsToContactFriendRequest()
+//                ));
 
 
 
@@ -120,11 +126,15 @@ public class ContactsFragment extends Fragment{
         }
 
         if (filteredList.isEmpty()){
-           // mBinding.search.setError()
-            //Toast.makeText(getActivity(), "no data found", Toast.LENGTH_SHORT).show();
+            int id = editsearch.getContext()
+                    .getResources()
+                    .getIdentifier("android:id/search_src_text", null, null);
+            EditText editText = (EditText) editsearch.findViewById(id);
+            editText.setError("No Results Found");
         }else{
             contactsAdapter.setFilteredList(filteredList);
         }
     }
+
 
 }

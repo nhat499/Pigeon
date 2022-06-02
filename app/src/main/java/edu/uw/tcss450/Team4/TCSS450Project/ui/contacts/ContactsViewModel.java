@@ -260,6 +260,7 @@ public class ContactsViewModel extends AndroidViewModel {
      * to retrieve a list of contacts for the signed in user
      *
      * @param jwt the signed in users jwt
+     * @param email
      */
     public void searchContacts(final String jwt,final String email) {
         String url = "https://team-4-tcss-450-web-service.herokuapp.com/"

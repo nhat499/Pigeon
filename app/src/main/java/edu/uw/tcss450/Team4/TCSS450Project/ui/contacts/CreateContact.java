@@ -54,7 +54,6 @@ public class CreateContact extends Fragment {
             @Override
             public void onClick(View v) {
                 Editable email = mBinding.edit2ContactEmail.getText();
-
                 // on below line we are making a text validation.
                 if (TextUtils.isEmpty(email)) {
                     //Toast.makeText(getActivity(), "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
@@ -63,11 +62,11 @@ public class CreateContact extends Fragment {
 
                 else {
                     mContactsViewModel.addContact(mUserModel.getmJwt(),mBinding.edit2ContactEmail.getText());
-                    Log.e("test respond", "onClick: " + mArgs.getString(",memberid"));
-                    if((mArgs.getString("memberid").equals("null"))){
+                    Log.e("check", "onClick: "+mContactsViewModel.getContactListValue());
+                    if(mContactsViewModel.getContactListValue().contains(mBinding.edit2ContactEmail.getText())){
                         mBinding.edit2ContactEmail.setError("User Not Verified");
                     }
-                    else {
+                     else {
                         Navigation.findNavController(v).navigate(
                                 CreateContactDirections.actionCreateContactToNavigationContacts());
                     }

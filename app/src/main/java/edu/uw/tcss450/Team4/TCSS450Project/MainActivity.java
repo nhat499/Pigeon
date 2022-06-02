@@ -3,8 +3,8 @@ package edu.uw.tcss450.Team4.TCSS450Project;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.view.MenuItemCompat;
 import androidx.lifecycle.MutableLiveData;
+import androidx.core.view.MenuItemCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -205,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
         getMenuInflater().inflate(R.menu.toolbar, menu);
 
         // updates the dark mode check box
@@ -217,28 +216,11 @@ public class MainActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.action_dark_mode);
         item.setChecked(isChecked);
 
-        MenuItem searchViewItem = menu.findItem(R.id.search);
-        // on below line we are creating a variable for our search view.
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-        // on below line we are setting on query text listener for our search view.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // on query submit we are clearing the focus for our search view.
-                searchView.clearFocus();
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // on changing the text in our search view we are calling
-                // a filter method to filter our array list.
-                //filter(newText.toLowerCase());
-                return false;
-            }
-        });
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

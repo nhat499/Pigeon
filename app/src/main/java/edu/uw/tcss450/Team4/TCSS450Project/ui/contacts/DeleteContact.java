@@ -13,8 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsProfileBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
@@ -52,6 +50,7 @@ public class DeleteContact extends Fragment {
             public void onClick(View v) {
                 Log.e("test respond", "onClick: " + mBinding.profileEmail.toString() );
                 mContactsViewModel.deleteContact(mUserModel.getmJwt(),mArgs.getString("email"));
+                Log.e("test", "try " + mArgs.getString("email") );
 
                 Navigation.findNavController(v).navigate(
                         DeleteContactDirections.actionContactsProfileToNavigationContacts2());
