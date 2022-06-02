@@ -1,6 +1,7 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,21 +10,32 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.shape.CornerFamily;
 
+import java.util.HashMap;
 import java.util.List;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatMessageBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.MessageViewHolder> {
 
     private final List<ChatMessage> mMessages;
     private final String mEmail;
-    public ChatRecyclerViewAdapter(List<ChatMessage> messages, String email) {
+    private HomeLandingViewModel mHomeModel;
+    private UserInfoViewModel mUserModel;
+
+
+
+    public ChatRecyclerViewAdapter(HomeLandingViewModel homemodel, UserInfoViewModel usermodel, List<ChatMessage> messages, String email) {
+        mHomeModel = homemodel;
+        mUserModel = usermodel;
         this.mMessages = messages;
         mEmail = email;
     }
@@ -39,6 +51,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+//        mHomeModel.connect(mMessages.get(position).getSender(), mUserModel.getmJwt());
+//        HashMap<String, String> temp = mHomeModel.getMResponse();
+//        mMessages.get(position).setSender(temp.get("name"));
         holder.setMessage(mMessages.get(position));
     }
 
@@ -60,7 +75,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         void setMessage(final ChatMessage message) {
             final Resources res = mView.getContext().getResources();
             final MaterialCardView card = binding.cardRoot;
-
             int standard = (int) res.getDimension(R.dimen.chat_margin);
             int extended = (int) res.getDimension(R.dimen.chat_margin_sided);
 
@@ -100,7 +114,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 card.requestLayout();
             } else {
                 //This message is from another user. Format it as such
-                binding.textMessage.setText(message.getSender() +
+                binding.textMessage.setText(message.getFirstName() +
                         ": " + message.getMessage());
                 ViewGroup.MarginLayoutParams layoutParams =
                         (ViewGroup.MarginLayoutParams) card.getLayoutParams();

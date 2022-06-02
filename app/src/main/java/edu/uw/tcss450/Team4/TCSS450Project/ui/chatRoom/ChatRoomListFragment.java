@@ -14,11 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatRoomListBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentRegistrationBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
 
 public class ChatRoomListFragment extends Fragment {
 
@@ -50,19 +54,26 @@ public class ChatRoomListFragment extends Fragment {
         FragmentChatRoomListBinding binding = FragmentChatRoomListBinding.bind(getView());
 
         mChatRoomModel.addChatRoomListObserver(getViewLifecycleOwner(), ChatRoomList -> {
-                binding.listRoot.setAdapter(
-                        new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
+            binding.listRoot.setAdapter(
+                        new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
                 );
         });
+
+        mChatModel.getFirstMessages(0, mUserModel.getmJwt());
+//        mChatModel.addRoomObserver(getViewLifecycleOwner(), message -> {
+//            binding.listRoot.setAdapter(
+//                    new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
+//            );
+//        });
+
         // Upon going back to the fragment, this fixes the bug of user seeing notifications for their own messages.
         mChatRoomModel.clearNotificationForRoom(mChatModel.getCurrentRoom());
         mChatModel.setCurrentRoom(-1);
         mChatRoomModel.clearNotificationForRoom(mChatModel.getCurrentRoom());
 
         mChatRoomModel.addNotificationObserver(getViewLifecycleOwner(), ChatRoomList -> {
-
                     binding.listRoot.setAdapter(
-                            new ChatRoomRecyclerViewAdapter(mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
+                            new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
                     );
                 });
         mBinding.buttonToCreateChatRoom.setOnClickListener(button ->

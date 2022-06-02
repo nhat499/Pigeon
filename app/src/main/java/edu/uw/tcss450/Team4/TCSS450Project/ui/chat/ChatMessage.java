@@ -1,11 +1,14 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.chat;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+
+import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
 
 /**
  * Encapsulate chat message details.
@@ -14,14 +17,19 @@ public final class ChatMessage implements Serializable {
 
     private final int mMessageId;
     private final String mMessage;
-    private final String mSender;
+    private String mSender;
     private final String mTimeStamp;
+    private final String mFirstName;
+    private final String mLastName;
 
-    public ChatMessage(int messageId, String message, String sender, String timeStamp) {
+
+    public ChatMessage(int messageId, String message, String sender, String timeStamp, String firstname, String lastname) {
         mMessageId = messageId;
         mMessage = message;
         mSender = sender;
         mTimeStamp = timeStamp;
+        mFirstName = firstname;
+        mLastName = lastname;
     }
 
     /**
@@ -36,7 +44,9 @@ public final class ChatMessage implements Serializable {
         return new ChatMessage(msg.getInt("messageid"),
                 msg.getString("message"),
                 msg.getString("email"),
-                msg.getString("timestamp"));
+                msg.getString("timestamp"),
+                msg.getString("firstname"),
+                msg.getString("lastname"));
     }
 
     public String getMessage() {
@@ -53,6 +63,14 @@ public final class ChatMessage implements Serializable {
 
     public int getMessageId() {
         return mMessageId;
+    }
+
+    public String getFirstName() {
+        return mFirstName;
+    }
+
+    public String getLastName() {
+        return mLastName;
     }
 
     /**

@@ -20,7 +20,10 @@ import java.util.stream.Collectors;
 
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentChatRoomCardBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.registration.RegistrationFragmentDirections;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.signIn.SignInFragmentDirections;
 
@@ -34,8 +37,14 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
 
     private final List<Integer> mNotificationList;
 
-    public ChatRoomRecyclerViewAdapter(@NonNull List<ChatRoom> items, List<Integer> notificationList) {
+    private ChatViewModel mChatModel;
+
+    private UserInfoViewModel mUserModel;
+
+    public ChatRoomRecyclerViewAdapter(@NonNull UserInfoViewModel UserModel, ChatViewModel chatmodel, List<ChatRoom> items, List<Integer> notificationList) {
+        this.mChatModel = chatmodel;
         this.mChatRooms = items;
+        this.mUserModel = UserModel;
         this.mNotificationList = notificationList;
         mExpandedFlags = mChatRooms.stream()
                 .collect(Collectors.toMap(Function.identity(), blog -> false));
@@ -115,7 +124,12 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
         void setChatRoom(final ChatRoom chat) {
             mChatRoom = chat;
             binding.textTitle.setText(chat.getTitle());
-
+            mChatModel.getFirstMessages(chat.getRoomNumber(), mUserModel.getmJwt());
+            List<ChatMessage> temp = mChatModel.getMessageListByChatId(chat.getRoomNumber());
+            if (!temp.isEmpty()) {
+                Log.e("message:" , temp.get(temp.size() - 1).getMessage() + "");
+                binding.textRecent.setText(temp.get(temp.size() - 1).getMessage());
+            }
             // This handles setting the number of notifications of each chat room by looping
             // through the current notification list and if the given chatID matches with any
             // number in the notification list, we +1 to the notification number to the room.
