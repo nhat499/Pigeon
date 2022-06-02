@@ -3,11 +3,8 @@
     package="edu.uw.tcss450.Team4.TCSS450Project">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-<!--    location Permissions-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
 
     <!-- Pushy Permissions -->
 
@@ -23,7 +20,6 @@
         android:roundIcon="@mipmap/ic_app_icon_light_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TCSS450Project">
-        <activity android:name=".ui.contacts.CreateNewContactActivity"></activity>
         <activity android:name=".MainActivity"
 
         android:windowSoftInputMode="adjustResize"

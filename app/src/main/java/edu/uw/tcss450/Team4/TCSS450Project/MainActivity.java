@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -49,15 +50,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 //COMMENTED IMPORTS
 /**
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-**/
+ import com.google.android.material.floatingactionbutton.FloatingActionButton;
+ import com.karumi.dexter.Dexter;
+ import com.karumi.dexter.MultiplePermissionsReport;
+ import com.karumi.dexter.PermissionToken;
+ import com.karumi.dexter.listener.DexterError;
+ import com.karumi.dexter.listener.PermissionRequest;
+ import com.karumi.dexter.listener.PermissionRequestErrorListener;
+ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+ **/
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,6 +83,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.services.PushReceiver;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoom;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragmentArgs;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
@@ -113,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     private ChatViewModel mChatModel;
 
     private ActivityMainBinding binding;
+
+    private UserInfoViewModel mUserInfoModel;
 
     private HomeLandingViewModel mHomeLanding;
 
@@ -154,11 +158,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        // String email = mUser.gotEmail();
-        //String current_user_uid = mUser.getUid();
-
-        // user_email.setText(email);
-        // user_uid.setText(current_user_uid);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         // For removing the jwt on sign out.
         mRemoveTokenResponse = new MutableLiveData<>();
         mRemoveTokenResponse.setValue(new JSONObject());
-
+        mUserInfoModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         mChatRoomModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         mChatModel = new ViewModelProvider(this).get(ChatViewModel.class);
         mHomeLanding = new ViewModelProvider(this).get(HomeLandingViewModel.class);
@@ -279,14 +278,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
+        if (mPushMessageReceiver == null) {
+            mPushMessageReceiver = new MainPushMessageReceiver();
+        }
+        IntentFilter iFilter = new IntentFilter(PushReceiver.RECEIVED_NEW_MESSAGE);
+        registerReceiver(mPushMessageReceiver, iFilter);
         startLocationUpdates();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
+        if (mPushMessageReceiver != null){
+            unregisterReceiver(mPushMessageReceiver);
+        }
         stopLocationUpdates();
     }
 
@@ -407,7 +414,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
         getMenuInflater().inflate(R.menu.toolbar, menu);
 
         // updates the dark mode check box
@@ -419,26 +425,6 @@ public class MainActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.action_dark_mode);
         item.setChecked(isChecked);
 
-        MenuItem searchViewItem = menu.findItem(R.id.search);
-        // on below line we are creating a variable for our search view.
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-        // on below line we are setting on query text listener for our search view.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // on query submit we are clearing the focus for our search view.
-                searchView.clearFocus();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // on changing the text in our search view we are calling
-                // a filter method to filter our array list.
-                //filter(newText.toLowerCase());
-                return false;
-            }
-        });
         return super.onCreateOptionsMenu(menu);
     }
 

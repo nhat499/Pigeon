@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentAddContactsBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 
@@ -26,11 +28,13 @@ public class CreateContact extends Fragment {
     private FragmentAddContactsBinding mBinding;
 
     private Button addContact;
+    private Bundle mArgs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentAddContactsBinding.inflate(inflater);
+        mArgs = getArguments();
         return mBinding.getRoot();
     }
 
@@ -52,16 +56,18 @@ public class CreateContact extends Fragment {
             @Override
             public void onClick(View v) {
                 Editable email = mBinding.edit2ContactEmail.getText();
-
                 // on below line we are making a text validation.
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getActivity(), "Please enter the data in all fields. ", Toast.LENGTH_SHORT).show();
+                    mBinding.edit2ContactEmail.setError("Enter a Email");
                 }
-                else {
+
+               else {
                     mContactsViewModel.addContact(mUserModel.getmJwt(),mBinding.edit2ContactEmail.getText());
-                    Log.e("test respond", "onClick: " + mBinding.edit2ContactEmail.getText() );
-                    Navigation.findNavController(v).navigate(
-                            CreateContactDirections.actionCreateContactToNavigationContacts());
+                      Log.e("check", "onClick: "+mArgs.getString("email"));
+
+                        Navigation.findNavController(v).navigate(
+                                CreateContactDirections.actionCreateContactToNavigationContacts());
+                  //  }
                 }
 
             }

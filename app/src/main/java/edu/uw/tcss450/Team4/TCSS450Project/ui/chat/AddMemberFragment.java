@@ -83,6 +83,7 @@ public class AddMemberFragment extends Fragment {
             mBinding.buttonDeleteChat.setEnabled(false);
         } else {
             mBinding.textMessage.setText("");
+            mBinding.buttonRemoveYourself.setEnabled(false);
         }
 
 

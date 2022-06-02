@@ -16,18 +16,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_root"
-        android:layout_width="400dp"
-        android:layout_height="730dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="568dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="7dp"
         android:orientation="vertical"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/fragment_contacts_card" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,6 +47,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="330dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/search_view_bg"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search"
+        app:layout_constraintStart_toStartOf="@+id/list_root"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <requestFocus />
+    </SearchView>
+
+    <ImageView
+        android:id="@+id/friendRequest"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/search"
+        app:layout_constraintStart_toEndOf="@+id/search"
+        app:srcCompat="@drawable/ic_friend_request_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

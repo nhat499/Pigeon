@@ -31,7 +31,7 @@ public class ContactsViewModel extends AndroidViewModel {
 
     /* List of the currently signed in user's contacts */
     private MutableLiveData<List<Contacts>> mContacts;
-
+    private String currentDeletedContact;
     public ContactsViewModel(@NonNull Application application) {
         super(application);
         mContacts = new MutableLiveData<>(new ArrayList<>());
@@ -56,6 +56,7 @@ public class ContactsViewModel extends AndroidViewModel {
      *
      * @return mContacts.getValue() the list of currently signed in user's contacts as list
      */
+
     public List<Contacts> getContactListValue() {
         return getContactList().getValue();
     }
@@ -92,7 +93,6 @@ public class ContactsViewModel extends AndroidViewModel {
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
     }
-
     /**
      * Adds the contacts from the JSONArray to the mContacts list
      *
@@ -213,6 +213,7 @@ public class ContactsViewModel extends AndroidViewModel {
         JSONObject body = new JSONObject();
         try {
             body.put("email",email);
+            currentDeletedContact = email;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -237,9 +238,93 @@ public class ContactsViewModel extends AndroidViewModel {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
+        
     }
 
     private void handleDelete(final JSONObject response) {
-        mContacts.getValue().remove(response);
+        List<Contacts> temp = mContacts.getValue();
+        for (int i = 0; i < temp.size(); i++) {
+            Contacts tempContact = temp.get(i);
+            if (tempContact.getContactEmail().equals(currentDeletedContact)) {
+                Log.e("DELETED from temp liost", "asdsa");
+                temp.remove(i);
+            }
+        }
+        mContacts.setValue(temp);
+
+
+    }
+
+    /**
+     * Get request to "https://team-4-tcss-450-web-service.herokuapp.com/contact"
+     * to retrieve a list of contacts for the signed in user
+     *  @param jwt the signed in users jwt
+     * @param email
+     */
+    public void searchContacts(final String jwt,final Editable email) {
+        String url = "https://team-4-tcss-450-web-service.herokuapp.com/"
+                + "contact/" + email;
+
+        Request request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                this::handleSearch,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+    }
+
+    /**
+     * Adds the contacts from the JSONArray to the mContacts list
+     *
+     * @param array JSONArray returned from the getFirstContacts get request
+     */
+    private void handleSearch(final JSONArray array) {
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject response = null;
+
+            try {
+                response = array.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (!response.has("numOfContact")) {
+                throw new IllegalStateException("Unexpected response in ContactViewModel: " + response);
+            }
+
+            try {
+                Contacts contact = new Contacts(
+                        response.getString("firstname"),
+                        response.getString("lastname"),
+                        response.getString("email"),
+                        response.getInt("memberid")
+                );
+                if (!mContacts.getValue().contains(contact)) {
+                    mContacts.getValue().add(contact);
+                } else {
+                    Log.wtf("Contact already received",
+                            "Or duplicate id:" + contact.getMemberId());
+                }
+            } catch (JSONException e) {
+                Log.e("JSON PARSE ERROR", "Found in handle Success ContactViewModel");
+                Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
+            }
+        }
+        mContacts.setValue(mContacts.getValue());
     }
 }
