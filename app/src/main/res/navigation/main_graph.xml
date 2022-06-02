@@ -43,10 +43,13 @@
             app:destination="@id/navigation_chat" />
         <action
             android:id="@+id/action_navigation_contacts_to_contactsProfile"
-            app:destination="@id/contactsProfile" />
+            app:destination="@id/DeleteContact" />
         <action
             android:id="@+id/action_navigation_contacts_to_createContact"
             app:destination="@id/createContact" />
+        <action
+            android:id="@+id/action_navigation_contacts_to_contactFriendRequest"
+            app:destination="@id/contactFriendRequest" />
     </fragment>
 
     <fragment
@@ -79,9 +82,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/contactsProfile"
-        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactsProfile"
-        android:label="ContactsProfile" >
+        android:id="@+id/DeleteContact"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.DeleteContact"
+        android:label="Delete Contact" >
         <action
             android:id="@+id/action_contactsProfile_to_navigation_contacts2"
             app:destination="@id/navigation_contacts" />
@@ -95,7 +98,7 @@
     <fragment
         android:id="@+id/createContact"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.CreateContact"
-        android:label="CreateContact" >
+        android:label="Friend Request" >
         <action
             android:id="@+id/action_createContact_to_navigation_contacts"
             app:destination="@id/navigation_contacts" />
@@ -164,4 +167,8 @@
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ManageChatFragment"
         android:label="fragment_manage_chat"
         tools:layout="@layout/fragment_manage_chat" />
+    <fragment
+        android:id="@+id/contactFriendRequest"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactFriendRequest"
+        android:label="Friend Request" />
 </navigation>

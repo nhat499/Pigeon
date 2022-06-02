@@ -13,19 +13,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentContactsProfileBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.UserInfoViewModel;
 
-public class ContactsProfile extends Fragment {
+public class DeleteContact extends Fragment {
 
     private ContactsViewModel mContactsViewModel;
     private FragmentContactsProfileBinding mBinding;
     private Bundle mArgs;
     private UserInfoViewModel mUserModel;
     private Button profileDelete;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,13 +51,18 @@ public class ContactsProfile extends Fragment {
             public void onClick(View v) {
                 Log.e("test respond", "onClick: " + mBinding.profileEmail.toString() );
                 mContactsViewModel.deleteContact(mUserModel.getmJwt(),mArgs.getString("email"));
+                Log.e("test", "try " + mArgs.getString("email") );
 
                 Navigation.findNavController(v).navigate(
-                        ContactsProfileDirections.actionContactsProfileToNavigationContacts2());
+                        DeleteContactDirections.actionContactsProfileToNavigationContacts2());
             }
         });
 
         mBinding.profileName.setText(mArgs.getString("name"));
         mBinding.profileEmail.setText(mArgs.getString("email"));
+
+
+
     }
+
 }
