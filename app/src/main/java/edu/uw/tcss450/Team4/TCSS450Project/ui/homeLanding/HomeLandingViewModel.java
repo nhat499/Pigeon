@@ -63,7 +63,7 @@ public class HomeLandingViewModel extends AndroidViewModel {
 
     // get weather infomation
     public void connectGetWeather(double lat, double lon) {
-        String url = getApplication().getResources().getString(R.string.base_url) + "weather";
+        String url = getApplication().getResources().getString(R.string.base_url) + "weather/location/" + lat + "/" + lon;
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
