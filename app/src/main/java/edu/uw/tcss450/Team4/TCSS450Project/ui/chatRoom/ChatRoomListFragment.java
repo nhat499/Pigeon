@@ -41,6 +41,7 @@ public class ChatRoomListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel .class);
         mChatRoomModel = new ViewModelProvider(getActivity()).get(ChatRoomViewModel.class);
@@ -52,14 +53,23 @@ public class ChatRoomListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentChatRoomListBinding binding = FragmentChatRoomListBinding.bind(getView());
-
+        mChatModel.getFirstMessages(1, mUserModel.getmJwt());
         mChatRoomModel.addChatRoomListObserver(getViewLifecycleOwner(), ChatRoomList -> {
             binding.listRoot.setAdapter(
                         new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
                 );
         });
 
-        mChatModel.getFirstMessages(0, mUserModel.getmJwt());
+//        mChatModel.addMessageObserver(0, getViewLifecycleOwner(), observer -> {
+//            Log.e("LOOP!", "ASD");
+//                binding.listRoot.setAdapter(
+//                        new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
+//                );
+//    });
+
+
+
+
 //        mChatModel.addRoomObserver(getViewLifecycleOwner(), message -> {
 //            binding.listRoot.setAdapter(
 //                    new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())

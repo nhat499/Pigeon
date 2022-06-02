@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -70,6 +71,7 @@ import edu.uw.tcss450.Team4.TCSS450Project.services.PushReceiver;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatFragment;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatMessage;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chat.ChatViewModel;
+import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoom;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ChatRoomViewModel;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingFragmentArgs;
 import edu.uw.tcss450.Team4.TCSS450Project.ui.homeLanding.HomeLandingViewModel;
@@ -102,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private UserInfoViewModel mUserInfoModel;
+
     private HomeLandingViewModel mHomeLanding;
 
     private MutableLiveData<JSONObject> mRemoveTokenResponse;
@@ -132,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         // For removing the jwt on sign out.
         mRemoveTokenResponse = new MutableLiveData<>();
         mRemoveTokenResponse.setValue(new JSONObject());
-
+        mUserInfoModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         mChatRoomModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         mChatModel = new ViewModelProvider(this).get(ChatViewModel.class);
         mHomeLanding = new ViewModelProvider(this).get(HomeLandingViewModel.class);

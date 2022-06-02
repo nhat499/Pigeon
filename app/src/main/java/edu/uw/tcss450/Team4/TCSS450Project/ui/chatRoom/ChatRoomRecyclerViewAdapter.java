@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -125,10 +126,10 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
             mChatRoom = chat;
             binding.textTitle.setText(chat.getTitle());
             mChatModel.getFirstMessages(chat.getRoomNumber(), mUserModel.getmJwt());
+            Log.e("a??", chat.getRoomNumber() + "");
             List<ChatMessage> temp = mChatModel.getMessageListByChatId(chat.getRoomNumber());
             if (!temp.isEmpty()) {
-                Log.e("message:" , temp.get(temp.size() - 1).getMessage() + "");
-                binding.textRecent.setText(temp.get(temp.size() - 1).getMessage());
+                binding.textRecent.setText(temp.get(temp.size() - 1).getFirstName() + ": " + temp.get(temp.size() - 1).getMessage());
             }
             // This handles setting the number of notifications of each chat room by looping
             // through the current notification list and if the given chatID matches with any
