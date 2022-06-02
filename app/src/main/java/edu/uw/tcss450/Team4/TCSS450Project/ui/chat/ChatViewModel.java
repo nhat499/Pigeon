@@ -122,7 +122,7 @@ public class ChatViewModel extends AndroidViewModel {
      * @param jwt the users signed JWT
      */
     public void getFirstMessages(final int chatId, final String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "messages/" + chatId;
 
         Request request = new JsonObjectRequest(
@@ -165,7 +165,7 @@ public class ChatViewModel extends AndroidViewModel {
      * @param jwt the users signed JWT
      */
     public void getNextMessages(final int chatId, final String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "messages/" +
                 chatId +
                 "/" +
@@ -225,7 +225,9 @@ public class ChatViewModel extends AndroidViewModel {
                         message.getInt("messageid"),
                         message.getString("message"),
                         message.getString("email"),
-                        message.getString("timestamp")
+                        message.getString("timestamp"),
+                        message.getString("firstname"),
+                        message.getString("lastname")
                 );
                 if (!list.contains(cMessage)) {
                     // don't add a duplicate

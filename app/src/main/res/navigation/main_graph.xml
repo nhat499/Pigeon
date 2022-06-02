@@ -13,10 +13,13 @@
         <argument
             android:name="room"
             app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_navigation_chat_to_addMemberFragment"
             app:destination="@id/addMemberFragment" />
+        <argument
+            android:name="roomName"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -104,16 +107,27 @@
         android:id="@+id/addMemberFragment"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chat.AddMemberFragment"
         android:label="AddMemberFragment" >
-        <action
-            android:id="@+id/action_addMemberFragment_to_navigation_chat"
-            app:destination="@id/navigation_chat" />
         <argument
             android:name="room"
-            app:argType="integer"
-            android:defaultValue="1" />
+            app:argType="integer"/>
         <action
             android:id="@+id/action_addMemberFragment_to_navigation_chat_room_list"
             app:destination="@id/navigation_chat_room_list" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_addFromContactsFragment"
+            app:destination="@id/addFromContactsFragment" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_addFromContactsFragment2"
+            app:destination="@id/addFromContactsFragment" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_manageChatFragment"
+            app:destination="@id/manageChatFragment" />
+        <argument
+            android:name="roomName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addMemberFragment_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <activity
         android:id="@+id/authenticationActivity"
@@ -124,4 +138,25 @@
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.changePassword.ChangePasswordFragment"
         android:label="@string/app_name_short"
         tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/addFromContactsFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.AddFromContactsFragment"
+        android:label="fragment_add_from_contacts"
+        tools:layout="@layout/fragment_add_from_contacts" >
+        <action
+            android:id="@+id/action_addFromContactsFragment_to_addMemberFragment"
+            app:destination="@id/addMemberFragment" />
+        <argument
+            android:name="room"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="roomName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageChatFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.ManageChatFragment"
+        android:label="fragment_manage_chat"
+        tools:layout="@layout/fragment_manage_chat" />
 </navigation>

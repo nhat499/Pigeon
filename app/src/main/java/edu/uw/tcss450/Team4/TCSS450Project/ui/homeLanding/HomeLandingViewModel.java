@@ -34,12 +34,16 @@ import edu.uw.tcss450.Team4.TCSS450Project.io.RequestQueueSingleton;
  */
 public class HomeLandingViewModel extends AndroidViewModel {
     public MutableLiveData<HashMap<String, String>> mResponse;
-    //public HashMap<String, String> userInfo = new HashMap<>();
+
     public MutableLiveData<ArrayList<HashMap<String, String>>> mResponseMessages;
+
+    public MutableLiveData<HashMap<String, String>> weatherResponse;
+
     public HomeLandingViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>(new HashMap<String, String>());
         mResponseMessages = new MutableLiveData<>(new ArrayList<HashMap<String,String>>());
+        weatherResponse = new MutableLiveData<>(new HashMap<String, String>());
         //mResponse.setValue(new JSONObject());
     }
 
@@ -52,8 +56,49 @@ public class HomeLandingViewModel extends AndroidViewModel {
         mResponse.observe(owner, observer);
     }
 
+    public void HomeLandingWeatherObserver(@NonNull LifecycleOwner owner,
+                                    @NonNull Observer<? super HashMap<String, String>> observer) {
+        weatherResponse.observe(owner, observer);
+    }
+
+    // get weather infomation
+    public void connectGetWeather(double lat, double lon) {
+        String url = getApplication().getResources().getString(R.string.base_url) + "weather/location/" + lat + "/" + lon;
+        Request request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                this::updateWeatherFrag,
+                this::handleError) {};
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+        //code here will run
+    }
+
+    public void updateWeatherFrag(final JSONObject response) {
+        HashMap<String, String> map = new HashMap<>();
+        try {
+            JSONObject current = response.getJSONObject("current");
+            JSONArray weather = current.getJSONArray("weather");
+            map.put("description", weather.getJSONObject(0).getString("description"));
+            map.put("temp", current.getString("temp"));
+            map.put("icon", weather.getJSONObject(0).getString("icon"));
+            weatherResponse.setValue(map);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // get contacts
     public void connect(final String email, String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) + "contact/" + email;
+        String url = getApplication().getResources().getString(R.string.base_url) + "contact/" + email;
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -78,8 +123,9 @@ public class HomeLandingViewModel extends AndroidViewModel {
         //code here will run
     }
 
+    // get recent messages
     public void getRecentMessages(String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) + "messages";
+        String url = getApplication().getResources().getString(R.string.base_url) + "messages";
         Request request = new JsonArrayRequest(
                 Request.Method.GET,
                 url,

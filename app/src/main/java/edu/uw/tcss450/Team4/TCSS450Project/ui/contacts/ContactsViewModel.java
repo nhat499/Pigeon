@@ -67,7 +67,7 @@ public class ContactsViewModel extends AndroidViewModel {
      * @param jwt the signed in users jwt
      */
     public void getFirstContacts(final String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url_service)
+        String url = getApplication().getResources().getString(R.string.base_url)
                 + "contact";
 
         Request request = new JsonArrayRequest(
@@ -131,10 +131,11 @@ public class ContactsViewModel extends AndroidViewModel {
             }
         }
         mContacts.setValue(mContacts.getValue());
+//        Log.e("JSON:", mContacts.toString());
     }
 
     public void addContact(final String jwt, final Editable email) {
-        String url = getApplication().getResources().getString(R.string.base_url_service)
+        String url = getApplication().getResources().getString(R.string.base_url)
                 + "contact";
 
         JSONObject body = new JSONObject();
@@ -206,7 +207,7 @@ public class ContactsViewModel extends AndroidViewModel {
     }
 
     public void deleteContact(final String jwt, final String email) {
-        String url = getApplication().getResources().getString(R.string.base_url_service)
+        String url = getApplication().getResources().getString(R.string.base_url)
                 + "contact/delete";
 
         JSONObject body = new JSONObject();

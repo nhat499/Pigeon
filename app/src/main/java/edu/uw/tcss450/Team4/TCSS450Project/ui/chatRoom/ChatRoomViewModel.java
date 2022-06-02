@@ -40,12 +40,14 @@ public class ChatRoomViewModel extends AndroidViewModel {
      * A Map of Lists of Chat Rooms ids.
      */
     private MutableLiveData<List<ChatRoom>> mChatRoomList;
+    private List<Integer> mChatRoomMemberCounts;
     private MutableLiveData<List<Integer>> mChatRoomNotifications;
 
     public ChatRoomViewModel(@NonNull Application application) {
         super(application);
         mChatRoomList = new MutableLiveData<>();
         mChatRoomNotifications = new MutableLiveData<>();
+        mChatRoomMemberCounts = new ArrayList<>();
     }
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
@@ -62,6 +64,14 @@ public class ChatRoomViewModel extends AndroidViewModel {
         List<ChatRoom> result = new ArrayList<ChatRoom>();
         if (!(mChatRoomList.getValue() == null)) {
             result = mChatRoomList.getValue();
+        }
+        return result;
+    }
+
+    public List<Integer> getMemberCounts() {
+        List<Integer> result = new ArrayList<>();
+        if (!(mChatRoomMemberCounts == null)) {
+            result = mChatRoomNotifications.getValue();
         }
         return result;
     }
@@ -97,9 +107,60 @@ public class ChatRoomViewModel extends AndroidViewModel {
         mChatRoomNotifications.setValue(result);
     }
 
+    public void getMembersInChat(final String jwt, final int id) {
+        String url = getApplication().getResources().getString(R.string.base_url) +
+                "chats/getMembers";
+
+        Request request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                this::handleMemberSuccess,
+                this::handleError) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                headers.put("chatid", id + "");
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+
+    }
+
+    // Adds the rooms to the fragment.
+    private List<String> handleMemberSuccess(final JSONObject response) {
+        List<String> membersList = new ArrayList<>();
+        try {
+            JSONArray members = response.getJSONArray("members");
+            for (int i = 0; i < members.length(); i++) {
+                JSONObject objectRoom = members.getJSONObject(i);
+                String email = objectRoom.getString("email");
+                if (!membersList.contains(email)) {
+                    // don't add a duplicate
+                    membersList.add(email);
+                    Log.e("Members list of chat room:", "" + membersList.toString());
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
+            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
+        }
+        return membersList;
+    }
+
     // Get the list of chat room ids and chat room names HERE.
     public void getRooms(final String jwt, final String email) {
-        String url = getApplication().getResources().getString(R.string.base_url_service) +
+        String url = getApplication().getResources().getString(R.string.base_url) +
                 "chats/getRooms";
 
         Request request = new JsonObjectRequest(
@@ -126,6 +187,7 @@ public class ChatRoomViewModel extends AndroidViewModel {
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
     }
+
 
     // Used when handling data from database.
     private void handleError(final VolleyError error) {
