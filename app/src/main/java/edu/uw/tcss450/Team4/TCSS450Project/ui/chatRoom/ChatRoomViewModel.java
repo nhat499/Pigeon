@@ -40,14 +40,14 @@ public class ChatRoomViewModel extends AndroidViewModel {
      * A Map of Lists of Chat Rooms ids.
      */
     private MutableLiveData<List<ChatRoom>> mChatRoomList;
-    private List<Integer> mChatRoomMemberCounts;
+    private MutableLiveData<Integer> mChatRoomMemberCounts;
     private MutableLiveData<List<Integer>> mChatRoomNotifications;
 
     public ChatRoomViewModel(@NonNull Application application) {
         super(application);
         mChatRoomList = new MutableLiveData<>();
         mChatRoomNotifications = new MutableLiveData<>();
-        mChatRoomMemberCounts = new ArrayList<>();
+        mChatRoomMemberCounts = new MutableLiveData<>();
     }
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
@@ -60,6 +60,11 @@ public class ChatRoomViewModel extends AndroidViewModel {
         mChatRoomNotifications.observe(owner, observer);
     }
 
+    public void addCountObserver(@NonNull LifecycleOwner owner,
+                                 @NonNull Observer<? super Integer> observer) {
+        mChatRoomMemberCounts.observe(owner, observer);
+    }
+
     public List<ChatRoom> getChatList() {
         List<ChatRoom> result = new ArrayList<ChatRoom>();
         if (!(mChatRoomList.getValue() == null)) {
@@ -68,12 +73,9 @@ public class ChatRoomViewModel extends AndroidViewModel {
         return result;
     }
 
-    public List<Integer> getMemberCounts() {
-        List<Integer> result = new ArrayList<>();
-        if (!(mChatRoomMemberCounts == null)) {
-            result = mChatRoomNotifications.getValue();
-        }
-        return result;
+    public Integer getCurrentCount() {
+        int temp = mChatRoomMemberCounts.getValue();
+        return temp;
     }
 
     public List<Integer> getNotificationList() {
@@ -138,7 +140,7 @@ public class ChatRoomViewModel extends AndroidViewModel {
     }
 
     // Adds the rooms to the fragment.
-    private List<String> handleMemberSuccess(final JSONObject response) {
+    private void handleMemberSuccess(final JSONObject response) {
         List<String> membersList = new ArrayList<>();
         try {
             JSONArray members = response.getJSONArray("members");
@@ -148,14 +150,14 @@ public class ChatRoomViewModel extends AndroidViewModel {
                 if (!membersList.contains(email)) {
                     // don't add a duplicate
                     membersList.add(email);
-                    Log.e("Members list of chat room:", "" + membersList.toString());
                 }
             }
         } catch (JSONException e) {
             Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
             Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
-        return membersList;
+        Log.e("Members list of chat room:", "" + membersList.toString());
+        mChatRoomMemberCounts.setValue(membersList.size());
     }
 
     // Get the list of chat room ids and chat room names HERE.

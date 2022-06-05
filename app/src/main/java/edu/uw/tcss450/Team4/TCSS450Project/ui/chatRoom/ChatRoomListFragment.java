@@ -60,6 +60,11 @@ public class ChatRoomListFragment extends Fragment {
                 );
         });
 
+        mChatRoomModel.addCountObserver(getViewLifecycleOwner(), Count -> {
+            Log.e("Count", mChatRoomModel.getCurrentCount()+ "");
+        });
+        mChatRoomModel.getMembersInChat(mUserModel.getmJwt(), 0);
+        mChatRoomModel.getMembersInChat(mUserModel.getmJwt(), 5);
 //        mChatModel.addMessageObserver(0, getViewLifecycleOwner(), observer -> {
 //            Log.e("LOOP!", "ASD");
 //                binding.listRoot.setAdapter(
