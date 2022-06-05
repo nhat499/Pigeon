@@ -37,29 +37,42 @@
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="@+id/edit_message"
         app:layout_constraintTop_toBottomOf="@+id/edit_message" />
+
     <ImageButton
         android:id="@+id/button_send"
         style="@style/Widget.App.Button.OutlinedButton.IconOnly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
+        android:layout_width="42dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="76dp"
         android:layout_marginBottom="16dp"
-        app:tint="#1976d2"
         android:contentDescription="TODO"
         android:src="@drawable/ic_send_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="#1976d2" />
+
     <ImageButton
         android:id="@+id/button_add"
         style="@style/Widget.App.Button.OutlinedButton.IconOnly"
-        android:layout_width="48dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="35dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="20dp"
         android:src="@drawable/ic_baseline_settings_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.979"
         app:layout_constraintStart_toEndOf="@+id/button_send" />
+
+    <ImageButton
+        android:id="@+id/button_members"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_friend_request_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_add"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.31" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

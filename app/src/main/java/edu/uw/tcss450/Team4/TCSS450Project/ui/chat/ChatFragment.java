@@ -129,6 +129,15 @@ public class ChatFragment extends Fragment {
         binding.buttonAdd.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(directions));
 
+
+        // Go to member list.
+        ChatFragmentDirections.ActionNavigationChatToMemberListFragment directions2 =
+                ChatFragmentDirections.actionNavigationChatToMemberListFragment();
+        binding.buttonMembers.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(directions2));
+
+
+
         mChatModel.addMessageObserver(HARD_CODED_CHAT_ID, getViewLifecycleOwner(),
                 list -> {
                     /*

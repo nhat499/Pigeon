@@ -40,14 +40,14 @@ public class ChatRoomViewModel extends AndroidViewModel {
      * A Map of Lists of Chat Rooms ids.
      */
     private MutableLiveData<List<ChatRoom>> mChatRoomList;
-    private MutableLiveData<Integer> mChatRoomMemberCounts;
     private MutableLiveData<List<Integer>> mChatRoomNotifications;
+    private MutableLiveData<List<String>> mMemberList;
 
     public ChatRoomViewModel(@NonNull Application application) {
         super(application);
         mChatRoomList = new MutableLiveData<>();
         mChatRoomNotifications = new MutableLiveData<>();
-        mChatRoomMemberCounts = new MutableLiveData<>();
+        mMemberList = new MutableLiveData<>();
     }
 
     public void addChatRoomListObserver(@NonNull LifecycleOwner owner,
@@ -60,9 +60,9 @@ public class ChatRoomViewModel extends AndroidViewModel {
         mChatRoomNotifications.observe(owner, observer);
     }
 
-    public void addCountObserver(@NonNull LifecycleOwner owner,
-                                 @NonNull Observer<? super Integer> observer) {
-        mChatRoomMemberCounts.observe(owner, observer);
+    public void addMemberListObserver(@NonNull LifecycleOwner owner,
+                                      @NonNull Observer<? super List<String>> observer) {
+        mMemberList.observe(owner, observer);
     }
 
     public List<ChatRoom> getChatList() {
@@ -73,15 +73,19 @@ public class ChatRoomViewModel extends AndroidViewModel {
         return result;
     }
 
-    public Integer getCurrentCount() {
-        int temp = mChatRoomMemberCounts.getValue();
-        return temp;
-    }
 
     public List<Integer> getNotificationList() {
         List<Integer> result = new ArrayList<Integer>();
         if (!(mChatRoomNotifications.getValue() == null)) {
             result = mChatRoomNotifications.getValue();
+        }
+        return result;
+    }
+
+    public List<String> getMemberList() {
+        List<String> result = new ArrayList<String>();
+        if (!(mMemberList.getValue() == null)) {
+            result = mMemberList.getValue();
         }
         return result;
     }
@@ -146,18 +150,19 @@ public class ChatRoomViewModel extends AndroidViewModel {
             JSONArray members = response.getJSONArray("members");
             for (int i = 0; i < members.length(); i++) {
                 JSONObject objectRoom = members.getJSONObject(i);
-                String email = objectRoom.getString("email");
-                if (!membersList.contains(email)) {
+                String firstname = objectRoom.getString("firstname");
+                String lastname = objectRoom.getString("lastname");
+                String name = firstname + " " + lastname;
+                if (!membersList.contains(name)) {
                     // don't add a duplicate
-                    membersList.add(email);
+                    membersList.add(name);
                 }
             }
         } catch (JSONException e) {
             Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
             Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
-        Log.e("Members list of chat room:", "" + membersList.toString());
-        mChatRoomMemberCounts.setValue(membersList.size());
+        mMemberList.setValue(membersList);
     }
 
     // Get the list of chat room ids and chat room names HERE.

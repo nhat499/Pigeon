@@ -60,27 +60,6 @@ public class ChatRoomListFragment extends Fragment {
                 );
         });
 
-        mChatRoomModel.addCountObserver(getViewLifecycleOwner(), Count -> {
-            Log.e("Count", mChatRoomModel.getCurrentCount()+ "");
-        });
-        mChatRoomModel.getMembersInChat(mUserModel.getmJwt(), 0);
-        mChatRoomModel.getMembersInChat(mUserModel.getmJwt(), 5);
-//        mChatModel.addMessageObserver(0, getViewLifecycleOwner(), observer -> {
-//            Log.e("LOOP!", "ASD");
-//                binding.listRoot.setAdapter(
-//                        new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
-//                );
-//    });
-
-
-
-
-//        mChatModel.addRoomObserver(getViewLifecycleOwner(), message -> {
-//            binding.listRoot.setAdapter(
-//                    new ChatRoomRecyclerViewAdapter(mUserModel, mChatModel, mChatRoomModel.getChatList(), mChatRoomModel.getNotificationList())
-//            );
-//        });
-
         // Upon going back to the fragment, this fixes the bug of user seeing notifications for their own messages.
         mChatRoomModel.clearNotificationForRoom(mChatModel.getCurrentRoom());
         mChatModel.setCurrentRoom(-1);

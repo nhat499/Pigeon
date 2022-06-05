@@ -20,6 +20,9 @@
         <argument
             android:name="roomName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_chat_to_memberListFragment"
+            app:destination="@id/memberListFragment" />
     </fragment>
 
     <fragment
@@ -177,4 +180,17 @@
         android:id="@+id/contactFriendRequest"
         android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.contacts.ContactFriendRequest"
         android:label="Friend Request" />
+    <fragment
+        android:id="@+id/memberListFragment"
+        android:name="edu.uw.tcss450.Team4.TCSS450Project.ui.chatRoom.MemberListFragment"
+        android:label="fragment_member_list"
+        tools:layout="@layout/fragment_member_list" >
+        <action
+            android:id="@+id/action_memberListFragment_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+        <argument
+            android:name="room"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>
