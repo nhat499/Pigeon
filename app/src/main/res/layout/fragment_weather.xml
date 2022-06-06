@@ -22,7 +22,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Tacoma"
+            android:text="City"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,17 +59,45 @@
 
         <Button
             android:id="@+id/button_search_city"
-            android:layout_width="wrap_content"
+            android:layout_width="95dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/round_corners"
-            android:text="@string/title_search"
+            android:text="Search City"
             android:clickable="true"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_enter_city_name" />
+
+        <Button
+            android:id="@+id/button_search_zip"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/round_corners"
+            android:clickable="true"
+            android:text="Search Zip"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/button_search_city"
+            app:layout_constraintTop_toBottomOf="@+id/text_enter_city_name" />
+
+        <Button
+            android:id="@+id/button_search_map"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/round_corners"
+            android:clickable="true"
+            android:text="Search Map"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/button_search_zip"
+            app:layout_constraintTop_toBottomOf="@+id/text_enter_city_name" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -101,11 +129,12 @@
                 android:layout_width="112dp"
                 android:layout_height="94dp"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/ic_weather_black_24dp"
+                android:src="@drawable/ic_white_cloud_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.285" />
+            <!--android:src="@drawable/ic_weather_black_24dp"  -->
 
             <TextView
                 android:id="@+id/text_temperature"
@@ -459,7 +488,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour1" />
 
@@ -469,7 +498,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour1"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour2" />
 
@@ -479,7 +508,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour2"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour3" />
 
@@ -489,7 +518,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour3"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour4" />
 
@@ -499,7 +528,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour4"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour5" />
 
@@ -509,7 +538,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour5"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour6" />
 
@@ -519,7 +548,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour6"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour7" />
 
@@ -529,7 +558,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour7"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour8" />
 
@@ -539,7 +568,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour8"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour9" />
 
@@ -549,7 +578,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour9"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour10" />
 
@@ -559,7 +588,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour10"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour11" />
 
@@ -569,7 +598,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour11"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour12" />
 
@@ -579,7 +608,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour12"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour13" />
 
@@ -589,7 +618,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour13"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour14" />
 
@@ -599,7 +628,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour14"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour15" />
 
@@ -609,7 +638,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour15"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour16" />
 
@@ -619,7 +648,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour16"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour17" />
 
@@ -629,7 +658,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour17"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour18" />
 
@@ -639,7 +668,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour18"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour19" />
 
@@ -649,7 +678,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour19"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour20" />
 
@@ -659,7 +688,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour20"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour21" />
 
@@ -669,7 +698,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour21"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour22" />
 
@@ -679,7 +708,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour22"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour23" />
 
@@ -689,7 +718,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_weather_black_24dp"
+                        android:src="@drawable/ic_white_cloud_24dp"
                         app:layout_constraintStart_toEndOf="@+id/image_hour23"
                         app:layout_constraintTop_toBottomOf="@+id/text_hour24" />
 
@@ -1011,9 +1040,21 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/text_weekly_hilo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/title_hilo"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintStart_toEndOf="@id/text_weekly_forecast"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="360dp"
+                android:layout_width="368dp"
                 android:layout_height="336dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
@@ -1105,7 +1146,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="19dp"
-                    android:src="@drawable/ic_weather_black_24dp"
+                    android:src="@drawable/ic_white_cloud_24dp"
                     app:layout_constraintStart_toEndOf="@+id/text_day1"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -1115,7 +1156,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="21dp"
-                    android:src="@drawable/ic_weather_black_24dp"
+                    android:src="@drawable/ic_white_cloud_24dp"
                     app:layout_constraintStart_toEndOf="@+id/text_day2"
                     app:layout_constraintTop_toBottomOf="@+id/image_day1" />
 
@@ -1125,7 +1166,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="21dp"
-                    android:src="@drawable/ic_weather_black_24dp"
+                    android:src="@drawable/ic_white_cloud_24dp"
                     app:layout_constraintStart_toEndOf="@+id/text_day3"
                     app:layout_constraintTop_toBottomOf="@+id/image_day2" />
 
@@ -1135,7 +1176,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="21dp"
-                    android:src="@drawable/ic_weather_black_24dp"
+                    android:src="@drawable/ic_white_cloud_24dp"
                     app:layout_constraintStart_toEndOf="@+id/text_day4"
                     app:layout_constraintTop_toBottomOf="@+id/image_day3" />
 
@@ -1145,7 +1186,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="21dp"
-                    android:src="@drawable/ic_weather_black_24dp"
+                    android:src="@drawable/ic_white_cloud_24dp"
                     app:layout_constraintStart_toEndOf="@+id/text_day5"
                     app:layout_constraintTop_toBottomOf="@+id/image_day4" />
 
@@ -1155,7 +1196,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="21dp"
-                    android:src="@drawable/ic_weather_black_24dp"
+                    android:src="@drawable/ic_white_cloud_24dp"
                     app:layout_constraintStart_toEndOf="@+id/text_day6"
                     app:layout_constraintTop_toBottomOf="@+id/image_day5" />
 
@@ -1165,7 +1206,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="21dp"
-                    android:src="@drawable/ic_weather_black_24dp"
+                    android:src="@drawable/ic_white_cloud_24dp"
                     app:layout_constraintStart_toEndOf="@+id/text_day7"
                     app:layout_constraintTop_toBottomOf="@+id/image_day6" />
 
@@ -1243,6 +1284,79 @@
                     app:layout_constraintStart_toEndOf="@+id/image_day7"
                     app:layout_constraintTop_toBottomOf="@+id/text_day6_temp" />
 
+                <TextView
+                    android:id="@+id/text_day1_hilo"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="19dp"
+                    android:text="Temp1"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/text_day1_temp"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/text_day2_hilo"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Temp2"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/text_day2_temp"
+                    app:layout_constraintTop_toBottomOf="@+id/text_day1_hilo" />
+                <TextView
+                    android:id="@+id/text_day3_hilo"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Temp3"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/text_day3_temp"
+                    app:layout_constraintTop_toBottomOf="@+id/text_day2_hilo" />
+                <TextView
+                    android:id="@+id/text_day4_hilo"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Temp4"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/text_day4_temp"
+                    app:layout_constraintTop_toBottomOf="@+id/text_day3_hilo" />
+                <TextView
+                    android:id="@+id/text_day5_hilo"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Temp5"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/text_day5_temp"
+                    app:layout_constraintTop_toBottomOf="@+id/text_day4_hilo" />
+
+                <TextView
+                    android:id="@+id/text_day6_hilo"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Temp6"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/text_day6_temp"
+                    app:layout_constraintTop_toBottomOf="@+id/text_day5_hilo" />
+                <TextView
+                    android:id="@+id/text_day7_hilo"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Temp7"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/text_day7_temp"
+                    app:layout_constraintTop_toBottomOf="@+id/text_day6_hilo" />
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1287,7 +1401,7 @@
                 android:id="@+id/text_wind_speed"
                 android:layout_width="93dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="152dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="90dp"
                 android:background="@drawable/round_corners"
                 android:backgroundTint="#9963a4ff"
@@ -1295,6 +1409,19 @@
                 android:text="@string/title_windspeed"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/text_humidity"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/text_feels_like"
+                android:layout_width="93dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="90dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
+                android:gravity="center"
+                android:text="@string/title_feels_like"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/text_wind_speed"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -1315,7 +1442,7 @@
                 android:id="@+id/text_sunset"
                 android:layout_width="93dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="152dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="68dp"
                 android:background="@drawable/round_corners"
                 android:backgroundTint="#9963a4ff"
@@ -1324,6 +1451,21 @@
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/text_sunrise"
                 app:layout_constraintTop_toBottomOf="@+id/text_wind_speed" />
+            <TextView
+                android:id="@+id/text_uvi"
+                android:layout_width="93dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="68dp"
+                android:background="@drawable/round_corners"
+                android:backgroundTint="#9963a4ff"
+                android:gravity="center"
+                android:text="@string/title_uvi"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/text_sunset"
+                app:layout_constraintTop_toBottomOf="@+id/text_feels_like" />
+
+
 
 
 

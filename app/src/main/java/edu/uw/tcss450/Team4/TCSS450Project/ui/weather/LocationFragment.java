@@ -1,6 +1,9 @@
 package edu.uw.tcss450.Team4.TCSS450Project.ui.weather;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,13 +24,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
+
 import edu.uw.tcss450.Team4.TCSS450Project.R;
 import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentLocationBinding;
+import edu.uw.tcss450.Team4.TCSS450Project.databinding.FragmentWeatherBinding;
 import edu.uw.tcss450.Team4.TCSS450Project.model.LocationViewModel;
 
 public class LocationFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     private LocationViewModel mModel;
     private GoogleMap mMap;
+    private FragmentLocationBinding binding;
+
 
 
     public LocationFragment() {
@@ -39,26 +48,28 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location, container, false);
+        binding = FragmentLocationBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentLocationBinding binding = FragmentLocationBinding.bind(getView());
+        binding.textLatLong.setText("Click the map to get weather data of marker's location!");
+
         mModel = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
+        Log.i("OnviewCReated viewmap", "made it before the observer");
 
+        //mModel.addLocationObserver(getViewLifecycleOwner(), location -> binding.textLatLong.setText(location.toString()));
 
-        mModel.addLocationObserver(getViewLifecycleOwner(), location ->
-                binding.textLatLong.setText(location.toString()));
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         //add this fragment as the OnMapReadyCallback -> See onMapReady()
         mapFragment.getMapAsync(this);
-
     }
+
+
 
    @SuppressLint("MissingPermission") // Don't know if this is supposed to be done
     @Override
@@ -66,10 +77,10 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
 
-        LocationViewModel model = new ViewModelProvider(getActivity())
-                .get(LocationViewModel.class);
+        LocationViewModel model = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
         model.addLocationObserver(getViewLifecycleOwner(), location -> {
             if(location != null) {
+                Log.i("onMapReady","made it in oberver");
                 googleMap.getUiSettings().setZoomControlsEnabled(true);
                 googleMap.setMyLocationEnabled(true);
                 final LatLng c = new LatLng(location.getLatitude(), location.getLongitude());
@@ -79,19 +90,28 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         });
     }
 
+
     @Override
     public void onMapClick(LatLng latLng) {
-        Log.d("LAT/LONG", latLng.toString());
+        Log.i("LAT/LONG", latLng.toString());
 
         mMap.clear();
 
-        Marker marker = mMap.addMarker(new MarkerOptions()
-                .position(latLng)
-                .title("New Marker"));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title("New Marker"));
+        Log.i("viewmap marker Latitude", String.valueOf(marker.getPosition().latitude));
+        Log.i("viewmap marker Longitude", String.valueOf(marker.getPosition().longitude));
+        mModel.setLat(String.valueOf(marker.getPosition().latitude));
+        mModel.setLon(String.valueOf(marker.getPosition().longitude));
+
+
+        Log.i("viewmap marker model lat", mModel.getLat());
+        Log.i("viewmap marker model lon", mModel.getLat());
 
         mMap.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                         latLng, mMap.getCameraPosition().zoom));
+        Log.i("viewmap Location Model lat and lon onMapCLick", mModel.getLat() +", "+ mModel.getLon());
+
 
     }
 
