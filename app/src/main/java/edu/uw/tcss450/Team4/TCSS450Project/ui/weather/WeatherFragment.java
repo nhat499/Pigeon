@@ -104,6 +104,10 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //hardCodedCity(); //sets to hard coded city : Tacoma
+
+
         binding.buttonSearchZip.setOnClickListener(button -> {
             viewZip();
         });
@@ -112,6 +116,9 @@ public class WeatherFragment extends Fragment {
         });
         binding.buttonSearchMap.setOnClickListener(button -> {
             viewMap();
+        });
+        binding.buttonSearchCurrent.setOnClickListener(button -> {
+            viewCurrentLocation();
         });
                 //viewZip(); //gets weather data for the zip code
                 //viewCity(); //gets weather data for the city name
@@ -130,6 +137,8 @@ public class WeatherFragment extends Fragment {
         //For Current Location
         LocationViewModel model = new ViewModelProvider(getActivity())
                 .get(LocationViewModel.class);
+
+
         model.addLocationObserver(getViewLifecycleOwner(), location -> {
             if(location != null) {
 
@@ -157,6 +166,28 @@ public class WeatherFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * Sets the weather data to hard coded location: Tacoma
+     */
+    private void hardCodedCity(){
+         String lat ="47.2529";
+         String lon ="-122.4443";
+         String city= "Tacoma";
+        mSendWeatherModel.setLon(lon);
+        mSendWeatherModelHD.setLon(lon);
+        mSendWeatherModel.setLat(lat);
+        mSendWeatherModelHD.setLat(lat);
+        mSendWeatherModel.setCityName(city);
+        mSendWeatherModelHD.setCityName(city);
+        // Calling the connect weather methods
+          mSendWeatherModel.getConnectWeather();
+          mSendWeatherModelHD.getConnectWeatherHD();
+
+        //Calling observers methods
+        mSendWeatherModel.addResponseObserver(getViewLifecycleOwner(), this::observeWeather);
+        mSendWeatherModelHD.addResponseObserver(getViewLifecycleOwner(),this::observeWeatherHD);
     }
 
     private void viewCity(){

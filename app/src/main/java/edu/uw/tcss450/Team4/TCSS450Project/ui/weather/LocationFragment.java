@@ -55,6 +55,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         binding.textLatLong.setText("Click the map to get weather data of marker's location!");
 
         mModel = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
