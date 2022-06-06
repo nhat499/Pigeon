@@ -61,10 +61,10 @@
         android:id="@+id/weather_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:id="@+id/city_name"
@@ -116,13 +116,11 @@
         android:id="@+id/profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
         android:text="Name"
         android:textSize="23dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -130,29 +128,28 @@
         android:layout_height="75dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/ic_account_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="11dp" />
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:id="@+id/profile_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="10px"
         android:text="nhat499@uw.edu"
 
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/profile_name"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
     <TextView
         android:id="@+id/recent_messages"
         android:layout_width="70dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
         android:text="Recent"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -164,7 +161,7 @@
         android:name=".ui.homeLanding.RecentMessageFragment"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/recent_messages"
