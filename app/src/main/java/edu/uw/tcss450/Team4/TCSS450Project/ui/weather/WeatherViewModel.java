@@ -49,13 +49,14 @@ public class WeatherViewModel extends AndroidViewModel {
     //This instance field is where we would get the response
     private MutableLiveData<JSONObject> mResponse;
     private MutableLiveData<JSONObject> mResponseHD; // data for hours and days
-    DecimalFormat df = new DecimalFormat("#.##");
-  //  private FragmentWeatherBinding binding;
+    private MutableLiveData<JSONObject> mResponseCity;
+    private MutableLiveData<JSONObject> mResponseZip; // data for hours and days
 
 
-    // from root object of the weather data:
+    // Hard coded longitude and latitude values from:
     private String lat ="47.2529";
     private String lon ="-122.4443";
+    private String cityName= "Tacoma";
 
     //private List<WeatherViewModel> weather;
 
@@ -69,9 +70,13 @@ public class WeatherViewModel extends AndroidViewModel {
         mResponse.setValue(new JSONObject());
         mResponseHD = new MutableLiveData<>();
         mResponseHD.setValue(new JSONObject());
+        mResponseCity = new MutableLiveData<>();
+        mResponseCity.setValue(new JSONObject());
+        mResponseZip = new MutableLiveData<>();
+        mResponseCity.setValue(new JSONObject());
     }
 /**
- * Getters and setters for latitude and longitude values.
+ * Getters and setters for latitude and longitude values and city name string value.
  */
     public String getLat (){
     return this.lat;
@@ -86,6 +91,9 @@ public class WeatherViewModel extends AndroidViewModel {
         this.lon = Longitude;
     }
 
+    public String getCityName(){return this.cityName.toUpperCase();}
+    public void setCityName(String name){ this.cityName = name; }
+
     /**
      * This method provides client code that adds observers to the LiveData
      *
@@ -96,6 +104,8 @@ public class WeatherViewModel extends AndroidViewModel {
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
         mResponseHD.observe(owner, observer);
+        mResponseCity.observe(owner,observer);
+        mResponseZip.observe(owner,observer);
 
     }
 
@@ -107,15 +117,46 @@ public class WeatherViewModel extends AndroidViewModel {
     private void handleResult(final JSONObject result) {
 
         mResponse.setValue(result);
-        //try{
-        //    JSONObject current = result.getJSON
-       // }
-    }
-    private void handleResultHD(final JSONObject result) {
 
+    }
+
+    private void handleResultHD(final JSONObject result) {
         mResponseHD.setValue(result);
     }
 
+    /**
+     * Gets and sets the Latitude and Longitude from city name and
+     * @param result
+     */
+    private void handleResultCity(final JSONObject result) {
+
+        Log.i("handle result city", "Entered");
+        mResponseCity.setValue(result);
+        /**
+        try{
+            JSONObject coord = result.getJSONObject("coord");
+            String cityLat = coord.getString("lat");
+            String cityLon = coord.getString("lon");
+            setLat(cityLat);
+            setLon(cityLon);
+            Log.i("City Latitude handle result", cityLat.toString()+", "+cityLon.toString());
+        }catch(JSONException e){
+            Log.e("JSON PARSE ERROR", "Found in handle city weather");
+        }
+         **/
+
+
+    }
+
+    private void handleResultZip(final JSONObject result) {
+        Log.i("zip handle result", "ENTERED");
+        mResponseZip.setValue(result);
+    }
+
+    /**
+     * These are the handle Error methods
+     * @param error
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -134,26 +175,6 @@ public class WeatherViewModel extends AndroidViewModel {
             } catch (JSONException e) {
                 Log.e("JSON PARSE", "JSON Parse Error in handleError");
             }
-        }
-    }
-
-    public void getConnectWeather() {
-        try {
-            Log.i("testing:", "Here");
-            String url = getApplication().getResources().getString(R.string.base_url) + "weather/location/"+lat+"/"+lon;
-
-            Request request = new JsonObjectRequest(
-                    Request.Method.GET,
-                    url,
-                    null, //no body for this get request
-                    this::handleResult, this::handleError);
-            request.setRetryPolicy(new DefaultRetryPolicy(10_000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            //Instantiate the RequestQueue and add the request to the queue
-            Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
@@ -179,10 +200,80 @@ public class WeatherViewModel extends AndroidViewModel {
             }
         }
     }
+    private void handleErrorCity(final VolleyError error) {
+        if (Objects.isNull(error.networkResponse)) {
+            try {
+                mResponseCity.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
+        else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            try {
+                mResponseCity.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
+    }
+
+    private void handleErrorZip(final VolleyError error) {
+        if (Objects.isNull(error.networkResponse)) {
+            try {
+                mResponseZip.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
+        else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            try {
+                mResponseZip.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
+    }
+
+
+    /**
+     * These are the getConnect methods
+     */
+
+    public void getConnectWeather() {
+        try {
+            Log.i("testing:", "Here");
+            String url = getApplication().getResources().getString(R.string.base_url) + "weather/location/"+lat+"/"+lon;
+
+            Request request = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null, //no body for this get request
+                    this::handleResult, this::handleError);
+            request.setRetryPolicy(new DefaultRetryPolicy(10_000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            //Instantiate the RequestQueue and add the request to the queue
+            Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void getConnectWeatherHD() {
         try {
-            Log.i("Made it:", "HERE TWO");
+            Log.i("Made it:", "Weather Hourly/Daily");
 
             String url = getApplication().getResources().getString(R.string.base_url) + "weather/location/"+lat+"/"+lon;
 
@@ -212,6 +303,48 @@ public class WeatherViewModel extends AndroidViewModel {
         }
     }
 
+    public void getConnectWeatherCity(String city) {
+
+        try {
+            Log.i("Made it to getconnect", "connect city");
+            String url = getApplication().getResources().getString(R.string.base_url) + "weather/?name=" + city;
+
+            Request request = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null, //no body for this get request
+                    this::handleResultCity, this::handleErrorCity);
+            request.setRetryPolicy(new DefaultRetryPolicy(10_000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            //Instantiate the RequestQueue and add the request to the queue
+            Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    } //end of method
+
+    public void getConnectWeatherZip(String zip) {
+
+        try {
+            Log.i("enter", "connect zip");
+            String url = getApplication().getResources().getString(R.string.base_url) + "weather/zip/?code=" + zip;
+
+            Request request = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null, //no body for this get request
+                    this::handleResultZip, this::handleErrorZip);
+            request.setRetryPolicy(new DefaultRetryPolicy(10_000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            //Instantiate the RequestQueue and add the request to the queue
+            Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 } // end of class
 
