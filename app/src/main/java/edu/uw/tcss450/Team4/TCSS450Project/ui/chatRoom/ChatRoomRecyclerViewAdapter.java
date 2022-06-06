@@ -94,33 +94,7 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
                             .navigate(directions);
                 }
             });
-//            binding.bu.setOnClickListener(this::handleMoreOrLess);
-
         }
-
-        private void handleMoreOrLess(final View button) {
-            mExpandedFlags.put(mChatRoom, !mExpandedFlags.get(mChatRoom));
-//            displayPreview();
-        }
-
-//        /**
-//         * Helper used to determine if the preview should be displayed or not.
-//         */
-//        private void displayPreview() {
-//            if (mExpandedFlags.get(mBlog)) {
-//                binding.textPreview.setVisibility(View.VISIBLE);
-//                binding.buittonMore.setImageIcon(
-//                        Icon.createWithResource(
-//                                mView.getContext(),
-//                                R.drawable.ic_less_grey_24dp));
-//            } else {
-//                binding.textPreview.setVisibility(View.GONE);
-//                binding.buittonMore.setImageIcon(
-//                        Icon.createWithResource(
-//                                mView.getContext(),
-//                                R.drawable.ic_more_grey_24dp));
-//            }
-//        }
 
         void setChatRoom(final ChatRoom chat) {
             mChatRoom = chat;
@@ -146,20 +120,6 @@ public class ChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<ChatRoomRe
                     binding.textNotification.setTextColor(Color.RED);
                 }
             }
-//            binding.buttonFullPost.setOnClickListener(view -> {
-//                Navigation.findNavController(mView).navigate(
-//                        ChatRoomListFragmentDirections.actionNavigationBlogsToBlogPostFragment(blog));
-//            });
-//            binding.textTitle.setText(blog.getTitle());
-//            binding.textPubdate.setText(blog.getPubDate());
-            //Use methods in the HTML class to format the HTML found in the text
-//            final String preview = Html.fromHtml(
-//                    blog.getTeaser(),
-//                    Html.FROM_HTML_MODE_COMPACT)
-//                    .toString().substring(0,100) //just a preview of the teaser
-//                    + "...";
-//            binding.textPreview.setText(preview);
-//            displayPreview();
         }
     }
 }
