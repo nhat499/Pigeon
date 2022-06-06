@@ -104,11 +104,19 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-                viewZip(); //gets weather data for the zip code
-                viewCity(); //gets weather data for the city name
-                viewMap();  // gets weather data from the clicked map location
-                viewCurrentLocation(); // gets the weather data for the device location
+        binding.buttonSearchZip.setOnClickListener(button -> {
+            viewZip();
+        });
+        binding.buttonSearchCity.setOnClickListener(button -> {
+            viewCity();
+        });
+        binding.buttonSearchMap.setOnClickListener(button -> {
+            viewMap();
+        });
+                //viewZip(); //gets weather data for the zip code
+                //viewCity(); //gets weather data for the city name
+                //viewMap();  // gets weather data from the clicked map location
+                //viewCurrentLocation(); // gets the weather data for the device location
 
     }//end of method
 
